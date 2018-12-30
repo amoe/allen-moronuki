@@ -17,9 +17,15 @@ There exists a package called `base` which is the base package.  ;)
 
 ghci commands begin with :, i.e. :info
 
+:: can be prononuced as 'has the type'
 
+To load a file, use `:load test.hs`
 
+    Prelude> :load test.hs
+    [1 of 1] Compiling Main             ( test.hs, interpreted )
+    Ok, modules loaded: Main.
 
+Reloading will change definitions.
 
 
 
