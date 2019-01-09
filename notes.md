@@ -74,8 +74,15 @@ A 10m circle has an area of 314m.
     314.1592653589793
 
 
+The id function exists.
+Some functions are infix.
+For instance, *.
+All operators are functions.
+Sometimes you can use regular functions in infix style.
+For instance, 10 `div` 4
 
-
+Wrapping + in parens will allow it to be applied in prefix form.  (+) 1 1
+Names with symbols are infix by default.
 
 
 
@@ -159,3 +166,5 @@ divergence:
 1. converges
 2. diverges
 3. converges
+
+
