@@ -1,3 +1,35 @@
+2019-01-19
+
+ghc will reply 'infixl' to an `:info` request if a function is an infix operator.
+infixl means left-associative, so the leftmost operand is evaluated.
+right associativity means that 2 ^ 3 ^ 4 is evaluated as 2 ^ (3^4)
+The second operand gets evaluated first.
+The evaluation of `2+3*4` and `(2+3)*4` are different because :info * shows that
+* has a higher precedence than + and thus is evaluated first.
+
+Exercise: Parentheses & Association
+-----------------------------------
+
+
+1.  a) result is 71
+    b) result is 135
+
+Correct!
+
+2.  I believe that this would have been parsed correctly anyway.
+
+nCorrect!
+
+3.  f x = x / 2 + 9
+
+/ has precedence so is evaluated as (x / 2) + 9
+This would change the result of the function.
+
+Correct!
+
+So basically arithmetic in Haskell works exactly as you expect.
+
+
 # environmentj
 
 
