@@ -1,3 +1,47 @@
+2019-01-21
+
+if you load files, order doesn't matter, you can declare things out of order
+unlike clojure
+
+"indentation in haskell code is significant and can change the meaning of the
+code"
+
+"whitespace is often the only mark of a function call"
+
+"the basic rule is that code that is part of an expression should be indented 
+under the beginning of that expression"
+
+if you write a let or a do, you have to line up the let definitions.
+
+basically the rule just seems to be that continuation expressions have some
+amount of whitespace before them.
+conversely, declarations must always start at column 0, or the column of the
+first declaration in the module.
+emacs will highlight declarations in purple
+
+do not indent all declarations in a module!  That is bad style
+
+1.  
+
+    area x = 3.14 * (x * x)
+
+the point is that floating point numbers can't contain whitespace
+
+
+2.
+
+    double x = x * 2
+
+b doesn't exist
+
+3. 
+
+    x = 7
+    y = 10
+    f = x + y
+
+extraneous whitespace when declaring y
+
 # environmentj
 
 
