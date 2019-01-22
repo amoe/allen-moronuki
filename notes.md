@@ -1,3 +1,83 @@
+2019-01-22
+
+div defines integral division
+div is more useful than other integer division operations.
+why does this fail?
+div 20 -6
+-6 parses as prefix -!
+
+
+laws for quotients and remainders...
+
+Write a function that will determine what day of the week it will be a certain number
+of days after this one.  In this case mod is useful
+
+mod (1 + 23) 7
+
+because it's assuming to be day 1 today (Monday) and the week is 7 days long.
+Mod 'wraps' the value every 7 units.  The difference between mod and rem comes
+out when the arguments can be negative.
+
+mod (-9) 7 = 5
+rem (-9) 7 = -2
+
+It seems that mostly mod is more appropriate, but perhaps rem can be useful
+also.
+
+They finally talk about negative numbers.
+
+The simple sum `1000 + -9` will not work.
+It's actually kind of good because + and - both have the same precedence so
+ghc signals an error.
+
+`1000 + (-9)`
+
+Being able to negate numbers with `-` is syntactic sugar and nothing to do
+with the `-` function.  Prefix `-` invokes the `negate` function.  And duly,
+`negate 10` evaluates to `-10`.
+
+I'm not sure we've actually seen `$` yet, but `$` is an infix operator...
+Yes, they are finally going to explain `$`!
+
+So `$` is an infix operator with the lowest possible precedence.
+
+(2^) (2 + 2)
+
+The parens around 2 + 2 are necessary because if you try
+
+(2^) 2 + 2
+
+this evaluates to 6, ie (2 ^ 2) + 2
+
+Using $ changes this to 
+
+(2^) $ 2 + 2
+
+This ensures that the part AFTER the parens will be evaluated first -- because
+it's low precedence AND it's defined as infixr -- and won't suck in other parts
+of the expr.
+
+Remember that 2^, +2 is a curried function.  (these are called 'operator sections' by ghc)
+We can test this by assigning them to declarations in ghc.
+
+    Prelude> x = (2^)
+    Prelude> :info x
+    x :: (Num a, Integral b) => b -> a
+
+It inferred the type.
+
+So the expr
+
+(2^) $ (+2) $ 3*2
+
+should be read right to left (as infixr), I think
+
+3*2 evals first.  == 6
+6 + 2 == 8
+2^8 == 256
+
+The dollar is kind of nice, I suppose.
+
 2019-01-21
 
 if you load files, order doesn't matter, you can declare things out of order
