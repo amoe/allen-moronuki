@@ -1,5 +1,9 @@
 2019-01-23
 
+Definitions: Parameter means the symbolic name for the value.  Argument is the
+value itself.
+
+
 ## Let and Where
 
 let introduces an expression, where is a declaration
@@ -31,12 +35,91 @@ This should evaluate to 3 + 3 = 6. y is unused binding
 When we rewrite let to where, bindings can be out of order.  eg binding x can
 refer to binding y that is defined further down.
 
+### Exercises: 2.11
+
+1.  2 + 2 * 3 - 1
+
+This should parse as
+2 + (2 * 3) - 1
+
+I think.  which = 2 + 6 - 1 = 8 - 1 = 7.
+
+Correct!
+
+2.  (^) 10 $ 1 + 1
+
+This should parse as:
+
+(^) 10 (1 + 1)
+= Raise 10 to the power of 2 = 100
+
+Correct!
+
+3.  2 ^ 2 * 4 ^ 5 + 1
+
+Exponential is highest precedence. So this becomes
+
+(2^2) * (4^5) + 1
+
+= 4 * 1024 + 1
+Actually, I was right about this parse.  I just worked it out wrong personally.
+
+Equivalent expressions
+
+1.  These will return the same result
+
+2.  10^2 = 100
+10 + 9 * 10
+10 + (9 * 10)
+10 + 90
+100
+So they will return the same.
+
+3.  400 - 37, this is 363
+
+(-) 37 400
+This evaluates to 37 - 400, -363, so they will NOT return the same.
+
+4.  100 div 3
+This does integer division and rounds down (I think)
+These won't return the same because div returns an integer, (/) returns a real.
+
+5.  2 * 5 + 18
+Parse as (2*5) + 18
+= 10 + 18 
+= 28
+
+2 * (5 + 18)
+2 * 23
+= 46
+
+So different.
+
+#### More fun with functions
+
+Rewriting stuff to evaluate in the repl.  We just rearrange the definitions
+according to a topological sort based on dependencies.
+
+z = 7
+y = z + 8
+x = y ^ 2
+waxOn = x * 5
+
+1.
+
+`10 + waxOn` will evaluate to 1135.  (waxOn is 1125)
+`(+10) waxOn` will evaluate to 1135.
+`(-) 15 waxOn` will evaluate to -1110 or something
+`(-) waxOn 15` will evluate to 1110
 
 
+2.  done
 
-
-
-
+3.  What does `triple waxOn` mean?  Well, it evaluates as `waxOn * 3`
+Which will mean 1125 * 3 = 3375.
+Worked fine.  I suppose this indicates that values aren't 'deferred' (i.e. stored
+symbolically); they contain actual numbers.
+    
 
 
 
