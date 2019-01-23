@@ -1,3 +1,33 @@
+2019-01-23
+
+## Let and Where
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Operator sectioning, order can matter when functions are not commutative.
+Subtraction is a special case:
+
+> (-2) 1
+
+This won't work because (-2) == negate 2, applied to the argument 1, and you
+can't apply integer to integer.
+
+You can section though with subtraction.  (1 -) denotes a sectioned subtract.
+- is an abbreviation of `subtract` function, anyway.
+
 2019-01-22
 
 div defines integral division
