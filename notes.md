@@ -2,10 +2,34 @@
 
 ## Let and Where
 
+let introduces an expression, where is a declaration
+
+where is bound to a forementioned declaration and is indented under it because
+of this.
 
 
+### Exercises: A Head Code
 
+1.  let x = 5 in x
 
+Should return 5.  Equivalent to (let [x 5] x)
+
+2.  let x = 5 in x * x
+
+Should return 5*5 eg 25.
+
+3.  let x = 5; y = 6 in x * y
+
+Well, I don't know if the semicolon is valid, but assuming the syntax works it
+should evaluate to 30.  We learn from this that ; can be used instead of a
+newline.
+
+4.  let x = 3; y = 1000 in x + 3
+
+This should evaluate to 3 + 3 = 6. y is unused binding
+
+When we rewrite let to where, bindings can be out of order.  eg binding x can
+refer to binding y that is defined further down.
 
 
 
