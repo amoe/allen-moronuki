@@ -1,4 +1,41 @@
-=======
+2019-01-29
+
+## Ch3: Strings
+
+Bool is a type that represents a boolean value.
+Strings are lists of characters.  Char is a single character.
+
+You can find the type of a literal value by doing
+
+    :type 'a'
+
+This will tell you that 'a' is a Char.
+
+    :type "Foo"
+
+The type here is [Char], denoting a list of Char, this is syntactic sugar, they
+explain why later.  List of char is supposedly a wart sometimes addressed by
+`Data.Text` and `Data.ByteString`.  You use `pack` function to get a Text.  This
+is O(n) String->Text.  String is an alias for [Char] defined in `Data.String`.
+This is a type alias much like `type` in Typescript.
+
+`import qualified` will prefix a namespace similar to `as` in Python.
+
+Char includes unicode characters.  Unicode chars are printed as '\8545', which
+is octal for some reason.
+
+Printing strings with `print` function defined in the prelude.
+http://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html
+The search engine for Haskell is hoogle.  https://www.haskell.org/hoogle/
+
+putStrLn will print without quotes and witha  newline.  putStr is the other one.
+`print` will give the equivalent of repr() in python.
+
+> When you enter functions directly into the REPL, ghci implicitly understand
+> and implements IO without you having to specify that.
+
+The `do` syntax allows for sequencing actions.
+
 2019-01-23
 
 Definitions: Parameter means the symbolic name for the value.  Argument is the
