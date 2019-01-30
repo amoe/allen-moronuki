@@ -36,6 +36,34 @@ putStrLn will print without quotes and witha  newline.  putStr is the other one.
 
 The `do` syntax allows for sequencing actions.
 
+The 'concat' function takes a list of strings as argument and concats the
+strings.
+
+    concat ["foo", "bar"] => "foobar"
+
+You can type where exprs also, like
+
+    where woot :: Integer
+          woot = 10
+
+though dont know if this is necessary (no it's not)
+
+## Exercise: Scope
+
+1.  Yes y is in scope for z.  Because it was already defined and becomes a top
+level declaration.
+
+2.  h is not in scope for g.  Obviously, because it wasn't defined.
+
+3.  No, there are several problems.  Pi is not defined.  d is not defined in
+the formula for r.
+
+4.  Yes
+
+
+
+
+
 2019-01-23
 
 Definitions: Parameter means the symbolic name for the value.  Argument is the
