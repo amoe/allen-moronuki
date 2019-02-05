@@ -1,4 +1,95 @@
-2019-01-29
+2019-02-05
+
+[[a]] -> [a]
+
+List of lists of type a to a single list of type a.  i.e. it's flatten one
+level.  Note that this is generic over the type `a`.  
+
+`Foldable t => t [a]` can be translated to `[[a]]`.  The arrow must have a
+special meaning here.
+
+That's cool it works to flatten lists of integers too.
+
+So BECAUSE a string is a list, you can use list functions to create strings.
+You can't have lists of heterogeneously typed values.
+
+`it` represents the last value in ghci.
+
+The type `a` is called a _type variable_.  These type variables are called
+polymorphic.
+
+## Exercises: Syntax Errors
+
+1.  ++ [1, 2, 3] [4, 5, 6]
+
+This won't work because `++` is an infixr operator.
+To make it work:
+
+    (++) [1, 2, 3] [4, 5, 6]
+
+Correct
+
+2.  '<3' ++ ' Haskell'
+
+Should work as is
+
+INCORRECT -- Uses wrong quote marks. Fix is 
+
+    "<3" ++ " Haskell"
+
+3.  concat ["<3", " Haskell"]
+
+Should work as is because the argument is a list of list (`[[Char]]`)
+CORRECT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+j2019-01-29
 
 ## Ch3: Strings
 
