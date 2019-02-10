@@ -2,7 +2,19 @@
 
 # 3.6 Concatenation and scoping
 
+When you call `++` in prefix form, it can only have two arguments.
 
+This won't work:
+
+    secondGreeting = (++) hello " " world
+
+Rather you need this:
+
+    secondGreeting = (++) hello ((++) " " world)
+
+Or equivalently
+
+    secondGreeting = (++) hello $ (++) " " world
 
 # 3.5 Types of concatenation functions
 
