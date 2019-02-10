@@ -1,5 +1,11 @@
 2019-02-05
 
+# 3.6 Concatenation and scoping
+
+
+
+# 3.5 Types of concatenation functions
+
 [[a]] -> [a]
 
 List of lists of type a to a single list of type a.  i.e. it's flatten one
@@ -43,53 +49,7 @@ Should work as is because the argument is a list of list (`[[Char]]`)
 CORRECT
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-j2019-01-29
+2019-01-29
 
 ## Ch3: Strings
 
@@ -151,15 +111,10 @@ the formula for r.
 
 4.  Yes
 
-
-
-
-
 2019-01-23
 
 Definitions: Parameter means the symbolic name for the value.  Argument is the
 value itself.
-
 
 ## Let and Where
 
