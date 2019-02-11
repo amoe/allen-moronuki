@@ -1,5 +1,102 @@
 2019-02-05
 
+# 3.7 More list functions
+
+cons builds a list and is named `:`, it does head and tail.  Note that it's
+ONLY called `:` and not called `cons`.
+
+    Prelude> 'P' : ""
+    "P"
+
+The single char and the empty string conses together to be the string "P", as
+distinct from the Char 'P'
+
+`head` takes a list and returns the first element.  So it will return the first
+char of the string.
+
+`tail` returns NOT the last char, but all but the first char.  This is equivalent
+to car/cdr in Scheme.
+
+`take` and `drop` do as we would expect.  They don't error if they go off the
+end of the string.
+
+There is an indexing operator.  It's `!!` as infix.  This is equivalent to
+nth in clojure.  Indexes are zero based.  Going off the end will cause an 
+exception.  They are "unsafe".  When they are given an empty list.   Exceptions
+basically suck and you shouldn't use these functions in real programs.  I'm
+guessing they will later be wrapped into a monad or something.
+
+# 3.8 Chapter Exercises
+
+## 1 Reading syntax
+
+Are these correct?
+
+> concat [[1,2,3], [4,5,6]]
+
+Concat takes a list of lists so yes.  It should return [1,2,3,4,5,6]
+
+CORRECT
+
+> ++ [1,2,3] [4,5,6]
+
+Need to parenthesize to call an infix as a prefix.
+
+Rewrite to [1,2,3] ++ [4,5,6]
+
+CORRECT
+
+> (++) "hello " "world"
+
+It works and returns "hello world".
+
+CORRECT
+
+> ["hello" ++ "world]
+
+Extremely wrong syntax.  Should be "hello" ++ "world"
+
+CORRECT
+
+> 4 !! "hello"
+
+Type mismatch, second arg is index
+
+CORRECT
+
+> (!!) "hello" 4
+
+Should work and return 'o'
+
+CORRECT
+
+> take "4 lovely"
+
+Type mismatch, needs 2 args.
+
+CORRECT
+
+> take 3 "awesome"
+
+Correct and returns 'awe'.
+
+## Match the code and output
+
+Code a), output d)
+Code b), output c)
+Code c), output e)
+Code d), output a)
+Code e), output b)
+
+## Code exercises
+
+Done in module.  This is just hackily hardcoding the appropriate indices using
+drop and take.  We also extract out the middle part into a where variable.
+
+A value is said to 'inhabit' a haskell type.
+
+
+
 # 3.6 Concatenation and scoping
 
 When you call `++` in prefix form, it can only have two arguments.
