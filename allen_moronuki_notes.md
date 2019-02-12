@@ -1,3 +1,169 @@
+2019-02-12
+
+# Chapter 4: Basic datatypes
+
+"Thinking about types as being like sets" will guide my intuition.
+Set theory was a precursor to type theory.
+
+Logical operations like disjunction and conjunction have an equivalent in
+Haskell's type system. -- UNLIKE java which does not have union types.
+Actually how would conjunction work in a type system?
+C's `union` actually operates more as a conjunction.
+
+Reading or writing type signatures is referred to as the "type level" of code.
+Type level is as opposed to 'term level'.  Presumably dependent types in Idris
+etc. tend to blur this line.  
+Term level refers to "the lines with the = expressions."
+
+Bool is an existing type defined as `False | True`.
+`False` and `True` are specific already existing data constructors.
+In fact, `False :: Bool`.
+My question is really, what's the TERM for `False = ?` in the prelude?
+Perhaps it's a typeclass the implements `Show` or something.
+
+`False` is called a *data constructor*.
+
+Some type constructors may have arguments.
+
+A *data declaration* looks as  such:
+
+data x = y
+
+where x is a type constructor and y is an expression-combining-data-constructors
+
+ghci will print the definition of a type  if you do something like
+
+`:info Bool`
+
+It's gonna show you that Bool implements `Show` as I predicted.  It's also an
+`Enum`.  It also tells me that Bool 
+
+I could define my own Bool types.  If I did as such:
+
+    data DavesBool = DavesFalse | DavesTrue
+
+And then somehow implemented Show for `DavesFalse` and `DavesTrue`, although
+I have no idea how I would do that.  (Update: You write `deriving Show`)
+
+This simplifies our code and enables us to write things such as logical
+inversion.
+
+    not :: Bool -> Bool
+
+It's quite funny to imagine trying to write this with dependent types.
+
+It makes you curious how you would write not in haskell.  There is a really neat
+way to write it.
+
+    davesNot :: Bool -> Bool
+    davesNot True = False
+    davesNot False = True
+
+In this way every function is implicitly pattern-matched.
+
+## Exercises: Mood Swing
+
+The data type given is as such:
+
+    data Mood = Blah | Woot deriving Show
+
+1.  What is the type constructor of this type?
+
+The answer is `Mood`.
+
+2.  If the function requires a Mood value, what are the values you could
+possibly use?
+
+The answer is `Blah` and `Woot`.
+
+3.  You can't write this:
+
+    changeMood :: Mood -> Woot
+
+Woot is a data constructor naming a value, where type signatures can only name
+types.  The answer would have to be `Mood -> Mood` instead.
+
+4.  I anticipated this earlier but this is the answer:
+
+    changeMood :: Mood -> Mood
+    changeMood Woot = Blah
+    changeMood Blah = Woot
+
+This is pattern matching.  But actually we can use the underscore to denote any
+value, eg `changeMood _ = Woot`.
+
+## Numeric types
+
+
+Types of numbers in haskell:
+
+* `Int`: this is a fixed precision integer.
+* `Integer`: arbitrary precision integer.
+* `Word`: unsigned integer.
+* `Float`: equivalent of C float.
+* `Double`: equivalent of C double.
+* `Rational`: this is a arbitrary precision rational number with a numerator
+and denominator.
+* `Fixed`: fixed-precision type that you control the length of.
+* `Scientific`: A cool number type that isn't actually in the base library.
+
+Using type classes, we make sure that operations like +, -, * operate across all
+numbers, using `Num`.
+
+**Most programs should use Integer**
+Integers will OVERFLOW WITHOUT WARNING if you use ints.
+You can cast data to Rational like so.  `1 / 2 :: Rational`
+
+> Numbers are polymorphic under the surface, and the compiler doesn't assign
+> them a concrete type until it is forced to.
+
+Don't understand what's happening here:
+minBound from `GHC.Int` can be used in the format:
+
+   > minBound :: Int8
+   -128
+
+Is this a zero argument call to minBound cast to Int8?  Clearly not In fact, ::
+can't even be printed.  It's not a regular operator, it's magic.  It's really
+unclear what this expression means.  It looks like a type declaration.
+But I don't know what it actually is.  You can coerce `Integral` values to 
+an actual `Integer` using 
+
+Be careful when using $
+Because
+
+someValue :: Integer
+someValue = toInteger (minBound :: Int8)
+
+
+Is not identical to
+
+someValue :: Integer
+someValue = toInteger $ minBound :: Int8
+
+The latter doesn't parse.  So `::` has low precedence.  Division function returns
+something that has an instance of the `Fractional` type class.
+
+    > :t (/)
+    (/) :: Fractional a => a -> a -> a
+
+Why can I divide integer types???
+
+Oh, actually the only reason is because GHC coerces its literal argument to a
+more useful value.  If I do this:
+
+davesTwo :: Integer
+davesTwo = 2
+
+And then try this
+(/) davesTwo davesTwo
+
+I get a more useful error.
+
+    • No instance for (Fractional Integer) arising from a use of ‘/’
+
+Which is exactly what I expect.
+
 2019-02-05
 
 # 3.7 More list functions
