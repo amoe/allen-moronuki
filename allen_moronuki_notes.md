@@ -164,6 +164,50 @@ I get a more useful error.
 
 Which is exactly what I expect.
 
+    16:18         amoe > In haskellbook ch4, I see that we can get the bounds of some types as such: 'minBound :: Int8'.  What's the '::' in this expression?  It seems that it's not like the operators that have 
+                         been shown so far, because I can't write ':t (::)' in ghci.
+    16:19       merijn > amoe: :: is just the syntax of type annotations
+    16:19       merijn > amoe: Type signatures don't only work on bindings (like functions/variables) they work on expressions too
+    16:21         amoe > I also saw that you could do '127 :: Int8' for instance.
+    16:21       merijn > Yes
+    16:21         amoe > I read that as '127 as type Int8'.  But I would read 'minBound :: Int8' as "the result of the zero argument function minBound" as Int8
+    16:22         amoe > minBound = (), so () :: Int8
+    16:22       merijn > amoe: minBound is not a function
+    16:22         amoe > ah ok
+    16:22       merijn > minBound is a value
+    16:22       merijn > :t minBound
+    16:22    lambdabot > Bounded a => a
+    16:22       merijn > :t 1
+    16:22    lambdabot > Num p => p
+    16:23       merijn > amoe: Note how both are polymorphic
+    16:26         amoe > I guess that because it has an instance of Bounded (if that's correct way to say it), Int8 defines minBound for itself
+    16:27         amoe > and 'minBound :: Int8' will evaluate to that definition
+    16:27       merijn > amoe: Right
+    16:28       merijn > > minBound :: Integer
+    16:28    lambdabot >  error:
+    16:28    lambdabot >      • No instance for (Bounded Integer)
+    16:28    lambdabot >          arising from a use of ‘minBound’
+    16:29      Uniaika > > minBound Int
+    16:29    lambdabot >  error:
+    16:29    lambdabot >      • Data constructor not in scope: Int
+    16:29    lambdabot >      • Perhaps you meant one of these:
+    16:29      Uniaika > …
+    16:29      Uniaika > ah.
+    16:29      Uniaika > > minBound :: Int
+    16:29       merijn > > minBound :: Int :)
+    16:29    lambdabot >  -9223372036854775808
+    16:29    lambdabot >  <hint>:1:18: error: parse error on input ‘)’
+    16:30      Uniaika > :3
+    16:30      Uniaika > thank merijn
+    16:30         amoe > I just want to read :: as a type cast operator but it's clearly not
+    16:30       merijn > amoe: Yeah, it's not
+    16:30       merijn > amoe: "foo :: bar" just says "expression 'foo' has type 'bar'"
+    16:31       merijn > amoe: Which GHC will then typecheck
+    16:31       merijn > amoe: What is happening in the case of 1 or minBound is that the type you're telling GHC is more specific, causing it to grab the right implementation
+    16:32         amoe > right, that makes sense
+    16:32         amoe > thanks merijn
+    16:33       merijn > The typeclass constraint of "Num a => a" and "Bounded a => a" basically says "for any type that is an instance of this class, I know how to figure out this value".
+
 2019-02-05
 
 # 3.7 More list functions
