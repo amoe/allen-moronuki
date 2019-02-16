@@ -18,3 +18,10 @@ someValue = toInteger (minBound :: Int8)
 
 davesTwo :: Integer
 davesTwo = 2
+
+davesFst :: (a, b) -> a
+davesFst (a, b) = a
+
+davesSnd :: (a, b) -> b
+davesSnd (a, b) = b
+

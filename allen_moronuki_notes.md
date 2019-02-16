@@ -78,6 +78,36 @@ set of possible values is the sum of the legal values.  The `,` is a 'product
 type' because the set of values it can take is defined by the permutations of `a`
 and `b`.  (That's my guess for the reasoning.)
 
+You can NOT have a 1-element tuple, this is actually an error, unlike in Python.
+
+The two tuple has accessor `fst` and `snd`, this is much like `car` and `cdr`
+when used with dotted pairs / improper lists in Scheme.
+
+Data.Tuple contains accessing functions for tuples.
+
+> The `(x, y)` syntax of the tuple is special.  The constructors you use in the
+> type signatures and in your code (terms) are syntactically identical even 
+> though they're different things.  Sometimes that type constructor is referred 
+> to without the type variables explicitly inside of it such as `,`.  Other times,
+> you'll see (a, b) -- particularly in type signatures.
+
+The upshot of this paragraph is basically that `(a, b)` is a type-level spelling
+for the data constructor `,`.  You can use that type-level spelling to
+pattern-match in the term definition as well.
+
+    davesFst :: (a, b) -> a
+    davesFst (a, b) = a
+
+    davesSnd :: (a, b) -> b
+    davesSnd (a, b) = b
+
+    > davesFst $ (,) 1 2
+    1
+    > davesSnd $ (,) 1 2
+    2
+
+We construct the pair using (,) and then dereference it with pattern matching.
+
 2019-02-12
 
 # Chapter 4: Basic datatypes
