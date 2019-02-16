@@ -1,3 +1,37 @@
+2019-02-16
+
+And is &&; or is ||.  These are proper functions.  Note that (&&) can be a
+regular function in Haskell, unlike in Scheme.
+
+# Exercise: Find the Mistakes
+
+1.  `not True && true`
+
+This refers to `true` which doesn't exist.  It should be `not True && True`
+&& has a precedence value of 3.  This means that it should parse correctly, I
+think.  Either way it evaluates to false.
+
+2.  not (x = 6)
+
+That doesn't work because single-equals is not an expression.  It should be 
+`not (x == 5)` and yes the parens are needed.
+
+3.  (1 * 2) > 5
+
+This looks fine?  I don't think this has an error.  Indeed, it is correct.
+
+4.  [Merry] > [Happy]
+
+This should be `"Merry" > "Happy"`.  `[Merry]` would attempt to construct a list
+of the value of the single binding `Merry`.  And indeed we get `Data constructor
+not in scope`.  It wants to parse `Merry` as a data constructor -- presumably
+because the first letter is capitalized?
+
+5.  [1, 2, 3] ++ "look at me!"
+
+This won't work, because it would attempt to create a heterogeneous array of
+[Integer|Char].
+
 2019-02-12
 
 # Chapter 4: Basic datatypes
