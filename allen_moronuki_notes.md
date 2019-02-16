@@ -32,6 +32,26 @@ because the first letter is capitalized?
 This won't work, because it would attempt to create a heterogeneous array of
 [Integer|Char].
 
+## Conditionals
+
+The if expression is a built-in syntactic sugar.  A given if expression has a
+type.  It's even type checkable using `:t` in ghci.  Note that both the `then`
+and `else` clauses must have the same type.
+
+The if-expression must be an actual Bool type.  For instance, you can't say `if
+0` or other horribly bogus things.
+
+The indentation structure for an if expression looks like so:
+
+foo x = 
+    if expr
+        then y
+    else
+        z
+    
+
+Note that the two expressions line up.  else lines up with if.
+
 2019-02-12
 
 # Chapter 4: Basic datatypes
