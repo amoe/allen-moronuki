@@ -52,6 +52,32 @@ foo x =
 
 Note that the two expressions line up.  else lines up with if.
 
+## Tuples
+
+The arity of a tuple is the number of values within the tuple.  For instance,
+the two-tuples is a pair (x, y).  Values in tuples do NOT need to have the same
+type.
+
+The tuple constructor is a function (,).  However it's NOT actually an infix
+operator, it seems (!)  Meaning I can construct a tuple as such.
+
+> (,) 1 2
+(1,2)
+
+This form `(1,2)` and `(1, 2)` are directly evaluable.  However the parens are
+mandatory.  (Why?)
+
+    data (,) a b = (,) a b
+
+This is a "product type" and not a "sum type".  Recall the definition for `Bool`.
+
+    data Bool = False | True
+
+This `Bool` definition is a 'sum type' because it's a logical disjunction.  The
+set of possible values is the sum of the legal values.  The `,` is a 'product
+type' because the set of values it can take is defined by the permutations of `a`
+and `b`.  (That's my guess for the reasoning.)
+
 2019-02-12
 
 # Chapter 4: Basic datatypes
