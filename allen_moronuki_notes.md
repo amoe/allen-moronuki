@@ -3,7 +3,7 @@
 And is &&; or is ||.  These are proper functions.  Note that (&&) can be a
 regular function in Haskell, unlike in Scheme.
 
-# Exercise: Find the Mistakes
+## Exercise: Find the Mistakes
 
 1.  `not True && true`
 
