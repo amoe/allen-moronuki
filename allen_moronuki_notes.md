@@ -1,3 +1,15 @@
+2019-02-18
+
+Tuples can be heterogeneous, but lists can't.  List syntax is used both
+at type level and term level, cf `[Char]` at type-level and `[1,2,3]` at term
+level.  Lists can be of arbitrary size where tuples always have a fixed size.
+
+A list of strings is denoted as [[Char]] at the typelevel.
+
+There will later be a full chapter on lists.
+
+## Chapter Exercises
+
 2019-02-16
 
 And is &&; or is ||.  These are proper functions.  Note that (&&) can be a
