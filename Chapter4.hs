@@ -25,3 +25,10 @@ davesFst (a, b) = a
 davesSnd :: (a, b) -> b
 davesSnd (a, b) = b
 
+
+-- It's a two argument function that is going to combine its tuple arguments
+-- in a certain way.
+-- 
+-- This is a demonstration of destructuring / pattern matching in both arguments.
+tupFunc :: (Int, [a]) -> (Int, [a]) -> (Int, [a])
+tupFunc (a, b) (c, d) = ((a + c), (b ++ d))

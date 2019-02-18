@@ -108,6 +108,23 @@ pattern-match in the term definition as well.
 
 We construct the pair using (,) and then dereference it with pattern matching.
 
+2019-02-14
+
+Equality operator is `==`.
+Not equal is `/=`, odd.
+
+Things that are testable for equality have an instance of typeclass Eq.
+Things that can be ordered have an instance of Ord.  Much like Comparable in java.
+
+You can't compare things that are not of the same type.
+
+a is greater than A
+
+Julie is greater than Chris because Chris comes before Julie.
+This property falls out of the fact that String = [Char] and Char has Ord.
+
+Won't work on our own datatype unless we add an instance of Ord to it somehow.
+
 2019-02-12
 
 # Chapter 4: Basic datatypes
