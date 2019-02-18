@@ -8,10 +8,148 @@ A list of strings is denoted as [[Char]] at the typelevel.
 
 There will later be a full chapter on lists.
 
+`length` tells 
+
+## Chapter Exercises for ch4
+
+1.  The type signature of `length` as given would be:
+
+    length :: [a] -> Integer
+
+It takes 1 argument and returns an Integer.  Actually for some reason it's 
+Integer and not Int.
+
+2.
+
+a) Result is `5`.  CORRECT
+b) Result is `3`.  CORRECT
+c) Result is `2`.  CORRECT
+d) 
+
+`concat allAwesome` will join all elements, so result will be length awesome +
+length also.  So it should be `5`.  CORRECT
+
+3.  Erm, this is confusing!
+I'd say that BOTH should work.  But if anything, 6 / length [1,2,3] should fail.
+It makes sense that 6 / 3 works because ghc chooses `Fractional a => a` to be
+a Double by default.
+
+Indeed this is true.
+With the second we get the following.
+`No instance for (Fractional Int) arising from a use of ‘/’`
+
+4.  We could fix it using like div or mod or something:
+
+   div 6 $ length [1,2,3]
+
+5.  Both + and = are infix operators, however, + has a higher precedence (6)
+than ==, so it evaluates as (2 + 3) == 5, so the result is True.
+
+6.
+
+  * `x = 5`: no value
+  * `x + 3 == 5`: False
 
 
+7.  My guesses are below.
 
-## Chapter Exercises
+    > length allAwesome == 2
+    True
+    > length [1, 'a', 3, 'b']
+    Error: heterogeneous list
+    > length allAwesome + length awesome
+    5
+    > (8 == 8) && ('b' < 'a')
+    False
+    > (8 == 8) && 9
+    Error: type mismatch, 9 is not boolean
+
+All CORRECT
+
+8.  Palindrome done and tested in ExercisesChapter4.hs
+
+9.  myAbs done and tested in ExercisesChapter4.hs
+
+10.  f is a function that takes two two-tuples
+It basically rearranges them.
+
+So 
+
+    > f (1,2) (3,4)
+    ((2,4), (1,3)
+
+This should be possible with pattern matching?  And indeed it is
+
+## Correcting syntax
+
+1.  The first error is about a data constructor F.  Firstly, you can't have a
+function wit such a name.  There's another mistake, that they used single quotes
+instead of backticks.
+
+2.  Define it using a lambda binding as such
+
+    myId = \x -> x
+
+I'm not sure that we've actually seen this yet?   But either way we shouldn't
+use all-caps variable names like this.
+
+3.  This is actually the function 'fst', so it looks as such:
+
+    myFst2 (a, b) = a
+
+## Match the function names to their types
+
+1.  The type of `show` should be c), `Show a => a -> String`
+Note that this correct type is only visible through :t in ghci.
+
+CORRECT
+
+2.  The type should be b), `Eq a => a -> a -> Bool`.  The first typeclass
+constraint introduces the variable a and the second is required to be identical.
+
+CORRECT
+
+3.  The type should be a, `(a, b) -> a` because it returns the first element
+of a two-tuple.
+
+CORRECT
+
+4.  The type of `(+)` should be d), `Num a => a -> a -> a`.  By a process of
+    elimination.  It could also be e), but I think it should be d)
+
+CORRECT
+
+## Remaining fun facts from Definitions
+
+() is the zero tuple.
+Parametric polymorphism is something like the function id:
+
+    id :: a -> a
+    id x = x
+
+There are no requirements of the argument x, so it's "parametrically polymorphic".
+
+Whereas,
+
+    isEqual :: Eq a => a -> a -> Bool
+
+This is *constrained polymorphism* which has requirements of its argument,
+notably that it has an instance of the Eq type class.
+
+There are 7 namespaces:
+
+* Functions
+* Term-level variables (x in `f x = x`)
+* Data constructors `True`
+* Type variables (`a` in `Num a => a`)
+* Type constructors (`Bool`)
+* Type classes (`Num`)
+* Modules (`ExercisesChapter4`)
+
+Conventions: Type variables are `a`, `b`, `c`
+Functions are often called `f`, `g`, etc.
+Single letter argument names are common.
+Lists are often called `xs`.  This is destructured as `(x:xs)`.
 
 2019-02-16
 
