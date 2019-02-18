@@ -1,3 +1,5 @@
 module ExercisesChapter4 where
 
-x = 42
+awesome = ["Papuchon", "curry", ":)"]
+
+also = ["Quake", "The Simons"]

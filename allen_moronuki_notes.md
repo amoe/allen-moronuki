@@ -8,6 +8,9 @@ A list of strings is denoted as [[Char]] at the typelevel.
 
 There will later be a full chapter on lists.
 
+
+
+
 ## Chapter Exercises
 
 2019-02-16
