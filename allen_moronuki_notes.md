@@ -1,3 +1,83 @@
+2019-02-16
+
+And is &&; or is ||.  These are proper functions.  Note that (&&) can be a
+regular function in Haskell, unlike in Scheme.
+
+# Exercise: Find the Mistakes
+
+1.  `not True && true`
+
+This refers to `true` which doesn't exist.  It should be `not True && True`
+&& has a precedence value of 3.  This means that it should parse correctly, I
+think.  Either way it evaluates to false.
+
+2.  not (x = 6)
+
+That doesn't work because single-equals is not an expression.  It should be 
+`not (x == 5)` and yes the parens are needed.
+
+3.  (1 * 2) > 5
+
+This looks fine?  I don't think this has an error.  Indeed, it is correct.
+
+4.  [Merry] > [Happy]
+
+This should be `"Merry" > "Happy"`.  `[Merry]` would attempt to construct a list
+of the value of the single binding `Merry`.  And indeed we get `Data constructor
+not in scope`.  It wants to parse `Merry` as a data constructor -- presumably
+because the first letter is capitalized?
+
+5.  [1, 2, 3] ++ "look at me!"
+
+This won't work, because it would attempt to create a heterogeneous array of
+[Integer|Char].
+
+## Conditionals
+
+The if expression is a built-in syntactic sugar.  A given if expression has a
+type.  It's even type checkable using `:t` in ghci.  Note that both the `then`
+and `else` clauses must have the same type.
+
+The if-expression must be an actual Bool type.  For instance, you can't say `if
+0` or other horribly bogus things.
+
+The indentation structure for an if expression looks like so:
+
+foo x = 
+    if expr
+        then y
+    else
+        z
+    
+
+Note that the two expressions line up.  else lines up with if.
+
+## Tuples
+
+The arity of a tuple is the number of values within the tuple.  For instance,
+the two-tuples is a pair (x, y).  Values in tuples do NOT need to have the same
+type.
+
+The tuple constructor is a function (,).  However it's NOT actually an infix
+operator, it seems (!)  Meaning I can construct a tuple as such.
+
+> (,) 1 2
+(1,2)
+
+This form `(1,2)` and `(1, 2)` are directly evaluable.  However the parens are
+mandatory.  (Why?)
+
+    data (,) a b = (,) a b
+
+This is a "product type" and not a "sum type".  Recall the definition for `Bool`.
+
+    data Bool = False | True
+
+This `Bool` definition is a 'sum type' because it's a logical disjunction.  The
+set of possible values is the sum of the legal values.  The `,` is a 'product
+type' because the set of values it can take is defined by the permutations of `a`
+and `b`.  (That's my guess for the reasoning.)
+
 2019-02-14
 
 Equality operator is `==`.
