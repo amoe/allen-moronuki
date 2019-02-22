@@ -1,3 +1,8 @@
+2019-02-22
+
+# Ch5: Types
+
+
 2019-02-18
 
 Tuples can be heterogeneous, but lists can't.  List syntax is used both
