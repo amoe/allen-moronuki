@@ -1,3 +1,39 @@
+2019-02-24
+
+    Num a => a -> a -> a
+
+How do we read this?  The compiler actually needs the same type for a across
+all arguments to the function.  However, some compiler magic will make sure
+that literal values still work.  Eg in this,
+
+
+   > (+) 1 2.0
+
+ghc infers `1` as a Fractional type.
+
+
+> When we query the types of numeric values, we see type class
+> information instead of a concrete type, because the compiler doesn’t
+> know which specific numeric type a value is until the type is either
+> declared or the compiler is forced to infer a specific type based on
+> the function.
+
+This means that an expression like `2` literally has no type, it only has
+a type class, `Num t => t`.  This is pretty brain exploding.
+
+Consider
+
+    x = 2 + 2
+
+What's the type of this?  Some mathematics has just happened, so we'd expect
+it to be Integer.  But it's actually
+
+    > :t x
+    x :: Num a => a
+
+What did we store in x?  Not the value 4 but the expression 2 + 2, which also
+has the type `Num a => a`.  This is laziness.
+
 2019-02-21
 
 ## Ch5: Types
