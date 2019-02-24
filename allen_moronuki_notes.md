@@ -1,3 +1,85 @@
+2019-02-24
+
+
+
+2019-02-21
+
+> In haskell you cannot create untyped data so ... [except for sugar] ...
+> everything originates in a data constructor.
+
+The Bool type is a set with two inhabitants, {True,False}
+
+> Much of what we suggest with regards to putting code in a file ... querying
+> types in the REPL is about creating habits conducive to having this pleasant
+> back and forth with your type system
+
+You can query types for partially applied functions.
+
+eg.
+
+    Prelude> :t (+ 1)
+    (+ 1) :: Num a => a -> a
+
+Values are "in a way, fully applied functions".  This is a useful comment IMO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 2019-02-18
 
 Tuples can be heterogeneous, but lists can't.  List syntax is used both
