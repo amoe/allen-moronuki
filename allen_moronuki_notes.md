@@ -1,8 +1,6 @@
-2019-02-24
-
-
-
 2019-02-21
+
+## Ch5: Types
 
 > In haskell you cannot create untyped data so ... [except for sugar] ...
 > everything originates in a data constructor.
@@ -21,64 +19,6 @@ eg.
     (+ 1) :: Num a => a -> a
 
 Values are "in a way, fully applied functions".  This is a useful comment IMO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 2019-02-18
 
