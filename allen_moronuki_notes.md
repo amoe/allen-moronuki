@@ -1,3 +1,24 @@
+2019-02-25
+
+15:32         amoe > It confuses me to say that `->` is a type constructor and also an infix operator.  Because that seems to suggest that expressions at type-level work comparably to expressions at 
+                     term-level.  But I don't think that this is the case.
+15:34        pie__ > ive seen stuff like ((->) e)
+15:34        pie__ > so maybe its true to some extent
+15:36         amoe > Well, that's also confusing.  Why do I have to type `:info (->)` in ghci when, afaik, using parens to refer to infix operators is a feature of the term-level language not the type-level one
+15:37         amoe > also `:t (,)` is valid but `:t (->)` is not
+15:40         amoe > I think I understand the latter -- because `,` is both type-level and term-level
+15:44         amoe > "Unlike the tuple constructor, though, the function type has no data constructors. The value that shows up at term level is the function. _Functions are values._"
+15:45         amoe > How does it "show up"?
+15:46         amoe > or perhaps it will be better for me to just accept that it somehow *does* for the moment
+16:11        dmwit > amoe: Typical ways for functions to show up are via lambdas (e.g. `\x -> 3*x` is the function which accepts one argument, names it `x`, and returns the result `3*x`) or via the existence 
+                     of function bindings like `f x = 3*x` (which is a function that accepts one argument, names it `x`, and returns `3*x`) after which `f` is a function value.
+16:11        dmwit > It is correct to say that expressions at the type-level work comparably to expressions at term-level. Of course they are not identical, but there are many similarities.
+16:12        dmwit > :i is special. It's not part of the language proper, but rather a tool offered by the compiler to let you inspect language constructs.
+16:12        dmwit > Because it's compiler magic, it can do apparently magical things -- like accept both terms and types as "arguments".
+16:13        dmwit > (By the way, I've recently started using "computations" and "types" to distinguish the two levels, because there are "terms" at both levels. I'm still not super pleased with this 
+                     terminology, since we are moving more and more towards allowing computation in types, but I haven't thought of a clearer distinction to make yet...)
+
+
 2019-02-24
 
 The typed lambda calculus was called 'System F' by French logician Girard.
