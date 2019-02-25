@@ -2,6 +2,24 @@
 
 # Ch5: Types
 
+The typed lambda calculus was called 'System F' by French logician Girard.
+System F is a formalization of parametric polymorphism.
+The `Bool` type is a set with two inhabitants.
+Testing is still necessary, because runtime errors can still occur.
+To avoid having the sensation that you are 'fighting with the compiler', it's
+important to get into the habit of interactively type checking things in the
+REPL.
+
+If we query the type of an integer for instance, we see type class information,
+because ghci will lazily assign a concrete type based on the actual usage.
+You can hint the inference by saying `x = 13 :: Integer`.
+
+The arrow `->` is a type constructor.
+"The function type has no data constructors"
+So you can't construct functions at the typelevel
+The point is that when I say x :: a -> b  I'm actually USING the type level
+constructor `->`.
+
 
 2019-02-18
 
