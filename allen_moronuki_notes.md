@@ -1,5 +1,7 @@
 2019-02-25
 
+Reached page 127: Multiple type class constraints.
+
 15:32         amoe > It confuses me to say that `->` is a type constructor and also an infix operator.  Because that seems to suggest that expressions at type-level work comparably to expressions at 
                      term-level.  But I don't think that this is the case.
 15:34        pie__ > ive seen stuff like ((->) e)
@@ -1267,5 +1269,4 @@ divergence:
 1. converges
 2. diverges
 3. converges
-
 
