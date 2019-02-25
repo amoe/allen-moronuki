@@ -1,6 +1,4 @@
-2019-02-22
-
-# Ch5: Types
+2019-02-24
 
 The typed lambda calculus was called 'System F' by French logician Girard.
 System F is a formalization of parametric polymorphism.
@@ -20,6 +18,61 @@ So you can't construct functions at the typelevel
 The point is that when I say x :: a -> b  I'm actually USING the type level
 constructor `->`.
 
+    Num a => a -> a -> a
+
+How do we read this?  The compiler actually needs the same type for a across
+all arguments to the function.  However, some compiler magic will make sure
+that literal values still work.  Eg in this,
+
+
+   > (+) 1 2.0
+
+ghc infers `1` as a Fractional type.
+
+
+> When we query the types of numeric values, we see type class
+> information instead of a concrete type, because the compiler doesn’t
+> know which specific numeric type a value is until the type is either
+> declared or the compiler is forced to infer a specific type based on
+> the function.
+
+This means that an expression like `2` literally has no type, it only has
+a type class, `Num t => t`.  This is pretty brain exploding.
+
+Consider
+
+    x = 2 + 2
+
+What's the type of this?  Some mathematics has just happened, so we'd expect
+it to be Integer.  But it's actually
+
+    > :t x
+    x :: Num a => a
+
+What did we store in x?  Not the value 4 but the expression 2 + 2, which also
+has the type `Num a => a`.  This is laziness.
+
+2019-02-21
+
+## Ch5: Types
+
+> In haskell you cannot create untyped data so ... [except for sugar] ...
+> everything originates in a data constructor.
+
+The Bool type is a set with two inhabitants, {True,False}
+
+> Much of what we suggest with regards to putting code in a file ... querying
+> types in the REPL is about creating habits conducive to having this pleasant
+> back and forth with your type system
+
+You can query types for partially applied functions.
+
+eg.
+
+    Prelude> :t (+ 1)
+    (+ 1) :: Num a => a -> a
+
+Values are "in a way, fully applied functions".  This is a useful comment IMO
 
 2019-02-18
 
