@@ -1,3 +1,82 @@
+2019-03-11
+
+## Exercises: Type Matching
+
+Match the function to its type signature.
+
+1.  not
+
+This should have the type `Bool -> Bool`
+
+2.  length
+
+This should have the type `[a] -> Int` or `[a] -> Integer` but I remember that
+the type was actually `[a] -> Int`.
+
+3.  concat
+
+This takes a list of lists and produces a list.
+
+`[[a]] -> [a]`
+
+I think.
+
+4) head
+
+As it is equivalen to `car`, this must be `[a] -> a`.
+
+5) `<`
+
+This would be a type class and would be something like
+
+`Num a => a -> a -> Bool`
+
+So my answers are:
+
+a) `head`
+b) `concat`
+c) `not`
+d) `length`
+e)_`<`
+
+Note that the type class that implements orderable things is `Ord`.
+
+## Currying
+
+All functions take one argument and return one result.
+
+> The way the type constructor for functions -> is defined makes currying the
+> default in haskell.  This is because it is an infix operator and right
+> associative.
+
+    f :: a -> a -> a
+
+Because it's right associative, types parse like this
+
+
+    f :: a -> (a -> a)
+
+So, f is a function taking one argument, that evaluates to a function accepting
+another argument.
+
+    map :: (a -> b) -> [a] -> [b]
+
+Here we have a type-safe map.  The first argument is a function from a -> b
+establishing the parameters of the map.  It neatly transforms a list of a into
+a list of b.
+
+
+"Explicit parenthesization, as when an input parameter is itself a function (such
+as in `map`), may be used to indicate order of evaluation, but the implicit
+associativity of the function type does not mean the inner or final set of
+parentheses, i.e. the result type, evaluates first."
+
+--- WHAT?
+
+Thoughts, how do we apply functions and use arguments that aren't the first one?
+
+
+
 2019-02-25
 
 Reached page 127: Multiple type class constraints.
