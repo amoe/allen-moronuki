@@ -1,3 +1,80 @@
+2019-03-11
+
+## Exercises: Type Matching
+
+Match the function to its type signature.
+
+1.  not
+
+This should have the type `Bool -> Bool`
+
+2.  length
+
+This should have the type `[a] -> Int` or `[a] -> Integer` but I remember that
+the type was actually `[a] -> Int`.
+
+3.  concat
+
+This takes a list of lists and produces a list.
+
+`[[a]] -> [a]`
+
+I think.
+
+4) head
+
+As it is equivalen to `car`, this must be `[a] -> a`.
+
+5) `<`
+
+This would be a type class and would be something like
+
+`Num a => a -> a -> Bool`
+
+So my answers are:
+
+a) `head`
+b) `concat`
+c) `not`
+d) `length`
+e)_`<`
+
+Note that the type class that implements orderable things is `Ord`.
+
+## Currying
+
+All functions take one argument and return one result.
+
+> The way the type constructor for functions -> is defined makes currying the
+> default in haskell.  This is because it is an infix operator and right
+> associative.
+
+    f :: a -> a -> a
+
+Because it's right associative, types parse like this
+
+
+    f :: a -> (a -> a)
+
+So, f is a function taking one argument, that evaluates to a function accepting
+another argument.
+
+    map :: (a -> b) -> [a] -> [b]
+
+Here we have a type-safe map.  The first argument is a function from a -> b
+establishing the parameters of the map.  It neatly transforms a list of a into
+a list of b.
+
+
+"Explicit parenthesization, as when an input parameter is itself a function (such
+as in `map`), may be used to indicate order of evaluation, but the implicit
+associativity of the function type does not mean the inner or final set of
+parentheses, i.e. the result type, evaluates first."
+
+--- WHAT?
+
+Thoughts, how do we apply functions and use arguments that aren't the first one?
+
 2019-03-10
 
 After a little break, I am coming back to this.
@@ -18,7 +95,49 @@ But surely this would be identical to;
 
 As it doesn't affect the number of args, etc at term level.
 
+2019-02-25
+
+Reached page 127: Multiple type class constraints.
+
+15:32         amoe > It confuses me to say that `->` is a type constructor and also an infix operator.  Because that seems to suggest that expressions at type-level work comparably to expressions at 
+                     term-level.  But I don't think that this is the case.
+15:34        pie__ > ive seen stuff like ((->) e)
+15:34        pie__ > so maybe its true to some extent
+15:36         amoe > Well, that's also confusing.  Why do I have to type `:info (->)` in ghci when, afaik, using parens to refer to infix operators is a feature of the term-level language not the type-level one
+15:37         amoe > also `:t (,)` is valid but `:t (->)` is not
+15:40         amoe > I think I understand the latter -- because `,` is both type-level and term-level
+15:44         amoe > "Unlike the tuple constructor, though, the function type has no data constructors. The value that shows up at term level is the function. _Functions are values._"
+15:45         amoe > How does it "show up"?
+15:46         amoe > or perhaps it will be better for me to just accept that it somehow *does* for the moment
+16:11        dmwit > amoe: Typical ways for functions to show up are via lambdas (e.g. `\x -> 3*x` is the function which accepts one argument, names it `x`, and returns the result `3*x`) or via the existence 
+                     of function bindings like `f x = 3*x` (which is a function that accepts one argument, names it `x`, and returns `3*x`) after which `f` is a function value.
+16:11        dmwit > It is correct to say that expressions at the type-level work comparably to expressions at term-level. Of course they are not identical, but there are many similarities.
+16:12        dmwit > :i is special. It's not part of the language proper, but rather a tool offered by the compiler to let you inspect language constructs.
+16:12        dmwit > Because it's compiler magic, it can do apparently magical things -- like accept both terms and types as "arguments".
+16:13        dmwit > (By the way, I've recently started using "computations" and "types" to distinguish the two levels, because there are "terms" at both levels. I'm still not super pleased with this 
+                     terminology, since we are moving more and more towards allowing computation in types, but I haven't thought of a clearer distinction to make yet...)
+
+>>>>>>> c4accee5035277b679392beba96314bbaf9255c4
+
 2019-02-24
+
+The typed lambda calculus was called 'System F' by French logician Girard.
+System F is a formalization of parametric polymorphism.
+The `Bool` type is a set with two inhabitants.
+Testing is still necessary, because runtime errors can still occur.
+To avoid having the sensation that you are 'fighting with the compiler', it's
+important to get into the habit of interactively type checking things in the
+REPL.
+
+If we query the type of an integer for instance, we see type class information,
+because ghci will lazily assign a concrete type based on the actual usage.
+You can hint the inference by saying `x = 13 :: Integer`.
+
+The arrow `->` is a type constructor.
+"The function type has no data constructors"
+So you can't construct functions at the typelevel
+The point is that when I say x :: a -> b  I'm actually USING the type level
+constructor `->`.
 
     Num a => a -> a -> a
 
@@ -1250,5 +1369,4 @@ divergence:
 1. converges
 2. diverges
 3. converges
-
 
