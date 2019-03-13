@@ -1,3 +1,23 @@
+2019-03-10
+
+After a little break, I am coming back to this.
+
+> The compiler gives the least specific and most general type it can.
+
+This means that directly assigning `fifteen = 15` will NOT give fifteen a
+concrete class directly.
+
+I am confused, because it's given that we can have multiple type class
+constraints in a type signature, eg,
+
+    (Num a, Num b) => a -> b -> b
+
+But surely this would be identical to;
+
+    Num a => a -> a -> a
+
+As it doesn't affect the number of args, etc at term level.
+
 2019-02-24
 
     Num a => a -> a -> a
@@ -33,6 +53,8 @@ it to be Integer.  But it's actually
 
 What did we store in x?  Not the value 4 but the expression 2 + 2, which also
 has the type `Num a => a`.  This is laziness.
+
+"Unlike the tuple constructor, though, the function type has no data constructors. The value that shows up at term level is the function. _Functions are values._"
 
 2019-02-21
 
