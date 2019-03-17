@@ -5,6 +5,16 @@
 Uncurrying means to replace the curried arguments with tuples representing the
 actual arguments.
 
+"curry" means to convert from a function taking tuple arguments to a function
+taking nested-lambda arguments.  For example, `fst` is a good example of an
+already-uncurried function in this sense.  It takes one tuple argument.  `+` is
+an example of a curried function.  It takes multiple nested-lambda arguments.
+
+Using the generic uncurry allows you to call implicitly nested-lambda arguments
+with tuple syntax.  eg:
+
+    > uncurry (+) (1, 2)
+    3
 
 
 2019-03-11
