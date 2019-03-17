@@ -125,6 +125,17 @@ It wouldn't be the same because this signature can accept two different types
 that have instances of the Num class.  The second type signature will always
 need the same concrete type.
 
+Some further notes from IRC:
+
+    17:43        dmwit > amoe: That's a perfect reading of the type.
+    17:43        dmwit > As for what implementations there could be, well...
+    17:44        dmwit > About the only thing you can do with the `a` argument is throw it away.
+    17:44        dmwit > But e.g. `\_ x -> 3*x+1` could be given that type.
+    17:46        dmwit > If you want something that would be *inferred* to have that type, you can internally use the `a` argument before throwing it away; e.g.
+    17:46        dmwit > :t \a b -> let a' = 3*a in b-1
+    17:46    lambdabot > (Num a2, Num a1) => a1 -> a2 -> a2
+    17:47        dmwit > N.B. a' isn't used at all in the body of the let.
+
 
 2019-02-25
 
