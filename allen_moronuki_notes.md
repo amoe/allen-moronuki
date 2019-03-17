@@ -71,7 +71,13 @@ as in `map`), may be used to indicate order of evaluation, but the implicit
 associativity of the function type does not mean the inner or final set of
 parentheses, i.e. the result type, evaluates first."
 
---- WHAT?
+--- WHAT?  This is strangely written but basically means that
+
+    (a -> b)
+
+is a quirk of the syntax for functions, and should not lead you to assume that
+type variable `b` is evaluated first in any way.  That would be a weird
+assumption (and incoherent?) assumption anyway.
 
 Thoughts, how do we apply functions and use arguments that aren't the first one?
 
@@ -93,7 +99,13 @@ But surely this would be identical to;
 
     Num a => a -> a -> a
 
-As it doesn't affect the number of args, etc at term level.
+Actually no, this is because I'm reading the type class constraints wrong.
+The => rather serves as a separator between the type class constraints for
+variables in the whole signature, and the type signature itself.
+It wouldn't be the same because this signature can accept two different types
+that have instances of the Num class.  The second type signature will always
+need the same concrete type.
+
 
 2019-02-25
 
@@ -116,8 +128,6 @@ Reached page 127: Multiple type class constraints.
 16:12        dmwit > Because it's compiler magic, it can do apparently magical things -- like accept both terms and types as "arguments".
 16:13        dmwit > (By the way, I've recently started using "computations" and "types" to distinguish the two levels, because there are "terms" at both levels. I'm still not super pleased with this 
                      terminology, since we are moving more and more towards allowing computation in types, but I haven't thought of a clearer distinction to make yet...)
-
->>>>>>> c4accee5035277b679392beba96314bbaf9255c4
 
 2019-02-24
 
