@@ -1,3 +1,12 @@
+2019-03-17
+
+## Manual currying and uncurrying
+
+Uncurrying means to replace the curried arguments with tuples representing the
+actual arguments.
+
+
+
 2019-03-11
 
 ## Exercises: Type Matching
