@@ -14,7 +14,6 @@ subtractStuff x y = x - y - 10
 
 subtractOne = subtractStuff 1
 
-
 davesAddition :: Num a => a -> a -> a
 davesAddition x y = x + y
 
@@ -23,6 +22,15 @@ davesAddition x y = x + y
 -- the argument.  For instance, we can't add x and y.  Why?  Because + can only
 -- add values of the SAME type.  (You can confirm this because its type signature
 -- only contains one type variable.)
+
+-- However, note that in this example, the result type doesn't get fixed to a
+-- concrete type.
+--
+-- > :t davesFunction 1 2
+-- davesFunction 1 2 :: Num b => b
+--
+-- It stays with the type-class-constraint associated to its type variable.
+
 davesFunction :: (Num a, Num b) => a -> b -> b
 davesFunction _ y = y
 

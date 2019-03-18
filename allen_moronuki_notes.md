@@ -1,3 +1,83 @@
+2019-03-18
+
+## Sectioning
+
+I learned some new syntax.  [1..10] can be used to construct a list of
+intervening natural numbers.  Only seems to work for integers.
+
+`elem` is a sequence search function, it's basically `member` in scheme, or
+`x in y` in Python.
+
+Hence, 
+`elem 5 [1..10]` => True
+
+So you can use infix to search also
+
+    5 `elem` [1..10]
+
+And you can also section `elem`, causing it to search a fixed sequence.
+Example:
+
+    isPercentage = (`elem` [1..100])
+
+Now `isPercentage 100` => True, `isPercentage 101` => False.
+We wouldn't be able to do this with just regular currying.
+
+
+## Exercise: Type arguments
+
+1.  The answer is a) `Char -> Char -> Char`, because the type variable `a` has
+been fixed at the concrete type `Char`, and one argument has been applied.
+
+2.  The answer is d), `Char`, because all 3 'input' args have been fully applied,
+and the type variable `b` was fixed to the type of the second argument, which
+is `'c'`, which is of type `Char`.
+
+3.  The answer is b) `Integer`.  It must evaluate to whatever type variable `b`
+was bound to, and in this case it was bound to an Integer.  Why not `Integral b
+=> b`?  This could also be possible.
+
+WRONG
+
+The answer is `Num b => b`.  I suppose because the compiler gives the result
+the least specific type possible.
+
+4.  Here the answer IS c) Double, because the manual hinting of the second
+arg to a concrete type causes the compiler  to eagerly assign it.
+
+CORRECT
+
+5.  Remember that lists are a separate concept orthogonal to types, and that a
+string is a list of Char.  That's why the answer from q3 doesn't apply, because
+ghci treats strings specially vs numbers, there's no ambiguity as to what type
+it could assign, so it just immediately assigns the concrete type.  Therefore,
+the type of this in my view must be a) `[Char]`
+
+CORRECT
+
+6.  Well, the type should be `Eq b => b -> a`, and `a` has been inferred to a
+concrete type already, so it should be `Eq b => b -> [Char]`
+
+CORRECT
+
+7.  It should be `Ord a => a`
+
+WRONG
+
+The type is actually `(Ord a, Num a) => a`.  Why???  The `Num` constraint gets
+propagated onto the result type variable a for some reason.
+
+8.  The result should be the same, `(Ord a, Num a) => a`, because only the first
+argument matters to the result type.
+
+CORRECT (at least)
+
+10.  Here the result should be the concrete type `Integer`.
+
+CORRECT
+
+
+
 2019-03-17
 
 ## Manual currying and uncurrying
