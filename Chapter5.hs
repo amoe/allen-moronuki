@@ -15,3 +15,19 @@ subtractStuff x y = x - y - 10
 subtractOne = subtractStuff 1
 
 
+
+davesId :: a -> a
+davesId x = do
+  x
+  where
+    greeting = "Hello"
+
+davesMysteryFunction1 :: a -> a -> a
+davesMysteryFunction1 x y = x
+
+
+davesMysteryFunction2 :: a -> a -> a
+davesMysteryFunction2 x y = x
+
+davesPuzzle :: a -> b -> b
+davesPuzzle x y = y

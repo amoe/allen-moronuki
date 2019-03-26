@@ -1,3 +1,51 @@
+2019-03-26
+
+## Exercises: Parametricity
+
+1.  Try to write another version of id.
+
+Options that do IO don't work, as they would in Clojure.  For instance this
+attempt fails:
+
+    davesId :: a -> a
+    davesId x = do
+      putStrLn $ greeting ++ ", world"
+      x
+      where
+        greeting = "Hello"
+
+The value of the 'do' block, although it attempt to yield x as its last
+expression, actually is inferred as the type `IO b0`.
+
+However, other syntactically equivalent variations will work, like:
+
+    davesId :: a -> a
+    davesId x = do
+      x
+      where
+        greeting = "Hello"
+
+So it's actually about the type of the final expression.
+
+2.  Logically there can be only two implementations.
+
+    davesMysteryFunction1 :: a -> a -> a
+    davesMysteryFunction1 x y = x
+
+and
+
+    davesMysteryFunction2 :: a -> a -> a
+    davesMysteryFunction2 x y = y
+
+Or some trivial syntactic variation thereof.
+
+3.  The signature indicates a two-argument parametrically polymorphic function.
+It should only have one implementation.  And that is:
+
+    davesPuzzle :: a -> b -> b
+    davesPuzzle x y = y
+
+
 2019-03-11
 
 ## Exercises: Type Matching
