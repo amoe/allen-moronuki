@@ -1,5 +1,28 @@
 2019-03-26
 
+An expression like this won't work.
+
+    6 / length [1, 2, 3]
+
+Because `length` has the concrete result type `int`.
+
+You can't cast the result to Fractional; it's already been narrowed.  My guess
+is that we'll need to use some sort of function to convert and not just a compiler
+hint.
+
+Yes, we use a coercion function.  Such a function is named `fromIntegral`.
+
+We can see its type.
+
+    fromIntegral :: (Num b, Integral a) => a -> b
+
+The interesting part is that Fractional doesn't appear in this at all.  Basically
+our end procedure will be doing the following type massage:
+
+    Int -> (Num a => a) -> (Fractional a => a)
+
+
+
 ## Exercises: Parametricity
 
 1.  Try to write another version of id.
