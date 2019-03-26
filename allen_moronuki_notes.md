@@ -68,6 +68,104 @@ It should only have one implementation.  And that is:
     davesPuzzle :: a -> b -> b
     davesPuzzle x y = y
 
+2019-03-18
+
+## Sectioning
+
+I learned some new syntax.  [1..10] can be used to construct a list of
+intervening natural numbers.  Only seems to work for integers.
+
+`elem` is a sequence search function, it's basically `member` in scheme, or
+`x in y` in Python.
+
+Hence, 
+`elem 5 [1..10]` => True
+
+So you can use infix to search also
+
+    5 `elem` [1..10]
+
+And you can also section `elem`, causing it to search a fixed sequence.
+Example:
+
+    isPercentage = (`elem` [1..100])
+
+Now `isPercentage 100` => True, `isPercentage 101` => False.
+We wouldn't be able to do this with just regular currying.
+
+
+## Exercise: Type arguments
+
+1.  The answer is a) `Char -> Char -> Char`, because the type variable `a` has
+been fixed at the concrete type `Char`, and one argument has been applied.
+
+2.  The answer is d), `Char`, because all 3 'input' args have been fully applied,
+and the type variable `b` was fixed to the type of the second argument, which
+is `'c'`, which is of type `Char`.
+
+3.  The answer is b) `Integer`.  It must evaluate to whatever type variable `b`
+was bound to, and in this case it was bound to an Integer.  Why not `Integral b
+=> b`?  This could also be possible.
+
+WRONG
+
+The answer is `Num b => b`.  I suppose because the compiler gives the result
+the least specific type possible.
+
+4.  Here the answer IS c) Double, because the manual hinting of the second
+arg to a concrete type causes the compiler  to eagerly assign it.
+
+CORRECT
+
+5.  Remember that lists are a separate concept orthogonal to types, and that a
+string is a list of Char.  That's why the answer from q3 doesn't apply, because
+ghci treats strings specially vs numbers, there's no ambiguity as to what type
+it could assign, so it just immediately assigns the concrete type.  Therefore,
+the type of this in my view must be a) `[Char]`
+
+CORRECT
+
+6.  Well, the type should be `Eq b => b -> a`, and `a` has been inferred to a
+concrete type already, so it should be `Eq b => b -> [Char]`
+
+CORRECT
+
+7.  It should be `Ord a => a`
+
+WRONG
+
+The type is actually `(Ord a, Num a) => a`.  Why???  The `Num` constraint gets
+propagated onto the result type variable a for some reason.
+
+8.  The result should be the same, `(Ord a, Num a) => a`, because only the first
+argument matters to the result type.
+
+CORRECT (at least)
+
+10.  Here the result should be the concrete type `Integer`.
+
+CORRECT
+
+
+
+2019-03-17
+
+## Manual currying and uncurrying
+
+Uncurrying means to replace the curried arguments with tuples representing the
+actual arguments.
+
+"curry" means to convert from a function taking tuple arguments to a function
+taking nested-lambda arguments.  For example, `fst` is a good example of an
+already-uncurried function in this sense.  It takes one tuple argument.  `+` is
+an example of a curried function.  It takes multiple nested-lambda arguments.
+
+Using the generic uncurry allows you to call implicitly nested-lambda arguments
+with tuple syntax.  eg:
+
+    > uncurry (+) (1, 2)
+    3
+
 
 2019-03-11
 
@@ -142,10 +240,51 @@ as in `map`), may be used to indicate order of evaluation, but the implicit
 associativity of the function type does not mean the inner or final set of
 parentheses, i.e. the result type, evaluates first."
 
---- WHAT?
+--- WHAT?  This is strangely written but basically means that
+
+    (a -> b)
+
+is a quirk of the syntax for functions, and should not lead you to assume that
+type variable `b` is evaluated first in any way.  That would be a weird
+assumption (and incoherent?) assumption anyway.
 
 Thoughts, how do we apply functions and use arguments that aren't the first one?
 
+2019-03-10
+
+After a little break, I am coming back to this.
+
+> The compiler gives the least specific and most general type it can.
+
+This means that directly assigning `fifteen = 15` will NOT give fifteen a
+concrete class directly.
+
+I am confused, because it's given that we can have multiple type class
+constraints in a type signature, eg,
+
+    (Num a, Num b) => a -> b -> b
+
+But surely this would be identical to;
+
+    Num a => a -> a -> a
+
+Actually no, this is because I'm reading the type class constraints wrong.
+The => rather serves as a separator between the type class constraints for
+variables in the whole signature, and the type signature itself.
+It wouldn't be the same because this signature can accept two different types
+that have instances of the Num class.  The second type signature will always
+need the same concrete type.
+
+Some further notes from IRC:
+
+    17:43        dmwit > amoe: That's a perfect reading of the type.
+    17:43        dmwit > As for what implementations there could be, well...
+    17:44        dmwit > About the only thing you can do with the `a` argument is throw it away.
+    17:44        dmwit > But e.g. `\_ x -> 3*x+1` could be given that type.
+    17:46        dmwit > If you want something that would be *inferred* to have that type, you can internally use the `a` argument before throwing it away; e.g.
+    17:46        dmwit > :t \a b -> let a' = 3*a in b-1
+    17:46    lambdabot > (Num a2, Num a1) => a1 -> a2 -> a2
+    17:47        dmwit > N.B. a' isn't used at all in the body of the let.
 
 
 2019-02-25
@@ -169,7 +308,6 @@ Reached page 127: Multiple type class constraints.
 16:12        dmwit > Because it's compiler magic, it can do apparently magical things -- like accept both terms and types as "arguments".
 16:13        dmwit > (By the way, I've recently started using "computations" and "types" to distinguish the two levels, because there are "terms" at both levels. I'm still not super pleased with this 
                      terminology, since we are moving more and more towards allowing computation in types, but I haven't thought of a clearer distinction to make yet...)
-
 
 2019-02-24
 
@@ -224,6 +362,8 @@ it to be Integer.  But it's actually
 
 What did we store in x?  Not the value 4 but the expression 2 + 2, which also
 has the type `Num a => a`.  This is laziness.
+
+"Unlike the tuple constructor, though, the function type has no data constructors. The value that shows up at term level is the function. _Functions are values._"
 
 2019-02-21
 
