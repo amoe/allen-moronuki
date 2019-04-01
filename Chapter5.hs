@@ -76,3 +76,50 @@ davesMysteryFunction2 x y = x
 
 davesPuzzle :: a -> b -> b
 davesPuzzle x y = y
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- ourId gets inferred; a -> a
+ourId x = x
+
+-- myGreet gets inferred; [Char] -> [Char]
+myGreet x = x ++ "Julie"
+
+-- myGreet2 gets inferred; [a] -> [a] -> [a]
+myGreet2 x y = x ++ y

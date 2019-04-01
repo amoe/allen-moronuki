@@ -1,3 +1,20 @@
+2019-04-01
+
+## Type inference
+
+It's really obvious that `ourId x = x` will be inferred as `ourId :: a -> a`.
+That parametrically polymorphic type is the most general type it can take.
+
+If we do `x ++ "Julie"`, the compiler knows that the expression `x` can only be
+valid if `x` is also of type `[Char]`.  Because you cannot concat heterogeneous
+types.
+
+However, if we do `x ++ y`, all we know is that we work on `[a]`.
+This is plain from the type of `++`.  Actually, in this case `myGreet2` is
+identical to `++`.
+Remember that `++` is not the same as `concat`.
+
+
 2019-03-26
 
 An expression like this won't work.
