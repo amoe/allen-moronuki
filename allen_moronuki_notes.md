@@ -15,6 +15,17 @@ identical to `++`.
 Remember that `++` is not the same as `concat`.
 
 
+I find it useful to parenthesize the type class constraints even when they
+are not product types, eg:
+
+    f :: (Num a) => a -> a -> a
+
+Basically `=>` should be read as a delimiting character, like semicolon or
+a single colon.
+
+If you take the type of `f 1`, you remove one argument, so you get the curried
+version.  Which makes total sense.
+
 2019-03-26
 
 An expression like this won't work.
