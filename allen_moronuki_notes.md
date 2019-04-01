@@ -1,5 +1,113 @@
 2019-04-01
 
+## Exercise: Apply Yourself
+
+1.
+
+The general function is:
+
+     (++) :: [a] -> [a] -> [a]
+     
+Now we use it.
+
+    myConcat x = x ++ " yo"
+
+What is the type of myConcat?
+
+Here, the type is
+
+    myConcat :: [Char] -> [Char]
+
+Check in gchi: CORRECT
+
+2.  The general function is
+
+    (*) :: Num a => a -> a -> a
+
+The partially applied version is
+
+    myMult x = (x / 3) * 5
+
+Now what is the type of myMult?
+
+The naive answer is:
+
+    myMult :: Num a => a -> a
+
+However it's possible that it'll have to be Fractional a => a, or something?
+
+Check in ghci:
+
+    myMult :: Fractional a => a -> a
+
+Which makes sense, because `/` is only defined on types that have an instance of
+`Fractional`.
+
+3.  General:
+
+    take :: Int -> [a] -> [a]
+
+Partially-applied:
+
+    myTake x = take x "Hey you"
+
+The function has the second type variable bound.
+
+So the type will be more specific.
+
+And the type will be
+
+    myTake :: Int -> [Char]
+
+Check in ghci: CORRECT
+
+4.  General:
+
+    (>) :: Ord a => a -> a -> Bool
+
+Partially-applied:
+
+    myCom x = x > (length [1..10])
+
+What is the type?
+
+The second argument is fixed to a specific type, which will be Int.
+Both arguments to `(>)` are constrainted to have that type.
+They must have the same concrete type.
+
+So it should be
+
+   myCom :: Int -> Bool
+
+The other possibility is 
+
+   myCom :: Ord a => a -> Bool
+
+But I think this is too wide.
+
+Check in ghci: CORRECT, it was the concrete type.
+
+5.  General function:
+    
+    (<) :: Ord a => a -> a -> Bool
+
+Partially applied version:
+
+    myAlph x = x < 'z'
+
+Here we know that argument 2 is a `Char`.  Therefore argument 1 must also be a
+`Char`.  The type class is removed.
+
+So,
+
+   myAlph :: Char -> Bool
+
+Check in ghci: CORRECT.
+
+This is kind of interesting because it means that inferred types don't
+necessarily allow polymorphism in the Java-esque sense, unless you use two type
+variables explicitly.
+
 ## Type inference
 
 It's really obvious that `ourId x = x` will be inferred as `ourId :: a -> a`.
