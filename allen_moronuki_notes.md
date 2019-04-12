@@ -1,5 +1,127 @@
 2019-04-12
 
+## 5.8 Exercises for chapter 5.
+
+### Multiple choice
+
+1.  A value of type `[a]` is:
+
+c) A list whose elements are all of some type `a`.
+
+2.  A function of type `[[a]] -> [a]` could:
+
+a) take a list of strings as an argument
+
+3.  A function of type `[a] -> Int -> a`:
+
+b) returns one element of type `a` from a list.
+
+4.  A function of type `(a, b) -> a`:
+
+c) takes a tuple argument and returns the first value.
+
+### Determine the type
+
+
+1.
+
+a) (* 9) 6
+
+I can only assume that this does an operator section.  And that it will return
+9*6, ie 54.  But it should -- SHOULD -- return a `Num a => a`.
+
+CORRECT
+
+    dtt1b = head [(0, "doge"), (1, "kitteh")]
+
+I think that this should return a tuple type inferred based on the first pair.
+So the result should be of type `(Num a => a, [Char])`
+
+The result was right, but it's actually written in a more logical way,
+
+    Num t => (t, [Char])
+
+Remember that the `=>` acts as a delimiter and typeclass constraints are
+always listed first!
+
+c) 
+
+    dtt1c = head [(0 :: Integer, "doge"), (1, "kitteh")]
+
+This is quite a confusing one.  Bear in mind that a list always has to be
+of a homogenous type.  So because the second item in the list was not hinted
+to be integer, the result should be
+
+    Num a => (a, [Char])
+
+WRONG -- Somehow the compiler is smart enough to realize that the result is
+
+    dtt1c :: (Integer, Char)
+
+How?  The key lies in the fact that the type of this expression:
+
+    [(0 :: Integer, "doge"), (1, "kitteh")]
+
+Is actually:
+
+    [(Integer, [Char])]
+
+The first element having been coerced to Integer, AND the second being coercible
+TO integer, ghc just makes the whole list integer.
+
+d)
+
+    dtt1d = if False then True else False
+
+Assuming a smart compiler, you could just say that the result is `False`.  But
+`False` is not an expression at type level.  So that means that the result
+should simply be of type `Bool`.
+
+CORRECT
+
+e) 
+
+    dtt1e = length [1,2,3,4,5]
+
+The type of this should be Int.  Just because I happen to know that it's 5, I
+also know that the result of `length` is always `Int`.  And indeed it is.
+
+CORRECT
+
+
+2.  What is the type of w?
+
+Almost certainly `Num a => a`.  CORRECT
+
+3.  The type of z should be
+
+Num a => a -> a
+
+CORRECT
+
+4  What is the type of f?   It can be `Fractional a => a`.
+
+CORRECT
+
+
+5.  What is the type of f?  It should be `[Char]`.  
+
+CORRECT
+
+### Does it compile?
+
+1.
+
+It does not compile.  The error happens in 'wahoo'.  Bignum is just a big
+number.  It's not like an operator section.  I don't know what this code
+is trying to do, so I don't know how to fix it.
+
+Actually there is a totally different error when I try to do, a bunch of junk
+about both lines, so not sure on this.
+
+This actually does compile in ghci.
+
+
 ## 5.7 Asserting types for declarations
 
 The :: type hinting syntax at term level can be parenthesized.  Eg these are
@@ -18,7 +140,14 @@ You can also use local type declarations as part of a 'where' expression.
       where tripleItYo :: Integer -> Integer
             tripleItYo y = y * 3
 
+The type of `tripleItYo` will automatically be propagated to the function
+that's calling it.  So it gets inferred correctly to the using function.
 
+You can't just wantonly hint that, for instance, a numeric literal is actually
+a string.  `5 :: String` will just blanket fail.
+
+There's a good use of 'overdetermined' here, for when one trivial error may be
+masking another error.
 
 2019-04-01
 
