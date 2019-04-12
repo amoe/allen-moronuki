@@ -2,6 +2,24 @@
 
 ## 5.7 Asserting types for declarations
 
+The :: type hinting syntax at term level can be parenthesized.  Eg these are
+valid and loadable by ghci.
+
+    inferredButRestrictedTriple x = (x * 3) :: Integer
+
+And also this
+
+    inferredButRestrictedTriple x = x * (3 :: Integer)
+
+These two get inferred to being the same eventual type signature.
+You can also use local type declarations as part of a 'where' expression.
+
+    tripleWithLocalTypeDeclaration x = tripleItYo x
+      where tripleItYo :: Integer -> Integer
+            tripleItYo y = y * 3
+
+
+
 2019-04-01
 
 ## Exercise: Apply Yourself

@@ -123,3 +123,57 @@ myGreet x = x ++ "Julie"
 
 -- myGreet2 gets inferred; [a] -> [a] -> [a]
 myGreet2 x y = x ++ y
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- The type of this will be Integer -> Integer
+inferredButRestrictedTriple1 x = (x * 3) :: Integer
+
+inferredButRestrictedTriple2 x = x * (3 :: Integer)
+
+-- They end up being the same as this.
+declaredTriple :: Integer -> Integer
+declaredTriple x = x * 3
+
+-- Demonstrate declaring types within a 'where' expression.
+tripleWithLocalTypeDeclaration x = tripleItYo x
+  where tripleItYo :: Integer -> Integer
+        tripleItYo y = y * 3
