@@ -1,0 +1,10 @@
+10:26         amoe > In HPFFP, we have an exercise where there's a function `kessel :: (Ord a, Num b) => a -> b -> a`.  We want to know the type of `kessel 1 2`.  I expect the result type to be `Ord a => a`.  
+                     But it's actually `(Ord a, Num a) => a`.  Why did the typeclass constraint applying to `b` get 'propagated' to the result type variable `a`?
+10:27       merijn > amoe: It didn't
+10:27       merijn > :t 1
+10:27    lambdabot > Num p => p
+10:27       merijn > amoe: It got propagated from the input '1' which is polymorphic
+10:28       merijn > amoe: GHC knows three things: 1) the first argument MUST be an instance of Ord, 2) the type of any numeric literal must be an instance of Num, and 3) the result of kessel is identical to 
+                     it's first argument
+10:29       merijn > amoe: Conclusion: The result can be any type that is both an instance of Num *and* of Ord
+10:44         amoe > Ahhhh OK
