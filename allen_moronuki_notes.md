@@ -21,7 +21,128 @@ Assume that `bigNum` was actually supposed to be a function:
     wahoo = bigNum $ 10
 
 
-2.  
+2.  The relevant code is:
+
+    x = print
+    y = print "woohoo!"
+    z = x "hello world"
+
+Yes, it does compile, so I suppose that nothing needs to be fixed.
+
+3.  This shouldn't compile, because the term for `c` is incorrect.
+
+    a = (+)
+    b = 5
+    c = b 10
+    d = c 200
+
+I suppose that it's trying to use the aliased function at some point.
+
+4.  This doesn't compile, because c0 isn't defined.
+
+### Type variable or specific type constructor?
+
+2.
+
+`zed` -- Fully polymorphic type variable
+`Zed` -- Concrete
+`Blah` -- Concrete
+
+3. 
+
+`a` -- Fully polymorphic
+`b` -- Constrained polymorphic
+`C` -- Concrete
+
+4.
+
+`f` -- Fully polymorphic
+`g` -- Fully polymorphic
+`C` -- Concrete
+
+### Write a type signature
+
+1.  This function takes a list of any type and returns one element of that type.
+
+Therefore its type should be `[a] -> a`.
+
+2.  This function takes two arguments of a type that can have the > function
+applied to them.
+
+The type of the > function is:
+
+    (>) :: Ord a => a -> a -> Bool
+
+Therefore the type of `functionC` should be:
+
+
+    functionC :: (Ord a) => a -> a -> Bool
+
+3.  This function takes a 2-tuple as its argument, and returns the second element
+of the tuple.
+
+Therefore its type should be:
+
+    functionS :: (a, b) -> b
+
+### Given a type, write the function
+
+1.  The only definition is the identity function.
+
+    i :: a -> a
+    i x = x
+
+2.  The sensible definition of this one is:
+
+    c :: a -> b -> a
+    c x _ = x
+
+3.  Yes, in this example `c''` is the same thing as `c`.
+
+4.  This is just a very similar version to the other one.
+
+    c' :: a -> b -> b
+    c _ y = y
+
+5.  This is just a list transformer.
+
+One successful solution is `r x = x`.
+Another solution might be `r = x ++ x`.
+
+6.  Here our eventual aim is to get the `c` out.
+We only have one possible definition.
+
+    co :: (b -> c) -> (a -> b) -> a -> c
+    co f1 f2 x = f1 (f2 x)
+
+7.  This is just a troll example.  You just ignore the first argument.
+
+    a :: (a -> c) -> a -> a
+    a _ x = x
+
+8.  You just use the conversion function to convert the value argument.
+
+    a' :: (a -> b) -> a -> b
+    a' f1 x = f1 x  
+
+
+### Fixit
+
+1.  Done in Sing.hs.  `fstString` should actually be a function from string
+to string, you can't use operators in types, as ghci helpfully informs you.
+It foolishly used 'or' instead of the real syntax for alternatives, `else`.
+It also used the same variable names for `x` and `y`.
+
+2.  Just change `>` to `<` or vice versa
+
+3.  Done in Arith3Broken.hs.  Problems are:
+
+* `main` was capitalized when it should not have been.
+* `print 1 + 2` won't work because of precedence
+* putStrLn won't work because it needs an Integer
+* The literal `-1` needs to be parenthesized
+
+
 
 2019-04-12
 
