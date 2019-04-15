@@ -142,6 +142,28 @@ It also used the same variable names for `x` and `y`.
 * putStrLn won't work because it needs an Integer
 * The literal `-1` needs to be parenthesized
 
+### Type-kwon-do
+
+1.  h :: Int -> Char
+
+You can compose g and f, like `h = g . f`
+
+2.  The same approach here.
+
+3.  You destructure in the pattern match and apply the functions to convert
+the types.
+
+    xform :: (X, Y) -> (Z, Z)
+    xform (x, y) = (xz x, yz y)
+
+4.  The final output variable is `w`.  So we need to do this:
+
+munge f1 f2 x = 
+x at term level is bound to the type variable x
+f1 turns x to y
+f2 turns it to (w, z)
+Then you just use `fst` to extract the `w` one.
+
 
 
 2019-04-12
