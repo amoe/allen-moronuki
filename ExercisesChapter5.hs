@@ -1,6 +1,12 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
 module ExercisesChapter5 where
 
 x = 42
 
-bignum = (^) 5 $ 10
--- wahoo = bignum $ 10
+-- Does it compile?
+
+-- 1, fixed version:
+bigNum = (^) 5
+wahoo = bigNum $ 10
+

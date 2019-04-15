@@ -1,3 +1,28 @@
+2019-04-15
+
+### Does it compile?
+
+1.
+
+It does not compile.  The error happens in 'wahoo'.  Bignum is just a big
+number.  It's not like an operator section.  I don't know what this code
+is trying to do, so I don't know how to fix it.
+
+Actually there is a totally different error when I try to do, a bunch of junk
+about both lines, so not sure on this.
+
+This actually does compile in ghci.  The use of NoMonomorphismRestriction changes
+the behaviour and the error message.
+
+I don't totally understand the point of this problem, but one fix is this:
+Assume that `bigNum` was actually supposed to be a function:
+
+    bigNum = (^) 5
+    wahoo = bigNum $ 10
+
+
+2.  
+
 2019-04-12
 
 ## 5.8 Exercises for chapter 5.
@@ -107,19 +132,6 @@ CORRECT
 5.  What is the type of f?  It should be `[Char]`.  
 
 CORRECT
-
-### Does it compile?
-
-1.
-
-It does not compile.  The error happens in 'wahoo'.  Bignum is just a big
-number.  It's not like an operator section.  I don't know what this code
-is trying to do, so I don't know how to fix it.
-
-Actually there is a totally different error when I try to do, a bunch of junk
-about both lines, so not sure on this.
-
-This actually does compile in ghci.
 
 
 ## 5.7 Asserting types for declarations
