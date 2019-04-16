@@ -77,43 +77,7 @@ davesMysteryFunction2 x y = x
 davesPuzzle :: a -> b -> b
 davesPuzzle x y = y
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Type inference
 
 -- ourId gets inferred; a -> a
 ourId x = x
@@ -123,46 +87,6 @@ myGreet x = x ++ "Julie"
 
 -- myGreet2 gets inferred; [a] -> [a] -> [a]
 myGreet2 x y = x ++ y
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- The type of this will be Integer -> Integer
 inferredButRestrictedTriple1 x = (x * 3) :: Integer
@@ -177,3 +101,5 @@ declaredTriple x = x * 3
 tripleWithLocalTypeDeclaration x = tripleItYo x
   where tripleItYo :: Integer -> Integer
         tripleItYo y = y * 3
+
+-- Definitions section

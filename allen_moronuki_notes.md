@@ -1,3 +1,10 @@
+2019-04-16
+
+## Ch5: Definitions
+
+
+
+
 2019-04-15
 
 ### Does it compile?
