@@ -2,8 +2,60 @@
 
 ## Ch5: Definitions
 
+_Polymorphism_ simply describes a type variable that can take on more than
+one concrete type.  That is, in a type signature, anything that's not a concrete
+type is polymorphic to some degree.
 
+_Type inference_ is where terms do not have an explicit typing but the compiler
+is able to deduce them.  This isn't always the case, but it is often the case.
 
+The _principal type_ is the most polymorphic type that still typechecks.  When a
+system uses _principal typing_, the type system produces a set of types as a
+result of inference.  The principal type is the least constrained one.  For
+instance, if a parametrically polymorphic type is present (plain `a`) then that
+type will be the principal type.  If that's not available, then a constrained
+type will be chosen, if available, etc.
+
+A _type variable_ is a way of referring to a type or a set of types throughout
+a type signature.  In general, their scope is the entire type signature.  So
+in the signature `a -> b -> a` the second `a` refers to the same set of types
+as the first `a` does.
+
+A _type class_ is a way to describe operations that multiple types can
+implement.
+
+_Parametricity_ is unconstrained polymorphism.  It means that the function will
+have the exact same behaviour for every input type.
+
+_Ad-hoc_ polymorphism is another word for polymorphism _constrained_ by a type
+class.  Parametric polymorphism can tell us a lot about the behaviour of a
+function.  For instance:
+
+    f :: a -> [a]
+
+The ONLY thing this function can do is return a list of its value, repeated a
+constant number of times.  Why?  Because using the parametrically polymorphic
+value `a` we can't transform the value in any way.  So it has to be the same
+value.  Because there's no input specifying the list, the length of the list
+MUST be hardcoded.  It can't be deduced from the input because there are no
+operations for `a`, and because functions are pure there's no way to get
+any other information that is not itself constant.  It's not like we could,
+for instance, return a list repeated a random number of times, because this
+would cause us to enter the IO or State monad (I believe).
+
+A _module_ organizes and scopes:
+
+* Values
+* Functions
+* Data types
+* Type classes
+* Type class instances
+
+The keyword `import` has to live at the top of the file, before the definitions
+start.
+
+The distinction drawn here between _parametric_ and _ad-hoc_ polymorphism is
+derived from Strachey's _Fundamental Concepts in Programming Languages_ text.
 
 2019-04-15
 

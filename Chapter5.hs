@@ -1,5 +1,7 @@
 module Chapter5 where
 
+import Data.Aeson (encode)
+
 x = 42
 
 --addStuff :: Integer -> Integer -> Integer
@@ -103,3 +105,10 @@ tripleWithLocalTypeDeclaration x = tripleItYo x
         tripleItYo y = y * 3
 
 -- Definitions section
+
+-- This function can't do anything according to its type signature other than
+-- repeat its value a constant number of times.
+convList :: a -> [a]
+convList x = [x, x, x]
+
+
