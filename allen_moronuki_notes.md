@@ -1,3 +1,122 @@
+2019-05-01
+
+## Ch6: Type classes
+
+"Type classes allow us to generalize over a set of types in order to define and
+execute a standard set of features for those types."
+
+There exists a type class named Bounded.  It's not clear what functions this
+type class provides.  (You can look it up in zeal, it's part of the Prelude.)
+
+Type classes that are in the prelude exist in some hierarchical relationship,
+because you need to be able to Eq something to be able to Ord it.
+
+Not every type can be compared for equality.  One example is functions.  No
+function should ever be equal to any other function.
+
+
+Let's try to compare two functions.  We get a message `No instance for (Eq ...)`.
+
+You can look up information on type classes using the `:info` operator.  The basics
+though are just the following:
+
+    class Eq a where
+      (==) :: a -> a -> Bool
+      (/=) :: a -> a -> Bool
+
+So if a type wants to have an instance of Eq, it just defines these functions
+for itself.  :info is also going to tell us which types have an instance.
+
+Equality is defined for tuples of various lengths up to 14.
+
+Question: How does == work on lists?
+It's not clear that [Char] has an instance of Eq.
+Actually it does -- it's listed here:
+
+    instance Eq a => Eq [a] -- Defined in ‘GHC.Classes’
+
+Not quite sure how to read this yet.  Is this just a type signature?
+
+You can't compare different types.  This won't work:
+
+    (1, 2) == "puppies"
+
+Because the concrete type assigned to the type variable `a` is set by the leftmost
+occurrence, so in this case, the type of `a` is `(Integer, Integer)` and there's
+now no matching function that will work with [Char].
+
+    instance (Eq a, Eq b) => Eq (a, b)
+
+> Critically, the Eq instance of (a, b) relies on the Eq instances of a and b.
+> This tells us the equality of two tuples (a, b) depends on the equality of
+> their constituent values a and b.
+
+Is this actually the implementation, or is it just the specification?  It's
+unclear.
+
+    data Trivial = Trivial
+
+A new type starts out with zero type class instances.  It can't be printed and
+really you can't do anything useful with it except for pass it to the identity
+function.
+
+Data constructors and type constructors can have the same name which can get
+confusing.  In this example the type constructor is `Trivial` while the data
+constructor is `Trivial'`.  Data refers not to the keyword that is used to
+introduce it, but the string that's used at *term-level* to create the data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 2019-04-16
 
 ## Ch5: Definitions
