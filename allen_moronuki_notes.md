@@ -1,6 +1,12 @@
 2019-05-15
 
 
+To access fields on our 'record' type, we just destructure it in the definition
+for the instance.
+
+    instance Eq Date where
+      (==) (Date weekDay1 dayOfMonth1) (Date weekDay2 dayOfMonth2) =
+        weekDay1 == weekDay2 && dayOfMonth1 == dayOfMonth2
 
 
 
