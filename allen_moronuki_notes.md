@@ -1,5 +1,102 @@
-2019-05-15
+2019-05-16
 
+To make types printable, just add `deriving Show` to them.
+
+A _partial function_ what is it?  Some function where all set of inputs are
+not exhaustively covered by terms.
+
+The language will throw a run time error if you miss out some clause.
+`Non-exhaustive pattern in function`.
+
+We can use `-Wall` to get more warnings which will warn us about this case.
+
+You can set these parameters in ghci using `:set` command.
+It's not clear how to set them on a permanent basis.
+
+You have .ghci file local to a project and also ~/.ghc/ghci.conf.
+
+ghc is clever enough to tell you which patterns are matched for some type.
+
+    Pattern match(es) are non-exhaustive
+    In an equation for ‘f’:
+        Patterns not matched: p where p is not one of {2}
+
+It knows that 2 is the only value of the type `Int` that is matched.
+You use the wildcard underscore `_` to match all cases.
+
+The key is to not use Int to represent enums, otherwise you're going to have
+to match all cases everywhere you want to only care about a restricted set.
+Just declare the set of values that you DO care about.
+
+    data Identity a = Identity a
+
+This will declare a wrapper type `Identity` for a parametrically polymorphic
+type variable `a`.
+How would we compare these?  We couldn't really because we haven't proved that
+`a` has an instance of `Eq`.
+
+I'd expect something like this to work.
+
+    instance Eq Identity where
+      (==) (Identity x) (Identity y) = x == y
+
+
+But it doesn't, I get `Expected one more argument to Identity`.  Ah the syntax
+is wrong.
+
+    instance Eq (Identity a) where
+      (==) (Identity x) (Identity y) = x == y
+
+Note that we have to write `instance Eq (Identity a)` instead of
+`instance Eq Date` as we were able to do so before.  QUESTION: why?
+
+The correct way is as follows:
+
+    instance Eq a => Eq (Identity a) where
+
+How  is this to be read?  Compare it with:
+
+    instance Ord a => Eq (Identity a) where
+
+
+One thing you should notice here is that in the second example, it's still the
+ `Eq` being declared.
+So it should be read as
+
+instance <TYPE-CLASS-CONSTRAINT> => <TYPE-CLASS> <CLIENT-CLASS>
+
+where CLIENT-CLASS can also be parameterized over its type variables.
+Note that we are already into what Java calls 'generics' here.
+`Identity a` is a generic type equivalent to `Identity<A>` in java.
+
+Perhaps the reason we have to write `Identity a` is related to this, that once
+you have a polymorphic type in the name of an aggregate type, it's always
+necessary to use the name of it, much in the same sense that it doesn't make
+sense to say `List` in Java, you have to say `List<Foo>` or (at the least)
+`List<?>`.
+
+In another sense, obviously it wouldn't make sense to express a type class
+constraint on a type that didn't have it.  And in fact this is an error.
+
+    • Variable ‘a’ occurs more often
+        in the constraint ‘Show a’ than in the instance head
+      (Use UndecidableInstances to permit this)
+    • In the instance declaration for ‘Eq Date’
+
+So this tells us that the constraint  part is the part before =>.
+The "instance head" is the part comprising  TYPE-CLASS CLIENT-CLASS
+
+Chapter and verse:
+
+> In Haskell 98 the head of an instance declaration must be of the form C (T a1
+> ... an), where C is the class, T is a data type constructor, and the a1 ... an
+> are distinct type variables.
+
+So if there are no type variables, it just collapses to `C (T)` that is
+equivalent to `C T` I presume.  This is the case in the `Eq Date` example, C =
+`Eq`, T = `Date`.
+
+2019-05-15
 
 To access fields on our 'record' type, we just destructure it in the definition
 for the instance.
