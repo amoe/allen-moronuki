@@ -21,7 +21,7 @@ instance Eq DayOfWeek where
 
 data Date = Date DayOfWeek Int deriving Show
 
-instance Show a => Eq Date where
+instance Eq Date where
   (==) (Date weekDay1 dayOfMonth1) (Date weekDay2 dayOfMonth2) =
     weekDay1 == weekDay2 && dayOfMonth1 == dayOfMonth2
 
@@ -47,6 +47,3 @@ data Identity a = Identity a
 
 instance Eq a => Eq (Identity a) where
   (==) (Identity x) (Identity y) = x == y
-
-
-
