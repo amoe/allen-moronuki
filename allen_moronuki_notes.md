@@ -1,3 +1,59 @@
+2019-05-20
+
+Exercises: Eq Instances
+-----------------------
+
+1. 
+
+    instance Eq TisAnInteger where
+      (==) (TisAn x) (TisAn y) = x == y
+
+2.
+
+    instance Eq TwoIntegers where
+      (==) (Two x y) (Two x' y') = (x == x') && (y == y')
+
+3.
+
+    instance Eq StringOrInt where
+      (==) (TisAnInt x) (TisAnInt y) = x == y
+      (==) (TisAString x) (TisAString y) = x == y
+      (==) _ _ = False
+
+4.   Pair of one parametrically polymorphic type:
+
+    instance Eq a => Eq (Pair a) where
+      (==) (Pair x y) (Pair x' y') = (x == x') && (y == y')
+
+5.  Pair of two different parametrically polymorphic  needs two type class instance
+on both type variables.
+
+    instance (Eq a, Eq b) => Eq (Tuple a b) where
+      (==) (Tuple x y) (Tuple x' y') = (x == x') && (y == y')
+
+
+6.  Sum type of two parametrically polymorphic type variables.
+
+    instance (Eq a) => Eq (Which a) where
+      (==) (ThisOne x) (ThisOne y) = x == y
+      (==) (ThatOne x) (ThatOne y) = x == y
+      (==) _ _ = False
+
+We only needed to specify the type class constraint for the single type variable
+even though it's used across two different data constructors.
+
+7.  Sum type across two different parametrically polymorphic type variables.  We
+need to specify type class constraints on both of them.  Note however that it's
+only the actual content of the terms that we define -- `x == y` -- that leads
+to the necessity to add these constraints.
+
+    instance (Eq a, Eq b) => Eq (EitherOr a b) where
+      (==) (Hello x) (Hello y) = x == y
+      (==) (Goodbye x) (Goodbye y) = x == y
+      (==) _ _ = False
+
+
+
 2019-05-16
 
 To make types printable, just add `deriving Show` to them.
