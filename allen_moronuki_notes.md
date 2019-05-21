@@ -1,3 +1,72 @@
+2019-05-21
+----------
+
+signum is a method on a Num a => a that will give you its sign, -1, 0, or 0.
+
+Why is fromInteger present on the type class?
+It s pretty unclear
+
+The existence of a type `fromInteger Integer => a` implies that the 'return
+value', insofar as it exists, is also a site of type inference.
+
+We can verify this 
+
+    foo :: String -> Float
+    foo _ = fromInteger 42
+
+
+Here, Float's instance of the `Num` method `fromInteger` is being called.
+
+We haven't actually looked at delcaring our own classes yet.  So it's not
+totally clear what the meaning of requesting type class instances on the *class*
+declaration itself is.
+
+## Exercise: Tuple Experiment
+
+Look for quotRem and divMod.
+
+    quotRem :: a -> a -> (a, a)
+
+It obviously returns the quotient and the remainder as a tuple.
+
+    divMod :: a -> a -> (a, a)
+
+Does a similar thing except that `quot` truncates towards zero, while `div`
+truncates towards negative infinity.
+
+    ones x = snd (divMod x 10)
+
+A function that takes one argument and divides by 10 returning the remainder.
+
+eg it's effectively a limited-wrap-around-counter that wraps at 10.
+
+
+## Fractional
+
+Fractional has type class methods (/) for division, `recip` which is presumably
+the reciprocal, and `fromRational`.
+
+Not all num are divisible, only Fractional are.
+
+## Put on your thinking cap
+
+It is only necessary to specify that the argument should have an instance of
+Fractional in order to implement `divideThenAdd` because all Fractionals are
+Nums.
+
+How do we know this?  We know it because of the type class declaration of
+Fractional.
+
+    class Num a => Fractional a ...
+
+Because Fractional requires Num, you transitively get access to all the methods
+defined on Num.
+
+When using ghci the defaults specified for type classes will cause literals to
+coerce to that specific type.
+
+
+
 2019-05-20
 
 Exercises: Eq Instances

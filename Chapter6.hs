@@ -1,7 +1,5 @@
 module Chapter6 where
 
-x = 42
-
 data Trivial = Trivial'
 
 instance Eq Trivial where
@@ -86,3 +84,7 @@ instance (Eq a, Eq b) => Eq (EitherOr a b) where
   (==) (Hello x) (Hello y) = x == y
   (==) (Goodbye x) (Goodbye y) = x == y
   (==) _ _ = False
+
+
+foo :: String -> Float
+foo _ = fromInteger 42
