@@ -34,12 +34,32 @@ this is presumably the type of thing that could be done with Idris
 Because Eq is a superclass of Ord, using an Ord constraint gives you access to
 the methods defined in the Eq class as well.  So Ord implies Eq.
 
-check' :: Ord a => a -> a -> Bool
-check' a a' = a == a'
+    check' :: Ord a => a -> a -> Bool
+    check' a a' = a == a'
 
 
+## Exercises: Will they work?
 
+    max (length [1, 2, 3]) (length [8, 9, 10, 11, 12])
 
+It will type check and the second list is greater than the first, so the second
+list will be returned.  The type of argument is `Num a => [a]`.
+
+Actually it's the lengths, not the lists, so the greater length will be returned,
+which is 5, and the result type is `Int`.
+
+    compare (3 * 4) (3 * 5)
+
+Type variable a is bound to `Num a => a`.  and the result will be `LT` because
+the first is less than the second.
+
+    compare "Julie" True
+
+This should not compile.
+
+    (5 + 3) > (3 + 6)
+
+This reduces to `(>) 8 9` and the result should be `False`.
 
 
 
