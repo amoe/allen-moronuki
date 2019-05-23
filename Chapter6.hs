@@ -93,3 +93,9 @@ bar :: Ordering -> String
 bar LT = "Less than"
 bar GT = "Greater than"
 bar EQ = "Equal"
+
+
+-- This won't type check, because we don't have an instance of Eq so the
+-- use of == is invalid.
+check' :: Ord a => a -> a -> Bool
+check' a a' = a == a'

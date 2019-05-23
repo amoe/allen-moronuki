@@ -1,3 +1,51 @@
+2019-05-23
+----------
+
+    compare True False => GT
+
+Weird!
+
+max and min are binary functions that work as you would expect.
+
+It's not that clear what a tuple ordering does?
+
+2, 0 is greater than 0, 3
+
+so that means that the first result can take priority
+
+the function is defined for lists which is pretty crazy
+
+    instance Ord a => Ord [a] -- Defined in ‘GHC.Classes’
+
+Hey, we finally talk about the `Show` error at a random time!  Luckily I've kind
+of figured this out.
+
+You can derive Ord which basically gives you a 'default' implementation based
+on something weird.
+
+it's possible to derive Ord.
+
+But you can only derive Ord if you have eq.
+
+The type system doesn't prevent you from making completely baffling behaviours,
+though. --  'you want your ord instances to define a sensible total order'
+this is presumably the type of thing that could be done with Idris
+
+Because Eq is a superclass of Ord, using an Ord constraint gives you access to
+the methods defined in the Eq class as well.  So Ord implies Eq.
+
+check' :: Ord a => a -> a -> Bool
+check' a a' = a == a'
+
+
+
+
+
+
+
+
+
+
 2019-05-22
 ----------
 
