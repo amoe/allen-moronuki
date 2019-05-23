@@ -1,3 +1,73 @@
+2019-05-22
+----------
+
+some notes on polymorphism with type classes and defaults
+
+declare a variable that gets specialized into a specific concrete type
+
+
+The expression `(x+)` designates an operator section over x.  Because x is
+an integer, the type variable `a` in the type signature for `(+)` gets specialized
+to the `Integer` type.
+
+"Monomorphism" means restrictedness as in 'type concreteness'.
+
+    let add = (+) :: Integer -> Integer -> Integer
+
+I don't really understand what the `let` keyword is being used for in this
+context.  Is it a ghci expression?  How is `let x = y` different from `x = y`?
+
+This expression basically shows that you can 'downcast' from the more polymorphic
+type to the less polymorphic type.  But you can't go the other way (why not?)
+This is a difference between the way matching works at typelevel and the way
+that it works at term level.
+
+## Ord
+
+ord defines no really interesting methods.  Note max and min are two-argument
+functions unlike the schemey versions.  `compare` is an interesting function
+that has the signature
+
+    compare :: a -> a -> Ordering
+
+What is an Ordering?
+
+The answer is:
+
+    data Ordering = LT | EQ | GT
+
+This could be fun to play with.
+
+We know that for instance Char is orderable.
+
+Let's try it
+
+`compare a z` yields `LT` which is the showable constant
+
+    bar :: Ordering -> String
+    bar LT = "Less than"
+    bar GT = "Greater than"
+    bar EQ = "Equal"
+
+Test it with
+
+    bar (compare 'a' 'z')
+
+This worked well.
+
+Now let's return to the type class definition for Ord.
+
+
+    class Eq a => Ord a where
+       ...
+
+Here what do we note -- we note that the Ord class is constrained to those
+type that have an instance of Eq already -- thus enabling the use of Eq's
+methods.  not that they would always be usable, but.
+
+My question is, is it necessary formally for Ord to be constrained by Eq?
+Or is that a convenience? -- see logs folder
+
 2019-05-21
 ----------
 

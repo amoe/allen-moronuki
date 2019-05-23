@@ -88,3 +88,8 @@ instance (Eq a, Eq b) => Eq (EitherOr a b) where
 
 foo :: String -> Float
 foo _ = fromInteger 42
+
+bar :: Ordering -> String
+bar LT = "Less than"
+bar GT = "Greater than"
+bar EQ = "Equal"

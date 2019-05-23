@@ -1,0 +1,18 @@
+08:22        amoe_ > Reading HPFFP and they are discussing the Ord type class.  They note that it's constrained by Eq ("class Eq a => Ord a").  What I wondered is, why is this necessary?  Is it actually 
+                     formally necessary, or is it just to make it easier for types to implement Ord?
+08:23     dminuoso > amoe_: It's to build up a hierarchy of typeclasses.
+08:23     dminuoso > amoe_: It's not a constraint specification, its a superclass specification.
+08:23       merijn > amoe_: It's for user sanity
+08:24     dminuoso > amoe_: So if you consider classes as "bags of types inside", then Ord is definitely a subbag of Eq. :-P
+08:24       merijn > amoe_: It basically means you cannot define an Ord instance without ALSO defining an Eq instance (which makes sense, since ordering automatically means being able to compare for equality)
+08:26     dminuoso > amoe_: It also gives you a more coherent picture. Imagine that Applicative had an additional method `afmap`, and people wrote instnaces where `afmap` behaves differently from fmap`
+08:27     dminuoso > You'd get annoyed because there's no way to express the idea that "for a given type, you want this fmap idea to work coherently everywhere"
+08:29       merijn > amoe_: To answer your other question: No, it's not *actually* necessary, you could just as easily define Ord without the Eq superclass, but then you can get in scenarios where "a <= b" 
+                     typechecks, but "a == b" does not (due to no Eq instance), which is obviously super annoying as a programmer
+08:29       merijn > amoe_: This superclass constraint prevents that
+08:32     dminuoso > The thing that is actually annoying, is having to implement the superclass even if you wouldn't need it.
+08:32       merijn > dminuoso: I disagree, that sorta nonsense thinking got us into the whole mess of needing AMP to begin with
+08:33     dminuoso > merijn: No I meant it as "its annoying to write `instance Applicative where (<*>) = ap; pure = return`
+08:33     dminuoso > merijn: GHC could generate this instance for me automatically.
+08:34     dminuoso > say `instance derivingsuper Monad Foo...` where derivingsuper would handle generating the boilerplate superclass instances.
+08:34     dminuoso > (According to some specification in the Monad class)
