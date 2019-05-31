@@ -1,7 +1,8 @@
 2019-05-31
 ----------
 
-Enum.
+## Enum
+
 This has methods succ and pred.
 As well as a bunch of other confusing type conversion shit.
 
@@ -22,6 +23,71 @@ reach the end point.  It stops short, but never goes over.
 
 This is actually pretty useful, it's just constructing a regularly ordered
 sequence based on an example.
+
+## Show
+
+This is used to create showable values.  Honestly the presence of this type
+class is pretty frustrating but now I understand why.
+
+Show is not a serialization format.  It's only for human readable data, not
+for parsability.  It's a write only format, any readability is purely
+coincidental.
+
+The type class methods that Show has are.
+
+showsPrec which I'm guessing shows to a certain precision.
+
+show :: a -> String which is pretty obvious.
+
+You can write a Show instance like so.
+
+    instance Show MyType where
+      show x = "Some representation"
+
+How do we read some shit like this?
+
+    instance Show a => Show (Maybe a)
+
+Here we need our type variable that's attached to our Maybe<A> to be qualified
+correctly.  That is, it needs to be Showable.
+
+## Printing and side effects
+
+`it` represents the last result evaluated in ghci.
+
+The type of print reveals that it is effectful.  What's the type of `print`?
+
+    print :: Show a => a -> IO () 	-- Defined in ‘System.IO’
+
+The type written `IO ()` is an "IO action" that returns a value of the type `()`.
+`()` is called "unit".  it's essentially a null.
+So the part after IO indicates its return value.
+
+So a value of type IO X indicates an action that will eventually produce an X.
+It's not an X right now, but a delayed way to get an X.
+
+The point so far is just that ghci implicitly calls an IO action when we evaluate
+values.  This is `print it.`
+
+## Read
+
+Read is the opposite of Show but it's bad.
+
+read can return "no parse".  It throws exceptions.  That makes it a "partial
+function".  A function that's not guaranteed to yield a result that matches
+its type.
+
+## Instances are dispatched by type.
+
+This means that if you have two types that define instances of the same class,
+the type class methods aren't prefixed.  So ghci has to know which one to call.
+
+If you have some type class method with no argument, then it just can't return
+anything, because no type classes were matched.  You can hint to get the correct
+type.
+
+
+
 
 2019-05-23
 ----------
