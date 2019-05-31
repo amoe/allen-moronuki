@@ -1,3 +1,28 @@
+2019-05-31
+----------
+
+Enum.
+This has methods succ and pred.
+As well as a bunch of other confusing type conversion shit.
+
+    > succ 6
+    7
+
+The `succ` of 4.5 is 5.5, which is not that clear to me.
+
+enumFromTo gives you an inclusive range from one to the other.
+
+    enumFromThenTo 1 10 100
+    [1,10,19,28,37,46,55,64,73,82,91,100]
+
+This is kind of weird.  What does it do?  It's adding 9 each time.  So I think
+what it does is take the second argument as the first point in a series.
+Then extends that series to the end point.  Although it doesn't always actually
+reach the end point.  It stops short, but never goes over.
+
+This is actually pretty useful, it's just constructing a regularly ordered
+sequence based on an example.
+
 2019-05-23
 ----------
 
