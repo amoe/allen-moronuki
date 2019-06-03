@@ -130,3 +130,17 @@ instance Numberish Year where
 sumNumberish :: Numberish a => a -> a -> a
 sumNumberish a a' = fromNumber summed
   where summed = (toNumber a) + (toNumber a')
+
+add :: Num a => a -> a -> a
+add x y = x + y
+
+addWeird :: (Num a) => a -> a -> a
+addWeird x y = 
+  if x > 1
+  then x + y
+  else x
+
+-- We don't need to add any more types here because Int already implies its
+-- various type class instances, in this case Eq.  But this is bad practice.
+check' :: Int -> Int -> Bool
+check' a a' = a == a'

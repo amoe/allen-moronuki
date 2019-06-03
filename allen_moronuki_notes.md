@@ -1,3 +1,22 @@
+2019-06-03
+----------
+
+## 6.13 Gimme more operations
+
+The point is the compiler tells you when you lack the appropriate type class.
+If I'm missing the type class constraint for an operation on a function, it's
+going to say "Could not deduce (Ord a)" bound by the type signature.
+And it's even going to tell you the possible fix.
+
+Concrete types imply all the classes they imply.  This is pretty much self
+explanatory.
+
+You should always use the loosest type you can.  Only use type class constraints
+that provide the operations which you actually use in the function.
+
+## Exercises
+
+
 2019-05-31
 ----------
 
