@@ -37,6 +37,68 @@ None of the others are realistic at all.
 c) the type of x is a tuple, specifically Integral a => (a, a)
 
 
+5.  The type class Integral includes 
+
+a) Int and Integer numbers
+
+It also includes 'Word' by the way.
+
+## Does it typecheck?
+
+1.  I don't believe that this will type check, because the person type has not
+been declared as deriving show.  -- correct.
+The fixed version destructures the Person type in the term and just shows the
+Bool value that has been wrapped instead.
+
+    printPerson :: Person -> IO ()
+    printPerson (Person someVal) = putStrLn (show someVal)
+
+
+2.  I believe that this will work.  I don't believe that it even has anything
+to do with Show.
+Wrong!  It doesn't work because we don't derive Eq, thus preventing us from
+using Eq.
+So Mood is correctly inferred.
+
+Fixed version:
+
+    data Mood = Blah | Woot deriving (Show, Eq)
+
+3. 
+
+a) Only Mood is an acceptable input.
+
+b) The compiler will complain that "No instance for (Num Mood)", although I
+honestly can't translate this message very well.
+
+c) No instance for (Ord Mood).  That makes sense, as > has to type match on its
+arguments.
+
+4.  The only question really is whether s1 will type check.  I don't think it
+    will, because it's missing the third data item, Object.
+
+Fuck, it does!  This is because of currying.  The `Sentence` constructor
+remains a function, not a bit of syntax.  Therefore, s1 is actually a function
+Object -> Sentence.  It's a partially applied function and (as such) can't be shown.
+However, the fully created Sentence works fine.
+It's clear that the keyword `type` is being used to define sentences.  
+
+
+## Given a datatype declaration, what can we do?
+
+1.  I think that this will not typecheck, because the two arguments of the Papu
+data constructor are not being explicitly coerced to the correct type.  Unless
+there is some type of compiler magic that forces it to DWIM. -- CORRECT!
+
+2.  As before, this is an example of the general case of not enough arguments
+to the data constructor.  The first arugment type checks so the expression
+will type check, but it yields a function `Yeah -> Papu`.  -- CORRECT!
+
+3.  This should type check because the Papu type as a whole derives the Eq.
+And it does -- CORRECT!
+
+4.  This won't type check because Papu doesn't implement Ord.  -- CORRECT!
+
 2019-05-31
 ----------
 
