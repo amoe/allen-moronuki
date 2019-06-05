@@ -16,6 +16,26 @@ that provide the operations which you actually use in the function.
 
 ## Exercises
 
+### Multiple choice
+
+1.  The Eq class
+
+c) makes equality tests possible.
+
+2.  The type class Ord
+
+b) is a subclass of Eq.
+
+3.  If a type class Ord has an operator >, what is its type.
+
+a) Ord a => a -> a -> Bool
+
+None of the others are realistic at all.
+
+4.  In x = divMod 16 12
+
+c) the type of x is a tuple, specifically Integral a => (a, a)
+
 
 2019-05-31
 ----------
