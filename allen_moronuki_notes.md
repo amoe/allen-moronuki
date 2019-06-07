@@ -1,3 +1,51 @@
+2019-06-07
+----------
+
+
+## Match the types
+
+1.  Trying to assign to a binding that's hinted as :: a does not work.
+Parametrically polymorphic variable
+For the value `1`, ghci infers `Num a => a`.
+
+2.  ghci infers `Fractional a => a`.  I think this will succeed.
+No, it does not.  It's really not obvious to me why this fails.
+
+3.  This succeeds.
+
+4.  This succeeds because the Float has an instance of Real.
+
+5.  We define identity function under the name `freud`.  Change it to Ord.
+This should succeed.  And it does.
+
+6.  Freud-prime.  Rebrand to Int -> Int, still works, bexause it's more
+    specific.
+
+7.  Try to modify a Int->Int function to be parametrically polymorphic again.
+Will it work?  No, because user could pass any value in to the argument,
+which would bind the type variable a to something else but would return Int.
+And indeed that's correct.
+
+8.  Should we be able to modify sigmund' to loosen restriction to Num a => a?
+No, because myX is already a more specific type.   CORRECT.
+
+9.  jung function returns the minimum element of a list.  And redoing it to Int
+does work, because Int has an instance of Ord already.
+
+10.  We design a version that's specific to strings.  Then attempt to loosen the
+     restriction.  Of course this will work.  It's the exact same signature
+as jung.  CORRECT
+
+11.  mySort won't match as the type passed in is Ord a => [a].  But mySort
+     require the more specific [Char] type.
+
+
+
+
+
+
+
+
 2019-06-03
 ----------
 
