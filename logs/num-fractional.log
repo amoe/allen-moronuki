@@ -1,0 +1,25 @@
+14:54         amoe > Hi.  On HPFFP type class exercises.  I am not sure why the following line does not work.  i :: Num a => a; i = 1.0
+14:54         amoe > My reasoning goes that `1.0` has the type Fractional a => a.  Fractional is a subclass of Num.  Therefore all Fractionals support all Num operations.  So, binding a 'Fractional a => a' to a 'Num a => a' 
+                     should be possible.
+14:54       merijn > amoe: No
+14:55       merijn > amoe: "Num a => a" doesn't say "this is *something* that is an instance of Num"
+14:55       merijn > amoe: It says "this is *everything* that is an instance of Num"
+14:56       merijn > amoe: The caller/user of the variable 'i' gets to pick which type it *actually* is, the only restriction is that the user/caller has to pick a type that's an instance of Num
+14:56       merijn > amoe: Fractional is a subclass of Num (i.e. *some* things that are instance of Num are also instances of Fractional, but not all things)
+14:57       merijn > For example, Int is an instance of Num, but not Fractional
+14:57       merijn > So if you say "i :: Num a => a; i = 1.5" and I say "great! I want 'i' to be an Int" then we have a problem
+14:58       merijn > Because 1.5 (obviously) can't be an Int, it's a Fractional
+14:59       merijn > amoe: This is rather different from the meaning of "subclass" as used in OO
+15:00       merijn > amoe: It helps to think of constraints as predicates on types, so "i :: Num a => a" is similar "IF 'a' is an instance of Num THEN "i :: a" ELSE type error"
+15:00       merijn > amoe: The 'a' being a placeholder (hence, type variable) for some type we will pick later
+15:08         amoe > Actually I feel like the Fractional was confusing me.  I can't even assign an Int to a Num a => a binding.  So I can never bind a more specific type than the constraint requires.
+15:09       merijn > amoe: Right, you can only make types *more* strict, not less strict
+15:09       merijn > amoe: i.e. you can take "Num a => a" and make it more precise/strict (for example, saying this should be an Int)
+15:10       merijn > amoe: You can't take a value like "Int" and make it "less" precise (at least, not without going through a function)
+15:12       merijn > Incidentally, you are probably looking for things like:
+15:12       merijn > :t fromIntegral
+15:12    lambdabot > (Num b, Integral a) => a -> b
+15:12       merijn > :t fromIntegral 1337 :: Double
+15:12    lambdabot > Double
+15:12       merijn > > fromIntegral 1337 :: Double
+15:12    lambdabot >  1337.0
