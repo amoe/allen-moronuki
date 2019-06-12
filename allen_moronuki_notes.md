@@ -9,7 +9,10 @@ Parametrically polymorphic variable
 For the value `1`, ghci infers `Num a => a`.
 
 2.  ghci infers `Fractional a => a`.  I think this will succeed.
-No, it does not.  It's really not obvious to me why this fails.
+No, it does not.  It's really not obvious to me why this fails.  Update, the
+answer is that you can't assign a narrower type to the binding.  That would
+mean that multiple concrete types would be being used.  The value has to
+already be Num a => a.
 
 3.  This succeeds.
 

@@ -96,3 +96,8 @@ signifier xs = head (mySort xs)
 -- signifier2 :: Ord a => [a] -> a
 -- signifier2 xs = head (mySort xs)
 
+-- foo :: Num a => a
+-- foo = 0.1
+
+bar :: Num a => a
+bar = 2.0 :: Float
