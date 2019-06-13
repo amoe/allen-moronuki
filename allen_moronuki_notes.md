@@ -87,12 +87,6 @@ as jung.  CORRECT
      require the more specific [Char] type.
 
 
-
-
-
-
-
-
 2019-06-03
 ----------
 
