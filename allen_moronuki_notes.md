@@ -40,10 +40,8 @@ You can also just apply the first argument, which is a conversion function, to
 the third argument, and return the result.
 But what can you do with the second argument, the Integer?
 That much is extremely unclear.
-
-Hi, I wondered about HPFFP Chapter 6 exercise 'arith' function.  The task is to write a definition of the following function: `arith :: Num b => (a -> b) -> Integer -> a -> b`.  The hint specifies to 'combine values of type b'.  My question is, what is the second argument, the `Integer` for?  It seems that I can't use it in any way.  I understand that I can use `a -> b` to get a value of type b from the third argument, but don't understand what I should do with the second argument.
-
-
+The answer is that you can use the `fromInteger` method of the `Num` typeclass
+to take it back to a plain Num.
 
 
 ## Match the types

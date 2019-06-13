@@ -105,13 +105,13 @@ signifier xs = head (mySort xs)
 chk :: Eq b => (a -> b) -> a -> b -> Bool
 chk f x x' = (f x) == x'
 
---arith :: Num b => (a -> b) -> Integer -> a -> b
---arith f x y = x + 1
+arith :: Num b => (a -> b) -> Integer -> a -> b
+arith f x y = (f y) + (fromInteger x)
 
-newtype Nada = Nada Double deriving (Eq, Show)
+-- newtype Nada = Nada Double deriving (Eq, Show)
 
-instance Num Nada where
-  (+) (Nada x) (Nada y) = Nada (x + y)
+-- instance Num Nada where
+--   (+) (Nada x) (Nada y) = Nada (x + y)
 
-instance Fractional Nada where
-  (/) (Nada x) (Nada y) = Nada (x / y)
+-- instance Fractional Nada where
+--   (/) (Nada x) (Nada y) = Nada (x / y)
