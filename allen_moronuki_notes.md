@@ -1,6 +1,50 @@
 2019-06-07
 ----------
 
+You must write an instance of inherited superclasses before you are allowed to
+write the child type class instance.  Eg this will be acceptable:
+
+    newtype Nada = Nada Double deriving (Eq, Show)
+
+    instance Num Nada where
+      (+) (Nada x) (Nada y) = Nada (x + y)
+
+    instance Fractional Nada where
+      (/) (Nada x) (Nada y) = Nada (x / y)
+
+
+Although it will generate warnings.  
+
+Without the Num implementation, the compiler will whine and refuse to load the
+code.
+
+    • No instance for (Num Nada)
+        arising from the superclasses of an instance declaration
+
+
+Note that the entire type class did not need to be implemented, this one-method
+implementation was enough to satisfy ghc.
+
+## Type kwon do
+
+1.  chk is a function that takes another function -- a type converter.
+this has the ability to go from one type to a type with an instance of eq.
+
+It could be more verbosely named `transformAndCompare`.
+
+2.  arith is a 3 argument function.  Its args are as follows.
+
+A function converting from unconstrained type variable a to b
+One thing that you can do is to just ignore all the arguments.
+You can also just apply the first argument, which is a conversion function, to
+the third argument, and return the result.
+But what can you do with the second argument, the Integer?
+That much is extremely unclear.
+
+Hi, I wondered about HPFFP Chapter 6 exercise 'arith' function.  The task is to write a definition of the following function: `arith :: Num b => (a -> b) -> Integer -> a -> b`.  The hint specifies to 'combine values of type b'.  My question is, what is the second argument, the `Integer` for?  It seems that I can't use it in any way.  I understand that I can use `a -> b` to get a value of type b from the third argument, but don't understand what I should do with the second argument.
+
+
+
 
 ## Match the types
 
