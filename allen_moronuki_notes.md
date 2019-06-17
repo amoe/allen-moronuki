@@ -1,3 +1,55 @@
+2019-06-14
+----------
+
+# Chapter 7: More functional patterns
+
+Haskell functions are fully first class entities.
+Saying
+
+    f x = 42
+
+Is exactly equivalent to giving the variable `f` a function value, much as in
+Scheme and Clojure.
+
+When applying functions, we can say that the actual argument is *unified with*
+the formal parameter of the function.
+
+If we have a bare value, eg `myVal = 24`, we know from the type that it has no
+parameters as there isn't any `->` sign within the type.
+
+When defining functions without a type hint, Haskell will infer the type of
+arguments based on what's being used.  eg if you add something to an integer,
+the argument is automatically inferred to also be an integer.
+
+As is well known, multiple argument functions are just syntax sugar for single
+argument functions.  This implementation leaks through the abstraction in the type
+syntax, ie `a -> a -> a`, not `a a -> a`.  But the term level definition bundles
+the arguments together, eg `f x y`.
+
+If you add more arguments, ghc will infer a DIFFERENT parametrically-polymorphic
+type variable for each one.  "The type variables are different because *nothing
+in our code is preventing them from varying*" (emphasis mine).
+
+When applying a function:
+
+* Type variables (at the type-level) become bound to a type, and
+* Function variables (at the term-level) become bound to a value.
+
+Binding using let and where will infer types in the same way, presumably.
+Let induces a new scope, much as in Scheme.
+
+Shadowing with let works, much as it does in Scheme, and it does not generate
+any error or warning.  That is, Haskell has lexical scoping.
+
+Shadowing in ghci works similarly, this is what seems to be 'reassignment' in
+heavy quotation marks.  In reality, every iteration of the READ/EVAL step in ghci
+evaluates within a new let expression.
+
+Anonymous "lambda" functions are defined with a backslash.  The stuff after the
+backslash constitutes an entire argument list (with destructuring?  not sure
+about this, we haven't done much of that yet)
+
+
 2019-06-07
 ----------
 
@@ -42,7 +94,7 @@ But what can you do with the second argument, the Integer?
 That much is extremely unclear.
 The answer is that you can use the `fromInteger` method of the `Num` typeclass
 to take it back to a plain Num.
-
+And indeed I have confirmed with an upstream that this is the intended approach.
 
 ## Match the types
 
