@@ -17,6 +17,33 @@ b) See `addFive2`.  CORRECT
 c) See `mflip2`.  CORRECT
 
 
+## Pattern matching
+
+Note that data constructors eg `Nada x` are referred to as constructors.  This
+is the opposite of a deconstructor!
+
+Patterns are matched against values and data constructors, but not types.
+
+"Pattern matching proceeds from left to right, outside to inside" -- not really
+clear what the practical implications of this statement would be.
+
+The function isItTwo is a bit interesting because it matches a literal value.
+
+The question really becomes, how is the match on 2 implemented here?
+Is it terms of the Eq typeclass?  I don't think so because if I define a
+data constructor that has multiple valid symbols, we can still compare them
+even though we don't derive Eq.  There must be a more basic notion of identity
+that is being used in this case.
+
+Oh, the fault with this is simple.  The fact is that `Blah` and `Woot` become
+DATA CONSTRUCTORS: they become first class and are just checked that they refer
+to the same data constructor.  They are not values and are not checked according
+to the rules of values.
+
+There is a value called 'bottom' which is special in some sense, and will
+abort the program.  This would seem to be similar to the 'exploding' value
+that I've frequently wanted.
+
 2019-06-14
 ----------
 

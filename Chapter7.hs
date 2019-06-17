@@ -27,3 +27,16 @@ triple = \x -> x * 3
 
 
 foo = (\x -> x * 3) 3
+
+-- Now a bunch of lambda exercises, then back to pattern matching.
+
+isItTwo :: Integer -> Bool
+isItTwo 2 = True
+isItTwo _ = False
+
+data Mood = Blah | Woot
+
+isItBlah :: Mood -> Bool
+isItBlah Blah = True
+isItBlah _ = False
+
