@@ -26,3 +26,4 @@ bindExp2 x =
 triple = \x -> x * 3
 
 
+foo = (\x -> x * 3) 3

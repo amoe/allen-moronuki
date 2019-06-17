@@ -1,3 +1,22 @@
+2019-06-17
+----------
+
+## Anonymous functions
+
+To syntactically disambiguate anonymous functions, you frequently need to put
+them inside parentheses, eg `foo = (\x -> x * 3) 3`, now foo evaluates to 9.
+
+## Exercises: Grab bag
+
+1.  They are all identical.  Specifically they all expand to mth4.  CORRECT.
+2.  d, because one arg was applied.  CORRECT.
+3.  
+
+a) See `addOneIfOdd2`.  CORRECT
+b) See `addFive2`.  CORRECT
+c) See `mflip2`.  CORRECT
+
+
 2019-06-14
 ----------
 
