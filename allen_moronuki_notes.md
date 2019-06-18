@@ -1,3 +1,54 @@
+2019-06-18
+----------
+
+`newtype` is a special case of data declarations.
+
+Why?
+
+`newtype` only allows one constructor with one field.  It's basically syntax
+sugar for making a 'wrapper' type?   Whereas `data` can store multiple fields.
+
+`UnregisteredUser | RegisteredUser` is a 'sum type'.  It
+creates these specific data constructors, since they did not already exist.
+The first argument of `data` is the specific data constructor to create.  They
+are created as functions in the global namespace.  It's not really an enum
+though, because the data constructors can have arguments.
+
+This:
+
+    data User = UnregisteredUser | RegisteredUser Username AccountNumber
+
+Parses as this:
+
+    data User = UnregisteredUser | (RegisteredUser Username AccountNumber)
+
+It does NOT parse as the following, which would sort of make sense but is not
+how Haskell operates:
+
+    data User = (UnregisteredUser | RegisteredUser) Username AccountNumber
+
+So this means that there are two data constructors created:
+
+* UnregisteredUser, with no fields
+* RegisteredUser with two fields
+
+and the type User is the sum of these.
+
+The odd thing is that there's no way just to see if an expression compiles, if
+it doesn't have a show type.
+
+It sucks to create a registerd user.
+
+    printUser $ RegisteredUser (Username "foo") (AccountNumber 3337)
+
+There would be an easier way to do this, just with a function.
+
+Note that we can use data consructors within data constructor patterns, when
+matching on product types:
+
+    isGalapagosPenguin (Peng Galapagos) = True
+
+
 2019-06-17
 ----------
 

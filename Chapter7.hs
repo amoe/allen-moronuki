@@ -40,3 +40,50 @@ isItBlah :: Mood -> Bool
 isItBlah Blah = True
 isItBlah _ = False
 
+
+-- User printing example
+newtype Username = Username String
+
+newtype AccountNumber = AccountNumber Integer
+
+data User = UnregisteredUser | RegisteredUser Username AccountNumber
+
+printUser :: User -> IO ()
+printUser UnregisteredUser = putStrLn "<Unregistered>"
+printUser (RegisteredUser (Username u) (AccountNumber a)) = putStrLn (u ++ ": " ++ show a)
+
+
+
+-- Penguin example
+
+data WherePenguinsLive = Galapagos | Antarctica | Australia | SouthAfrica | SouthAmerica
+  deriving (Eq, Show)
+
+-- A 'product type', like it's just a wrapper for another data constructor.
+data Penguin = Peng WherePenguinsLive
+
+isSouthAfrica :: WherePenguinsLive -> Bool
+isSouthAfrica SouthAfrica = True
+isSouthAfrica _ = False
+
+gimmeWhereTheyLive :: Penguin -> WherePenguinsLive
+gimmeWhereTheyLive (Peng x) = x
+
+-- Test data
+
+humboldt = Peng SouthAmerica
+gentoo = Peng Antarctica
+macaroni = Peng Antarctica
+little = Peng Australia
+galapagos = Peng Galapagos
+
+isGalapagosPenguin :: Penguin -> Bool
+isGalapagosPenguin (Peng Galapagos) = True
+isGalapagosPenguin (Peng _) = False
+
+isAntarcticPenguin :: Penguin -> Bool
+isAntarcticPenguin (Peng Antarctica) = True
+isAntarcticPenguin (Peng _) = False
+
+antarcticOrGalapagos :: Penguin -> Bool
+antarcticOrGalapagos p = (isGalapagosPenguin p) || (isAntarcticPenguin p)
