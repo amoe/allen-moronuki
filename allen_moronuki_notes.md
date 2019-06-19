@@ -1,3 +1,13 @@
+2019-06-19
+----------
+
+## Pattern matching tuples
+
+You can pattern match tuples in the obvious way.
+ghci contains a command :browse that you can use to list 'stuff' that's defined
+in any module.
+
+
 2019-06-18
 ----------
 
