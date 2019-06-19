@@ -31,3 +31,20 @@ addFive2 = \x -> \y -> (if x > y then y else x) + 5
 mflip1 f = \x -> \y -> f y x
 
 mflip2 f x y = f y x
+
+
+k (x, y) = x
+
+-- has type Integer
+k1 = k ((4-1), 10)
+
+-- k2 has type string.
+k2 = k ("three", (1 + 2))
+
+-- has type Integer
+k3 = k (3, True)
+
+
+
+f :: (a, b, c) -> (d, e, f) -> ((a, d), (c, f))
+f (x, x', x'') (y, y', y'') = ((x, y), (x'', y''))

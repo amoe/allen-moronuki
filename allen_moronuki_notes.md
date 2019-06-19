@@ -7,6 +7,32 @@ You can pattern match tuples in the obvious way.
 ghci contains a command :browse that you can use to list 'stuff' that's defined
 in any module.
 
+## Exercise: Variety Pack
+
+1.
+
+a)  The type of k is:
+
+    k :: (a, b) -> a
+
+CORRECT
+
+b)  The type of k2 is `[Char]`
+
+CORRECT
+
+It is not the same type as k1 and k3.
+
+c) k1 and k3 will return the number 3 as a result.
+
+CORRECT
+
+2.  My definition:
+
+    f :: (a, b, c) -> (d, e, f) -> ((a, d), (c, f))
+    f (x, x', x'') (y, y', y'') = ((x, y), (x'', y''))
+
+
 
 2019-06-18
 ----------
