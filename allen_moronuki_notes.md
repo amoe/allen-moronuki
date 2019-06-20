@@ -1,3 +1,31 @@
+2019-06-20
+----------
+
+## Case expressions
+
+Bool itself is a sum type.  It's the sum of two data constructors.
+
+Case basically allows you to pattern match on a result type from an expression,
+within a function at any time.  Eg,
+
+    case EXPR of
+      PAT1 -> RESULTEXPR
+
+There is also a syntax case...where, the WHERE clause will bind names that will
+become visible in the case expression.
+
+## Case expression exercises
+
+1.  See definition of `functionC` inside ExercisesChapter7.hs.
+
+2.  See definition of `ifEvenAdd2`.  Also note that this needed to have the
+    Integral typeclass applied in order to use `mod`.
+
+3.  Just handle the case where Ordering is `EQ` and return some value.  
+Note that we need both Num and Ord for this case.  All Num are not Ord.
+
+
+
 2019-06-19
 ----------
 
@@ -32,7 +60,7 @@ CORRECT
     f :: (a, b, c) -> (d, e, f) -> ((a, d), (c, f))
     f (x, x', x'') (y, y', y'') = ((x, y), (x'', y''))
 
-
+ 
 
 2019-06-18
 ----------

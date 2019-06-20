@@ -50,7 +50,7 @@ data User = UnregisteredUser | RegisteredUser Username AccountNumber
 
 printUser :: User -> IO ()
 printUser UnregisteredUser = putStrLn "<Unregistered>"
-printUser (RegisteredUser (Username u) (AccountNumber a)) = putStrLn (u ++ ": " ++ show a)
+prwintUser (RegisteredUser (Username u) (AccountNumber a)) = putStrLn (u ++ ": " ++ show a)
 
 
 
@@ -87,3 +87,23 @@ isAntarcticPenguin (Peng _) = False
 
 antarcticOrGalapagos :: Penguin -> Bool
 antarcticOrGalapagos p = (isGalapagosPenguin p) || (isAntarcticPenguin p)
+
+funcZ :: (Eq a, Num a) => a -> String
+funcZ x = 
+  case x + 1 == 1 of
+    True -> "AWESOME"
+    False -> "wut"
+
+pal :: (Eq a) => [a] -> String
+pal xs = 
+  case xs == reverse xs of
+    True -> "yes"
+    False -> "no"
+
+
+-- Demo that we can use some expression to swap the vars, and then later pattern
+-- match with a case expression.
+swapAndCase tpl = 
+  case (snd tpl, fst tpl) of
+    (x, y) -> x
+

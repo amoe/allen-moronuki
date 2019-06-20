@@ -48,3 +48,69 @@ k3 = k (3, True)
 
 f :: (a, b, c) -> (d, e, f) -> ((a, d), (c, f))
 f (x, x', x'') (y, y', y'') = ((x, y), (x'', y''))
+
+
+
+
+
+
+-- functionC, aka max
+functionC :: (Ord a) => a -> a -> a
+functionC x y =
+  case x > y of
+    True -> x
+    False -> y
+
+
+-- Need the Integral type class constraint in order to use the modulus
+-- operation.
+-- Also, why do we not need the Eq typeclass to be explicitly added to the
+-- constraint?
+-- The answer is:
+-- Integral => Real => Ord => Eq
+-- So Integral transitively implies Eq.
+ifEvenAdd2 :: Integral a => a -> a
+ifEvenAdd2 x = 
+  case mod x 2 of
+    0 -> x + 2
+    _ -> x
+
+
+nums :: (Num a, Ord a) => a -> Integer
+nums x = case compare x 0 of
+  LT -> -1
+  GT -> 1
+  EQ -> 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
