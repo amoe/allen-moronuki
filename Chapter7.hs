@@ -107,3 +107,23 @@ swapAndCase tpl =
   case (snd tpl, fst tpl) of
     (x, y) -> x
 
+
+myFlip :: (a -> b -> c) -> b -> a -> c
+myFlip f x y = f y x
+
+returnLast :: a -> b -> c -> d -> d
+returnLast _ _ _ x = x
+
+-- This is identical to the previous one, but the type signature denotes the
+-- currying explicitly.
+returnLast' :: a -> (b -> (c -> (d -> d)))
+returnLast' _ _ _ x = x
+
+-- This will NOT work, as this would denote a single-parameter function.
+-- • The equation(s) for ‘returnLast''’ have four arguments,
+--   but its type ‘(((a -> b) -> c) -> d) -> d’ has only one
+--returnLast'' :: (((a -> b) -> c) -> d) -> d
+--returnLast'' _ _ _ x = x
+
+returnAfterApply :: (a -> b) -> a -> c -> b
+returnAfterApply f x _ = f x

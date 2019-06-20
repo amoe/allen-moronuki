@@ -24,6 +24,15 @@ become visible in the case expression.
 3.  Just handle the case where Ordering is `EQ` and return some value.  
 Note that we need both Num and Ord for this case.  All Num are not Ord.
 
+## Higher order functions
+
+Flip is going to apply its function with its two arguments flipped.  It must
+have two arguments.  But note that flip applies the function all the way.
+
+It's pretty easy to implement, the type signature is the hardest part.
+
+A&M go on to say that type signatures can denote HOFs and that the explicit
+associativity is right.  Hence currying is 'implicit'.
 
 
 2019-06-19
