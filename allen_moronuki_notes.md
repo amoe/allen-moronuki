@@ -1,3 +1,13 @@
+2019-06-26
+----------
+
+Note that we can derive Ord on a sum type.  This will enable us to compare
+values, as happens in the example `compare True False`.
+
+A really needlessly obtuse example in many ways, but it work well enough to
+demonstrate the power of accepting comparison functions.
+
+
 2019-06-20
 ----------
 
