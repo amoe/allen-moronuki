@@ -1,6 +1,46 @@
 2019-06-27
 ----------
 
+## Exercises: Guard Duty
+
+1.  If you put `otherwise` at the top, the other patterns will never be matched.
+You always get an 'F' from this function.
+
+2.  No, the first case matches instantly and short-circuits the rest of them.
+
+3.  b, the function returns true when it's a palindrome.
+
+4.  It can take any list whose members have an instance of Eq.
+
+5.  pal :: (Eq a) => [a] -> Bool
+
+6.  c, the function returns the sign of its argument.
+
+7.  It can take things with Ord, but they also have to be usable with 0, which
+is of Num type.
+
+8.  Therefore the type signature is
+
+numbers :: (Ord a, Num a) => a -> Integer
+
+
+
+## 7.7 -- Guards
+
+The syntax for guards looks weird.
+
+The guard case expression must evaluate to bool.
+otherwise is literally directly equal to True, used in guard expressions
+as a catch-all.
+
+It seems very much like the case expression, why is it here?  Actually, it seems
+that case expressions are pattern matches, not arbitrary exprs.
+Yes, this is true.  So guards are strictly more powerful than case exprs.
+
+If your guard doesn't match, you are going to get an error about 'non
+exhaustive' patterns.
+
+
 1.  `dodgy 1 0` => 1
 2.  `dodgy 1 1` => 11
 3.  `dodgy 2 2` => 22
