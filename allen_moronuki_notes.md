@@ -1,3 +1,24 @@
+2019-06-27
+----------
+
+1.  `dodgy 1 0` => 1
+2.  `dodgy 1 1` => 11
+3.  `dodgy 2 2` => 22
+4.  `dodgy 1 2` => 21
+5.  `dodgy 2 1` => 12
+6.  `oneIsOne 1` => 11
+7.  `oneIsOne 2` => 21
+8.  `oneIsTwo 1` => 1+(2*10) => 21
+9.  `oneIsTwo 2` => 2+(2*10) => 22
+10. `oneIsOne 3` => 31
+11. `oneIsTwo 3` => 23`
+
+All CORRECT
+
+dodgy is partially applied to the value one, meaning that the value will be 1+(1*10)
+If dodgy is flipped, the second argument, the coefficient,  will be fixed to 2,
+and the other one (the offset / intercept) will be the variable.
+
 2019-06-26
 ----------
 

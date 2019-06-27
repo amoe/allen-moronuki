@@ -127,3 +127,39 @@ returnLast' _ _ _ x = x
 
 returnAfterApply :: (a -> b) -> a -> c -> b
 returnAfterApply f x _ = f x
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
