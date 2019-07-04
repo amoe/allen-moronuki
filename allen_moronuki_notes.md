@@ -1,3 +1,69 @@
+2019-07-04
+----------
+
+## Chapter Exercises for Chapter 7
+
+1.  A polymorphic function...
+d) may resolve to values of different types, depending on inputs.
+
+2.  b) Char -> [String]
+
+3.  Ord a => a -> a -> Bool
+
+a) Ord a => a -> Bool after one argument applied.   WRONG!
+Actually the answer is d)
+(Ord a, Num a) => a -> Bool
+
+Somehow it picked up the Num constraint from being applied to its argument.
+I presume that if it has been a concrete type then that would have replaced 
+both constraints -- AND IT DID.
+
+4.  A function of type (a -> b) -> c
+
+b) is a higher-order function.
+
+5.  Given that f is the identity function, what's the type of f True.
+
+It should be `f True :: Bool`  CORRECT
+
+## Let's write code
+
+
+
+
+
+
+
+
+## Function composition
+
+Composition creates a two-step function, ie it goes straight from a->c where
+we usually have to go through two stages.
+
+There is a function `odd` that already exists; and a function `filter`, which
+works as we expect
+
+Hence `filter odd [1..10]`.
+
+Using function composition enables point free style.
+
+Type inference means that we can just write pointfree definitions.
+
+foldr is fold-right, ie reduce.
+
+The function f will count the number of occurrences of 'a' in a string.  It's
+really cool that the pure use of the (== 'a') basically implies that it would
+have its natural type.
+
+Things like `(+3)` somehow work correctly, but it's not really clear why 
+or how this happens.
+
+print is like putstrln but implicitly coerces its argument using Show.
+Actually, print is exactly equal to (putStrLn . show).
+
+
+We say that putStrLn "returns unit".
+
 2019-06-27
 ----------
 

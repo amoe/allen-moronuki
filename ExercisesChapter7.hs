@@ -121,3 +121,11 @@ numbers x
   | x < 0 = -1
   | x == 0 = 0
   | x > 0 = 1
+
+
+-- Chapter exercises
+
+tensDigit :: Integral a => a -> a
+tensDigit x = d
+  where xlast = x `div` 10
+        d = xlast `mod` 10

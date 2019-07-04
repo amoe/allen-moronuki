@@ -1,3 +1,4 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
 module Chapter7 where
 
 myNum :: Integer
@@ -204,6 +205,13 @@ avgGrade x
   | otherwise = 'F'
   where y = x / 100
 
+-- This is basically a reduce and is actually equivalent to sum.
+f :: Int -> [Int] -> Int
+f z xs = foldr (+) z xs
+
+-- To write it in pointfree.
+-- This won't compile with the monomorphism restriction active.
+pointfreeF = foldr (+)
 
 
 
