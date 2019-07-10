@@ -129,3 +129,33 @@ tensDigit :: Integral a => a -> a
 tensDigit x = d
   where xlast = x `div` 10
         d = xlast `mod` 10
+
+
+tensDigit' :: Integral a => a -> a
+tensDigit' x = d
+  where (x', _) = divMod x 10
+        d = mod x' 10
+
+
+hundredsDigit :: Integral a => a -> a
+hundredsDigit x = d
+  where (x', _) = divMod x 100
+        d = mod x' 10
+
+-- Select one of the values based on the argument.  I actually used to want this
+-- function in Clojure.
+foldBool1 :: a -> a ->  Bool -> a
+foldBool1 x y z = case z of
+  False -> x
+  True -> y
+
+-- As the bool is already a bool expression by definition, we can just
+-- pass it directly to the guard.
+foldBool2 :: a -> a ->  Bool -> a
+foldBool2 x y z
+  | z = y
+  | otherwise = x
+
+
+g :: (a -> b) -> (a, c) -> (b, c)
+g f (xa, xc) = (f xa, xc)

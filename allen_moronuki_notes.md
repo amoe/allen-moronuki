@@ -28,12 +28,26 @@ It should be `f True :: Bool`  CORRECT
 
 ## Let's write code
 
+1.  Digits functions:
 
+a) Rewritten to use divMod by just discarding the second part of the tuple.
+b) Yes it does.
+c) Implemented a version that gets the hundreds digit by just divving with 100
+instead.
 
+2.  Implemented the case and guard versions.
 
+3.  Implemented and working, test case is:
 
+```
+g (^2) (4, 1)
+```
 
+This is the only possible definition.
 
+4.  Wrote a round-trip program.
+
+5.  Wrote a point-free version.
 
 ## Function composition
 
