@@ -49,6 +49,14 @@ This is the only possible definition.
 
 5.  Wrote a point-free version.
 
+6.  The answer is this abomination:
+
+    print $ ((roundTrip2 4) :: Int)
+
+All parens are needed.  This is a very confusing exercise phrasing because
+it suggests that you need to adjust the definition of the function, when in
+fact you need to adjust the call site.
+
 ## Function composition
 
 Composition creates a two-step function, ie it goes straight from a->c where

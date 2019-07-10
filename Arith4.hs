@@ -14,5 +14,5 @@ roundTrip2 x = read $ show x
 main = do
   print $ roundTrip 4
   print $ roundTripPF 4
-  print $ roundTrip2 4
+  print $ ((roundTrip2 4) :: Int)  -- Have to force the result type at the call site 
   print $ id 4
