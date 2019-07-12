@@ -1,3 +1,30 @@
+2019-07-10
+----------
+
+# Chapter definitions for Chapter 7 notes
+
+When we talk of an 'uncurried function', we mean a function that accepts
+all its arguments as a single tuple.
+
+A product type is an aggregate value, i.e. one holding more than one atom.
+A sum type is a set of values (an enum) -- like Bool, can be False | True.
+
+eg
+
+data MyProductType a b = MyProductType a b
+
+MyProductType now holds two parametrically-polymorphic values.
+
+A sum type looks like this:
+
+    data SumOfThree a b c = FirstPossible a | SecondPossible b | ThirdPossible c
+
+Bottom is a notional type used to indivate the lack of a value.  It can't be
+written.  There is some function called error that can be used to throw
+exceptions.
+
+The `const` function takes two args and returns the first.
+
 2019-07-04
 ----------
 

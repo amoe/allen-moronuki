@@ -214,27 +214,115 @@ f z xs = foldr (+) z xs
 pointfreeF = foldr (+)
 
 
+-- Stuff from the chapter definitions.
+
+-- This is a binding.
+blah :: Int
+blah = 10
+
+-- Example of an anonymous function being used.
+bar = (*) ((\x -> x) 2) 2
 
 
+-- Curry-prime because curry and uncurry are already in the prelude.
+
+-- Curry goes from uncurried (tuple) style to curried style.
+curry' :: ((a, b) -> c) -> a -> b -> c
+curry' f a b = f (a, b)
+
+uncurry' :: (a -> b -> c) -> ((a, b) -> c)
+uncurry' f (a, b) = f a b
+
+-- An uncurried function.  Look that you can easily write in the uncurried
+-- style, if you want, which is identical to the format used by other languags.
+add :: (Int, Int) -> Int
+add (a, b) = a + b
 
 
+-- A curried function.
+add' :: Int -> Int -> Int
+add' a b = a + b
+
+-- Pattern matching:
+
+-- A 'nullary' data constructor that holds no values.
+data Blah2 = Blah2
+
+blahFunc :: Blah2 -> Bool
+blahFunc Blah2 = True
+
+-- A unary data constructor holding a single value.
+data Identity a = Identity a deriving (Eq, Show)
 
 
+-- We can unpack it with pattern matching.
+unpackIdentity :: Identity a -> a
+unpackIdentity (Identity x) = x
 
+-- We can also choose to ignore it
+ignoreIdentity :: Identity a -> Bool
+ignoreIdentity (Identity _) = True
 
+-- Or don't even bother actually pattern matching it.
+ignoreIdentity' :: Identity a -> Bool
+ignoreIdentity' _ = True
 
+-- An example of a product type.
+data Product a b = Product a b deriving (Eq, Show)
 
+productUnpackOnlyFirst :: Product a b -> a
+productUnpackOnlyFirst (Product x _) = x
 
+productUnpackOnlySecond :: Product a b -> b
+productUnpackOnlySecond (Product _ x) = x
 
+-- Or we can get both of them.
+productUnpack :: Product a b -> (a, b)
+productUnpack (Product x y) = (x, y)
 
+data SumOfThree a b c = FirstPossible a | SecondPossible b | ThirdPossible c
+  deriving (Eq, Show)
 
+-- Discriminate based on members of a sum type.
+sumToInt :: SumOfThree a b c -> Int
+sumToInt (FirstPossible _) = 1
+sumToInt (SecondPossible _) = 2
+sumToInt (ThirdPossible _) = 3
 
+-- Or ignore some members of a sum type if we feel like it.
+sumToInt' :: SumOfThree a b c -> Int
+sumToInt' (FirstPossible _) = 0
+sumToInt' _ = 1
 
+-- Bottom types
 
+-- An infinite loop
+argh x = argh x
 
+-- Calling this with False notionally 'returns bottom'.
+dontDoThis :: Bool -> Int
+dontDoThis True = 1
 
+-- The same with this, but this is NOT ADVISED to use error.
+definitelyDontDoThis :: Bool -> Int
+definitelyDontDoThis True = 1
+definitelyDontDoThis False = error "oops"
 
+-- The composition function... this is a valid implementation.
+comp :: (b -> c) -> ((a -> b) -> (a -> c))
+comp f g x = f (g x)
 
+-- Pointfree examples.
 
+-- Non-pointfree:
 
+blah3 x  = x 
+addAndDrop x y = x + 1
+reverseMkTuple a b = (b, a)
+reverseTuple (a, b) = (b, a)
 
+-- Convert them to pointfree:
+blah3' = id
+addAndDrop' = const . (1+)
+reverseMkTuple' = flip (,)
+reverseTuple' = uncurry (flip (,))
