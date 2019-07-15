@@ -1,3 +1,74 @@
+2019-07-14
+
+# Chapter 8: Recursion
+
+Recursion gives a way of expressing 'indefinite' computation.  Which is
+basically a way of saying you can write loops that can't be unrolled at compile
+time.
+
+It seems that the lambda calculus can't express recursion, though, because we
+don't have any way to name things.  (The answer to this is the Y combinator
+which is out of scope at the moment.)
+
+'It is not often necessary to write our own recursive functions' -- you learn
+this from Clojure, that HOFs basically make most uses of 'recur' obsolete.
+
+Write a factorial function.  4! = 4*3*2*1
+
+It's pretty simple, you just match on the 1 value, and the rest is much like in
+Scheme.
+
+As we know, recursion always needs a base case to terminate.
+
+Look at this sentence:
+
+> Making the base case an identity value for the function (multiplication in this
+> case) means that applying the function to the case doesn't change the result
+> of previous applications.
+
+In this case 'identity value' for a function means that n*1 = n. 
+
+Something about composition...
+
+## Exercise
+
+Write out the evaluation of `applyTimes 5 (+1) 5`
+
+It should be evaluated as such.  It means apply +1 5 times to the seed 5.
+
+applyTimes n f b
+
+applyTimes 5 (+1) 5 = (+1) (applyTimes (5 - 1) (+1) 5)
+  (+1) (+1) (applyTimes (4 - 1) (+1) 5)
+  (+1) (+1) (+1) (applyTimes (3 - 1) (+1) 5)
+  (+1) (+1) (+1) (+1) (applyTimes (2 - 1) (+1) 5)
+  (+1) (+1) (+1) (+1) (+1) (applyTimes (1 - 1) (+1) 5)
+  (+1) (+1) (+1) (+1) (+1) (applyTimes 0 (+1) 5)
+  (+1) (+1) (+1) (+1) (+1) 5
+  (+1) (+1) (+1) (+1) 6
+  (+1) (+1) (+1) 7
+  (+1) (+1) 8
+  (+1) 9
+  10
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 2019-07-10
 ----------
 
