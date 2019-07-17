@@ -1,3 +1,91 @@
+2019-07-17
+
+In haskell, these internal functions that are used to provide a counter etc
+are called 'go' functions.
+
+## Chapter 8 Exercises
+
+1. The type of `[[True, False], [True, True], [False, True]]` is a) `[[Bool]]`
+check -- CORRECT.
+
+2.  a) Does not have the same type, because the inner type is the 2-tuple.
+    b) Does have the same type, even though the lists are different lengths
+    c) Does not have the same type (it's `[Bool]`)
+    d) Does not have the same type (it's `[String]`)
+
+So the answer is b).  check -- CORRECT
+
+3.  d) All of the above are true.  The type variable [a] fixes the content of
+the list.
+
+4.  b) is a valid application: func "Hello" "World".  CORRECT
+
+## Reviewing currying
+
+1.  The value should be "woops mrow woohoo!".  CORRECT
+2.  Flippy has fixed the last argument at haha, so the value will be "1 mrow
+    haha".  CORRECT
+3.  appedCatty "2" => "woops mrow 2"
+    So, `frappe (appedCatty "2")` => "woops mrow 2 mrow haha".  CORRECT
+4.  frappe "blue" should be "blue mrow haha".So, "woops mrow blue mrow haha".
+    CORRECT
+5.  This one takes a bit more working out 
+
+cattyConny (frappe "pink")
+           (cattyConny "green" (appedCatty "blue"))
+
+Evaluate (appedCatty  "blue") => "woops mrow blue"
+now eval the 2nd expr
+"green mrow woops mrow blue"
+
+=> "pink mrow hahah mrow green mrow woops mrow blue"
+CORRECT
+6.  "are mrow Pugs mrow awesome"
+CORRECT
+
+## Recursion
+
+1.  First go back to the definition of dividedBy.
+
+dividedBy 15 2
+=> go 15 2 0
+=> go 13 2 1
+=> go 11 2 2
+=> go  9 2 3
+=> go  7 2 4
+=> go  5 2 5
+=> go  3 2 6
+=> go  1 2 7
+
+Result is (7, 1) 
+
+2.  Several approaches but I will just do the naive one.
+
+3.  to multiply 3x3, you want 9
+    you add 3 to 3 two times
+
+to multiply 3x4, you want 12, you add 3 to 3 3 times.
+
+6*6, you want 36, so the result try
+
+The solution looks similar, see iteratedMultiply
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 2019-07-14
 
 # Chapter 8: Recursion

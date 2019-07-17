@@ -47,3 +47,5 @@ applyTimesTail n f seed = applyTimesTail (n - 1) f (f seed)
 applyTimesComp :: (Eq a, Num a) => a -> (b -> b) -> b -> b
 applyTimesComp 0 f seed = seed
 applyTimesComp n f seed = (f . (applyTimesComp (n - 1) f)) seed
+
+
