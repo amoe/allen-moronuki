@@ -30,3 +30,35 @@ iteratedMultiply x y = go x y 0
   where go x y count
           | count == (y - 1) = x
           | otherwise = go (x + y) y (count + 1)
+
+-- Handles the case where both are negative -- yes.
+dividedByBothNegative :: Integral a => a -> a -> (a, a)
+dividedByBothNegative x y = go x y 0
+  where go n denom count
+          | (abs n) < (abs denom) = (count, n)
+          | otherwise = go (n - denom) denom (count + 1)
+
+
+-- You can't just keep subtracting, because you're in fact adding, so you
+-- never have any limit.  You'll just have to invert the denom.
+dividedByNegDenom :: Integral a => a -> a -> (a, a)
+dividedByNegDenom x y = go x (-y) 0
+  where go n denom count
+          | n < denom = (-count, n)
+          | otherwise = go (n - denom) denom (count + 1)
+
+-- Handles both negative and positive denom.
+dividedByNegDenom' :: Integral a => a -> a -> (a, a)
+dividedByNegDenom' x y = go x (abs y) 0
+  where go n denom count
+          | n < count = ((signum y) * count, n)
+          | otherwise = go (n - denom) denom (count + 1)
+
+-- This final version works for all cases
+dividedByAllCases :: Integral a => a -> a -> (a, a)
+dividedByAllCases x y = go (abs x) (abs y) 0
+  where go n denom count
+          | n < count = ((signum x) * (signum y) * count, n)
+          | otherwise = go (n - denom) denom (count + 1)
+
+

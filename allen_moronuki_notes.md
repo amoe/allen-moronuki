@@ -1,3 +1,23 @@
+2019-07-19
+
+Implemented a dividedBy that handles all cases.  Confirmed against neallred's
+solution, although I like mine better because it has less if statements.
+
+2019-07-18
+
+## Fixing dividedBy
+
+dividedBy will just loop infinitely when denom is 0
+
+why?  Because the n value will never decrease.
+
+In the case where denom is 2, we wnat the result to be -5
+This means that it's like we should just invert the result
+
+dividedBy' 20 0
+=> go 20 0 0
+
+
 2019-07-17
 
 In haskell, these internal functions that are used to provide a counter etc
