@@ -1,7 +1,12 @@
+
 2019-07-19
 
 Implemented a dividedBy that handles all cases.  Confirmed against neallred's
 solution, although I like mine better because it has less if statements.
+
+mc91 is truly nuts, I have no idea how this was derived, although it's easy to
+write in Haskell.
+
 
 2019-07-18
 

@@ -74,3 +74,8 @@ dividedByTotal x y = go (abs x) (abs y) 0
           | n < count = Result ((signum x) * (signum y) * count)
           | otherwise = go (n - denom) denom (count + 1)
 
+
+mc91 :: (Num a, Ord a) => a -> a
+mc91 n
+  | n > 100  = n - 10
+  | otherwise = mc91 (mc91 (n + 11))
