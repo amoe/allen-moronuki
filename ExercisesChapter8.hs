@@ -62,3 +62,15 @@ dividedByAllCases x y = go (abs x) (abs y) 0
           | otherwise = go (n - denom) denom (count + 1)
 
 
+data DivisionResult = Result Integer | DivisionByZero
+  deriving Show
+
+-- This final final version handles zero, called total because it's a 'total
+-- function', that is the zero case does not produce bottom
+dividedByTotal :: Integer -> Integer -> DivisionResult
+dividedByTotal x 0 = DivisionByZero
+dividedByTotal x y = go (abs x) (abs y) 0
+  where go n denom count
+          | n < count = Result ((signum x) * (signum y) * count)
+          | otherwise = go (n - denom) denom (count + 1)
+
