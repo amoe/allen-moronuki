@@ -1,3 +1,38 @@
+2019-07-22
+
+## Numbers into words
+
+See the solution to hundredsDigit
+
+    hundredsDigit :: Integral a => a -> a
+    hundredsDigit x = d
+      where (x', _) = divMod x 100
+            d = mod x' 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 2019-07-19
 
