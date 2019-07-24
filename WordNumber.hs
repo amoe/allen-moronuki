@@ -36,14 +36,14 @@ numberOfDigitsInInteger n = 1 + numberOfDigitsInInteger (div n 10)
 
 -- Something like this needs to happen:
 -- But a version that will actually type check
--- getCertainDigit :: Integral a => Integer -> a -> a
--- getCertainDigit n x = d
---   where wantedPower = doExpt 10 n
---         (x', _) = divMod x wantedPower
---         d = mod x' 10
+getCertainDigit :: Integral a => a -> a -> a
+getCertainDigit x n = d
+  where wantedPower = doExpt 10 (n - 1)
+        (x', _) = divMod x wantedPower
+        d = mod x' 10
 
 
 -- Integer exponentiation
-doExpt :: Integer -> Integer -> Integer
+doExpt :: Integral a => a -> a -> a
 doExpt _ 0 = 1
 doExpt x y = x * (doExpt x (y - 1))
