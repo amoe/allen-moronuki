@@ -1,8 +1,10 @@
 module WordNumber where
 
+-- Difficult exercise from Chapter 8!
+
 import Data.List (intersperse)
 
-digitToWord :: Int -> String
+digitToWord :: Integer -> String
 digitToWord 0 = "zero"
 digitToWord 1 = "one"
 digitToWord 2 = "two"
@@ -15,19 +17,16 @@ digitToWord 8 = "eight"
 digitToWord 9 = "nine"
 digitToWord _ = error "invalid digit"
     
--- digits :: Int -> [Int]
--- digits n = []
---   where magnitude = numberOfDigitsInInteger n
-
 -- Need to do the conversion using fromInteger
 getSeries :: Integer -> [Integer]
 getSeries n = take (fromInteger nDigits) $ enumFrom 1
   where nDigits = numberOfDigitsInInteger n
 
+getIndividualDigits :: Integer -> [Integer]
+getIndividualDigits n = reverse $ map (getCertainDigit n) (getSeries n)
 
-
-wordNumber :: Int -> String
-wordNumber n = undefined
+wordNumber :: Integer -> String
+wordNumber n = concat (intersperse "-" (map digitToWord (getIndividualDigits n)))
 
 -- Head recursive version
 numberOfDigitsInInteger :: Integer -> Integer
@@ -42,8 +41,7 @@ getCertainDigit x n = d
         (x', _) = divMod x wantedPower
         d = mod x' 10
 
-
--- Integer exponentiation
+-- Integer exponentiation (head recursive)
 doExpt :: Integral a => a -> a -> a
 doExpt _ 0 = 1
 doExpt x y = x * (doExpt x (y - 1))
