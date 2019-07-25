@@ -1,3 +1,82 @@
+2019-07-25
+
+In Haskell, lists are both finite sequences and also infinite streams.
+
+: is an infix operator meaning cons.
+As in lisp, cons takes a head and a taila nd returns a list.
+It works in the same way, you can cons the head onto an empty list.
+
+Hence, `(:) 1 []` => `[1]`, we constructed a list from one item.
+
+This line noise:
+
+    (:) 1 $ (:) 1 []
+
+Gives a list of two items.  
+
+When looking at the list definition,
+
+    data [] a = [] | a : [a]
+
+You read that as:
+
+SUM([], PRODUCT(:, a, [a]))
+
+Recall that a product type is an aggregate.
+
+    data MyProductType a b = MyProductType a b
+
+In this case, MyProductType is just a prefix function.
+You can create a near identical, less magical type by the following.
+
+    data MyList a = EmptyList | MyList a (MyList a)
+      deriving (Show)
+
+Hence cons is not really a function per se!  It's just a data constructor.
+It doens't even have a definition.
+
+Now, writing this:
+
+    MyList "bar" (MyList "foo" EmptyList)
+
+Is completely isomorphic to this:
+
+    (:) "bar" $ (:) "foo" []
+   
+Although they have a special print syntax, which can just be defined by giving
+them an instance of the Show type class.
+
+The list in question is a singly-linked list.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 2019-07-22
 
 ## Numbers into words
