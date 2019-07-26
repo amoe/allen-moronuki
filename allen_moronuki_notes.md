@@ -48,6 +48,31 @@ them an instance of the Show type class.
 
 The list in question is a singly-linked list.
 
+## Pattern matching on lists
+
+When we write `myHead (x : _) = x`, we define a function without a type
+signature.  This looks weird but we are just matching on the data constructor,
+which happens to be infix in this case.
+
+myHead and myTail are partial functions however.  Even the prelude from head is
+a partial function and as such you arguably shouldn't use it?
+
+The comma in lists is syntactic sugar.  Does it relate to the (,) tuple operator
+at all?  The ability to enclose lists in square brackets is all magic.
+Otherwise you would have to use explicit cons calls.
+
+There is something called a spine that 'is the connective structure that holds
+the cons cells together and in place'.  This isn't very clear.
+
+There is also sugar to construct list from ranges like Perl.
+
+[1..10] expands to [1,2,3,4,5,6,7,8,9,10]
+it's directly equivalent to an enumFrom
+You can also use [x,y...z]
+which will expand to enumFromThenTo, 
+this creates sequence with a step.  It might be called enumWithStep instead.
+enumFrom, enumFromThen creates infinite lists
+
 
 
 
