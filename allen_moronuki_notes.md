@@ -2,7 +2,8 @@
 
 # Exercise: EnumFromTo
 
-
+The basic strategy for this is to loop and have 3 conditions, 2 base cases and
+one recursion step.
 
 2019-07-25
 
