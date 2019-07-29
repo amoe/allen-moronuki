@@ -29,3 +29,15 @@ myTail3 (_ : xs) = Just xs
 myHead3 :: [a] -> Maybe a
 myHead3 [] = Nothing
 myHead3 (x : _) = Just x
+
+
+
+-- eft is an abbreviation of enumFromTo
+
+
+-- For Bool we can just handle all possible cases by pattern matching
+eftBool :: Bool -> Bool -> [Bool]
+eftBool False True = [False, True]
+eftBool False False = [False]
+eftBool True False = []
+eftBool True True = [True]

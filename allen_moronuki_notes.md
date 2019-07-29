@@ -1,3 +1,9 @@
+2019-07-29
+
+# Exercise: EnumFromTo
+
+
+
 2019-07-25
 
 In Haskell, lists are both finite sequences and also infinite streams.
@@ -72,34 +78,6 @@ You can also use [x,y...z]
 which will expand to enumFromThenTo, 
 this creates sequence with a step.  It might be called enumWithStep instead.
 enumFrom, enumFromThen creates infinite lists
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 2019-07-22
