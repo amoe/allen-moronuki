@@ -5,6 +5,30 @@
 The basic strategy for this is to loop and have 3 conditions, 2 base cases and
 one recursion step.
 
+take works as we expect.
+drop works as we expect.
+
+splitAt splits at an index and returns a 2-tuple
+The type signature basically says what it does.
+
+take can be used with infinite lists like the ones that result from enumFrom
+calls.
+
+takeWhile and dropWhile are weird
+takeWhile is like filter.  Except that it stops immediately on the first
+non-true.
+eg takeWhile (>3) [1..10]  evals to []
+but takeWhile (
+
+That's actually really really useful.
+
+## Exercise: Thy Fearful Symmetry
+
+This is a tricky exercise because you have to remove the initial space that gets
+included as a result.  And you have to use this trimmed version at both sites.
+Otherwise, it's a simple build-by-recursing thing.
+
+
 2019-07-25
 
 In Haskell, lists are both finite sequences and also infinite streams.

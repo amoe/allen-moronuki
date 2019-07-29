@@ -62,3 +62,16 @@ eftChar x y
   | x > y = []
   | x == y = [y]
   | otherwise = (:) x (eftChar (succ x) y)
+
+l = ["foo", "bar", "baz"]
+
+isSpace = (== ' ')
+isNonSpace = (/= ' ')
+
+myWords :: String -> [String]
+myWords "" = []
+myWords s = (:) word (myWords rest)
+  where trimmed = dropWhile isSpace s
+        word = takeWhile isNonSpace trimmed
+        rest = dropWhile isNonSpace trimmed
+
