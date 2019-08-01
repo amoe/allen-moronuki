@@ -1,3 +1,38 @@
+2019-08-01
+
+
+-- split :: Char -> String -> [String]
+-- split _ "" = []
+-- split x y = (:) element (split x rest)
+--   where isSep = (== x)
+--         isNonSep = (/= x)
+--         trimmed = dropWhile isSep y
+--         element = takeWhile isNonSep trimmed
+--         rest = dropWhile isNonSep trimmed
+
+
+## list comprehensions
+
+these are denoted with a [<function> | <var> <- <input set>]
+
+These seem very similar to the ones in python.
+
+There is also a version that has a predicate.  Still very similar
+the predicate is separated by a comma.
+
+you can have multiple generators
+
+lcVal3 = [x^y | x <- [1..10], y <- [2..3], x ^ y < 200]
+
+This expands out to a loop like
+
+for x in [1..10]
+  for y in [2..3]
+
+
+You can use tuples in generator expressions to pair things up
+
+
 2019-07-29
 
 # Exercise: EnumFromTo
@@ -24,9 +59,15 @@ That's actually really really useful.
 
 ## Exercise: Thy Fearful Symmetry
 
-This is a tricky exercise because you have to remove the initial space that gets
-included as a result.  And you have to use this trimmed version at both sites.
-Otherwise, it's a simple build-by-recursing thing.
+1.  This is a tricky exercise because you have to remove the initial space that
+gets included as a result.  And you have to use this trimmed version at both
+sites.  Otherwise, it's a simple build-by-recursing thing.
+
+
+2.  Implemented in PoemLines.hs
+
+3.  Implemented in Chapter9.hs as `split`
+
 
 
 2019-07-25

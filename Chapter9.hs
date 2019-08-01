@@ -76,5 +76,3 @@ myWords s = (:) word (myWords rest)
         rest = dropWhile isNonSpace trimmed
 
 
-
-
