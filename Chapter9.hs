@@ -103,3 +103,10 @@ lcVal5 = [ (x, y) | x <- [1, 2, 3], y <- [6, 7] ]
 
 -- And the tuple doesn't have to have the same type.
 lcVal6 = [ (x, y) | x <- [1, 2, 3], y <- ['a', 'b'] ]
+
+
+
+mySqr = [ x^2 | x <- [1..10] ]
+
+-- We can use the generated list as input to another list comprehension
+lcVal7 = [ (x, y) | x <- mySqr, y <- [1..3], x < 4 ]
