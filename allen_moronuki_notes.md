@@ -21,7 +21,6 @@ for x in [1..10]
 
 You can use tuples in generator expressions to pair things up
 
-
 2019-07-29
 
 # Exercise: EnumFromTo

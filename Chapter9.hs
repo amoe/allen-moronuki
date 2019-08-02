@@ -84,3 +84,13 @@ split x y = (:) element (split x rest)
         element = takeWhile isNonSep trimmed
         rest = dropWhile isNonSep trimmed
 
+
+lcVal1 = [ x^2 | x <- [1..10] ]
+
+lcVal2 = [ x^2 | x <- [1..10], rem x 2 == 0 ]
+
+lcVal3 = [ x^y | x <- [1..5], y <- [2, 3] ]
+
+-- When does the condition run?  The condition seems to form a filter, as
+-- expected.  It doesn't work in a stop-fast way, like takeWhile or similar
+lcVal4 = [ x^y | x <- [1..10], y <- [2, 3], x^y < 200 ]
