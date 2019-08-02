@@ -1,16 +1,5 @@
 2019-08-01
 
-
--- split :: Char -> String -> [String]
--- split _ "" = []
--- split x y = (:) element (split x rest)
---   where isSep = (== x)
---         isNonSep = (/= x)
---         trimmed = dropWhile isSep y
---         element = takeWhile isNonSep trimmed
---         rest = dropWhile isNonSep trimmed
-
-
 ## list comprehensions
 
 these are denoted with a [<function> | <var> <- <input set>]
