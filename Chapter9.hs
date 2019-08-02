@@ -85,12 +85,21 @@ split x y = (:) element (split x rest)
         rest = dropWhile isNonSep trimmed
 
 
+-- Single generator, single output function
 lcVal1 = [ x^2 | x <- [1..10] ]
 
+-- Single generator, single output function, single condition
 lcVal2 = [ x^2 | x <- [1..10], rem x 2 == 0 ]
 
+-- Multiple generators, they run in loops
 lcVal3 = [ x^y | x <- [1..5], y <- [2, 3] ]
 
 -- When does the condition run?  The condition seems to form a filter, as
 -- expected.  It doesn't work in a stop-fast way, like takeWhile or similar
 lcVal4 = [ x^y | x <- [1..10], y <- [2, 3], x^y < 200 ]
+
+-- Getting tuple results.
+lcVal5 = [ (x, y) | x <- [1, 2, 3], y <- [6, 7] ]
+
+-- And the tuple doesn't have to have the same type.
+lcVal6 = [ (x, y) | x <- [1, 2, 3], y <- ['a', 'b'] ]
