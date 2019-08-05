@@ -1,3 +1,23 @@
+2019-08-05
+
+## Exercises: Comprehend Thy Lists
+
+1.  mySqr is a list of squares from 1..10.
+So the result will be a filtered list of even squares.
+Which means that it will be `[4, 16, 36, 64, 100]`  -- CORRECT
+
+2.  x and y are elements of mysqr.
+    The result is a tuple
+    x is restricted to less-than 50: [1,4,9,16,25,36,49]
+    y is restricted to greater-than 50: [64, 81, 100]
+
+So the result should be (giant long list called wanted2) -- and result is true.
+
+3.  It's just the result of taking the first 5 so it should be
+
+`(1, 64), (1, 81), (1, 100), (4, 64), (4, 81)`
+
+
 2019-08-01
 
 ## list comprehensions
