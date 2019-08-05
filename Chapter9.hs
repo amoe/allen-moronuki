@@ -110,3 +110,22 @@ mySqr = [ x^2 | x <- [1..10] ]
 
 -- We can use the generated list as input to another list comprehension
 lcVal7 = [ (x, y) | x <- mySqr, y <- [1..3], x < 4 ]
+
+
+allLowercase = ['a'..'z']
+
+
+-- Blind attempt at removeLowercase
+removeLowercase :: String -> String
+removeLowercase xs = [ x' | x' <- xs, not (elem x' allLowercase) ]
+
+
+-- Or the inverted logic version, but note that this removes whitespace.
+keepUppercase :: String -> String
+keepUppercase xs = [ x' | x' <- xs, elem x' ['A'..'Z'] ]
+
+-- A&M ask us what this expression will do, the answer is that it will keep the
+-- vowels from the string.
+keepVowels :: String -> String
+keepVowels xs = [ x' | x' <- xs, elem x' "aeiou" ]
+

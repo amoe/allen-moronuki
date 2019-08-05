@@ -18,6 +18,32 @@ So the result should be (giant long list called wanted2) -- and result is true.
 `(1, 64), (1, 81), (1, 100), (4, 64), (4, 81)`
 
 
+
+Now continue.
+
+'elem' is the `in` keyword in python -- linear search for an item and return a
+boolean value.
+Write a list comprehension to remove all of the lowercase letters from a string.
+
+
+## Spines and non strict evaluation
+
+A&M suggest that a tree is a data structure in Haskell.
+We say that a list has a spine.
+What constitutes the spine -- the cons cells.
+The infix notation encourages you to think that the value is primary, but
+actually the cons cell is primary.  Hence perhaps why I wanted to write
+cons in prefix instead.
+
+Some confusing statements:
+
+"It is possible to evaluate only the spine of a list without evaluating
+individual values"
+
+"Until a value is consumed, there are a series of placeholders as a blueprint
+of the list that can be constructed when it's needed."
+
+
 2019-08-01
 
 ## list comprehensions
