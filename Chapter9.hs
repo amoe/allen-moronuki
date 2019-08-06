@@ -129,3 +129,26 @@ keepUppercase xs = [ x' | x' <- xs, elem x' ['A'..'Z'] ]
 keepVowels :: String -> String
 keepVowels xs = [ x' | x' <- xs, elem x' "aeiou" ]
 
+-- Normal form
+
+-- This expression is in NF (and WHNF).
+expr1 = (1, 2)
+
+-- This expression is merely in WHNF.  The outer expression is a data constructor.
+expr2 = (1, 1 + 1)
+
+-- This expression is in NF.  It can't be reduced because of the free variable x.
+expr3 = \x -> x * 10
+
+-- This expression is in none of them!  The outer expression is a function
+-- application.  It's in a non-reduced state.
+expr4 = "Papu" ++ "chon"
+
+-- This expression is in WHNF
+expr5 = (1, "Papu" ++ "chon")
+
+-- This list is in NF.
+expr6 = [1, 2, 3]
+
+
+

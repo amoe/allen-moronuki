@@ -1,3 +1,48 @@
+2019-08-06
+
+:sprint is a command that can show to what extent some variable has been
+evaluated.
+If it hasn't been referenced yet, it will print as the underscore.
+
+Except in the case of Num a => a, which will not evlauate ever as it's 'waiting
+for a sort of argument' in A&M terms, so ignore it in this case.
+
+Stuff will only get made non-_ as you take it.  Eg,
+
+    Prelude> Prelude> l1 = enumFromTo 'a' 'z'
+    Prelude> take 1 l1
+    "a"
+    Prelude> :sprint l1
+    l1 = 'a' : _
+    Prelude> take 2 l1
+    "ab"
+    Prelude> :sprint l1
+    l1 = 'a' : 'b' : _
+
+As we have not reached the end of the list yet, the final item is the
+unevaluated cdr of a cons cell.
+
+`length` is one of those special functions that evaluates only the spine of the
+list.  Unfortunately due to optimizations, it will seem as if the whole list was
+evaluated.  eg it shows `"abc"` when it should show `_ : _ : _ : []`.
+
+There is something called weak head normal form, WHNF, which means that
+expressions can be reduced to the point where they are 'waiting' for another
+input, rather than completely reduced (normal form -- NF).
+
+If we evaluate to NF, we say the expression has been fully evaluated, as far as
+it will go.
+
+Haskell actually does have the 'exploding value' that I dreamt about: the
+literal `undefined`.  Evaluating `undefined` will throw an exception but only
+when it's actually evaluated.  You can store undefined in a list and ask
+for the length of a list without an exception being thrown, because the `length`
+function in prelude is spine-strict.  It's "spine-strict" in the sense that
+it forces the evaluation of the entire spine, but it's not *value-strict*
+because it doesn't evaluate the values in either the car or cdr of the cons
+cells constituting the spine.
+
+
 2019-08-05
 
 ## Exercises: Comprehend Thy Lists
