@@ -1,3 +1,83 @@
+2019-08-07
+
+Binding things to _ is not merely a convention.  It prevents the compiler
+from attempting to evaluate whatever is in that spot.
+
+Look at creating some weird lists:
+
+
+
+    weirdList = [1] ++ undefined ++ [3]
+
+You can't either a) print this list, or b) get the length of it.
+Why not?
+Because this is not actually consing together a list fresh: it's welding
+together existing spines.
+As a result, undefined appears directly in the spine, causing the `length`
+function to blow up.
+
+This is fine though: `weirdList2 = [1] ++ [undefined] ++ [3]`
+This one can be got the length of, but it can't be printed.
+
+## Exercises: Bottom Madness
+
+1.  It will be undefined because you can't evaluate the whole sequence.  However
+the first item can be evaluated.  The first one should be 1^2 = 1, then it
+should blow up.  CORRECT
+
+2.  Should be fine and result in `[1]`.  CORRECT
+
+3.  This should fail because it has to force and reduce the whole spine+values
+before it can return anything.  CORRECT
+
+4.  This should succeed and return 3.  CORRECT
+
+5.  This won't work because it's an attempt to cons onto a spine and length
+is spine strict. 
+
+6.  It's really difficult to tell what this one will do.  With the most lazy
+interpretation, it would return [2].    The outer expression `take 1` would
+cause the inner call to stop.  And indeed that is CORRECT.
+
+The question is though, do we have to write `take` specially to avoid forcing
+the values?  Probably not!
+
+7.  Without the 2 in the list, the `take` call will keep reducing the filter
+    expression, and will attempt to evaluate undefined, so it will blow up.
+CORRECT
+
+8.  This will stop after producing the initial value [1].  CORRECT
+
+9.  This will stop after producing [1, 2].  CORRECT
+
+10.  This will blow up.
+
+## Intermission: Is it in normal form?
+
+1.  `[1, 2, 3, 4, 5]`: This expression is in NF.
+
+2.  `1 : 2 : 3 : 4 : _`: 
+If _ is evaluated, it's in NF, otherwise, it's only WHNF.  Since _ (hole)
+can't be evaluated by definition, it's in WHNF.
+
+3.  `enumFromTo 1 10`: The head is enumFromTo so surely it is
+in neither.
+
+4.  Again it's in neither: the head is length.
+
+5.  Again it's in neither: the head is sum.
+
+6.  Again it's in neither: the head is ++.
+
+7.  `(_, 'b')`: This is in WHNF but not NF, by definition the hole is not
+    evaluated.
+
+
+
+
+
+
+
 2019-08-06
 
 :sprint is a command that can show to what extent some variable has been

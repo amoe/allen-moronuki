@@ -27,3 +27,26 @@ someTuples1 = [ (x, y) | x <- mySqr2, y <- myCube2 ]
 someTuples2 = [ (x, y) | x <- mySqr2, y <- myCube2, x < 50, y < 50 ]
 
 
+--- Ex: Bottom madness
+
+expr1 = [ x^y | x <- [1..5], y <- [2, undefined] ]
+
+expr2 = take 1 expr1
+
+expr3 = sum [1, undefined, 3]
+
+expr4 = length [1, 2, undefined]
+
+expr5 = length $ [1, 2, 3] ++ undefined
+
+expr6 = take 1 $ filter even [1, 2, 3, undefined]
+
+expr7 = take 1 $ filter even [1, 3, undefined]
+
+expr8 = take 1 $ filter odd [1, 3, undefined]
+
+expr9 = take 2 $ filter odd [1, 3, undefined]
+
+expr10 = take 3 $ filter odd [1, 3, undefined]
+
+

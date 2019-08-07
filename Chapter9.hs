@@ -150,5 +150,12 @@ expr5 = (1, "Papu" ++ "chon")
 -- This list is in NF.
 expr6 = [1, 2, 3]
 
+weirdList1 = [1] ++ undefined ++ [3]
+weirdList2 = [1] ++ [undefined] ++ [3]
+
+mySum :: Num a => [a] -> a
+mySum [] = 0
+mySum (x:xs) = x + mySum xs
+
 
 
