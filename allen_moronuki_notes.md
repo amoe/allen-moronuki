@@ -1,3 +1,73 @@
+2019-08-08
+
+## Transforming lists of values
+
+map is used with regular lists, fmap is used with something called `Functor`,
+but we don't know what that is yet.
+
+They work the same in many examples.
+
+The type of map is:
+
+    map :: (a -> b) -> [a] -> [b]
+    fmap :: Functor f => (a -> b) -> f a -> f b
+
+I understand the regular map but not the type of fmap.  What does 'f a' mean.
+
+Let's take a call to `map (+1)`
+
+In this case, `(a -> b)` resolves to `Num a => a -> a`
+
+In that case, the type becomes
+
+    expr :: Num a => (a -> a) -> [a] -> [a]
+
+Now try with fmap.
+
+    fmap (+1)
+
+The type of `fmap (+1)` according to ghci is:
+
+    (Functor f, Num b) => f b -> f b
+
+A&M go into some detail about the evaluation of map, and emphasize that it's
+basically threading the function into each cons cell.  However:
+
+> crucially, map doesn't traverse the whole list and apply the function
+> immediately.  The function is applied to the values you force out of the list
+> one by one.
+
+The proof of this is this expression, which was alluded to in the previous
+set of exercises:
+
+    take 2 $ map (+1) [1, 2, undefined]
+
+If we had eager (strict) evaluation, this would blow up, because it would
+attempt to evaluate the `undefined`.
+
+## Exercises: More Bottoms
+
+1.  Value or bottom?  `take 1 $ map (+1) [undefined, 2, 3]`
+
+Bottom.  CORRECT
+
+2.  Value or bottom?  `take 1 $ map (+1) [1, undefined, 3]`
+
+Value [2].  CORRECT.
+
+3.  Value or bottom?  `take 2 $ map (+1) [1, undefined, 3]`
+
+Bottom after evaluating to [2,].  CORRECT
+
+4.  The type of `itIsMystery` is
+
+itIsMystery :: [a] -> [Bool]
+
+WRONG -- The actual type is [Char] -> [Bool], the input x is restricted to Char
+by the context of the Elem call.
+
+
+
 2019-08-07
 
 Binding things to _ is not merely a convention.  It prevents the compiler

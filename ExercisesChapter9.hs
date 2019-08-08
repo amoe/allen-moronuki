@@ -50,3 +50,8 @@ expr9 = take 2 $ filter odd [1, 3, undefined]
 expr10 = take 3 $ filter odd [1, 3, undefined]
 
 
+
+-- Ex: More bottoms
+
+-- 4.  What is its type?
+itIsMystery xs = map (\x -> elem x "aeiou") xs

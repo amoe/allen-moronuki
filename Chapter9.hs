@@ -159,3 +159,22 @@ mySum (x:xs) = x + mySum xs
 
 
 
+mapped1 = map (+1) [1, 2, 3, 4]
+mapped2 = map (1-) [1, 2, 3, 4]
+mapped3 = fmap (+1) [1, 2, 3, 4]
+mapped4 = fmap (2*) [1, 2, 3, 4]
+mapped5 = map id [1,2,3,4]
+mapped6 = fmap id [1,2,3,4]
+
+-- Map works with any function.
+mapped7 = map fst [(2,3), (4,5), (6,7)]
+
+-- Including partially applied functions.
+mapped8 = map (take 3) [[1..5], [1..5], [1..5]]
+
+-- And including anonymous functions.
+mapped9 = map (\x -> x + 1)  [1..5]
+
+-- And you can do complex expressions.  note that the type of (a -> b) can still
+-- be inferred here.
+mapped10 = map (\x -> if x == 3 then negate x else x)  [1..5]
