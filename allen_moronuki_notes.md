@@ -66,6 +66,37 @@ itIsMystery :: [a] -> [Bool]
 WRONG -- The actual type is [Char] -> [Bool], the input x is restricted to Char
 by the context of the Elem call.
 
+5.  What will be the result of the following functions
+
+a) A list of the squares of the numbers 1..10 inclusive.  CORRECT
+
+b) minimum is going to be applied over the list.
+It returns 'the least element of a non-empty structure'.
+
+So, it's going to return [1, 10, 20].
+
+c) 5+4+3+2+1 = 15, so [15, 15, 15]
+
+6.  There is some function in Data.Bool
+
+its type signature is `a -> a -> Bool -> a`
+
+ie take two arguments of the same type and yield one of the values depending
+on the truth value of the argument.
+indeed -- if the value is false, the first value will be returned, otherwise
+the second value will be returned.
+
+The implementation looks like: 
+
+    ex6 = map (\x -> bool x (negate x) (x == 3)) [1..5]
+
+This is pretty unclear IMO
+
+
+
+
+
+
 
 
 2019-08-07

@@ -1,5 +1,7 @@
 module ExercisesChapter9 where
 
+import Data.Bool (bool);
+
 -- Ex: Comprehend thy lists
 
 mySqr = [ x^2 | x <- [1..10] ]
@@ -55,3 +57,13 @@ expr10 = take 3 $ filter odd [1, 3, undefined]
 
 -- 4.  What is its type?
 itIsMystery xs = map (\x -> elem x "aeiou") xs
+
+-- 5.
+mapval1 = map (^2) [1..10]
+
+mapval2 = map minimum [[1..10], [10..20], [20..30]]
+
+mapval3 = map sum [[1..5], [1..5], [1..5]]
+
+
+ex6 = map (\x -> bool x (negate x) (x == 3))  [1..5]
