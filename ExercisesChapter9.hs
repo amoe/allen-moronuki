@@ -1,6 +1,8 @@
 module ExercisesChapter9 where
 
-import Data.Bool (bool);
+import Data.Bool (bool)
+import Data.Char (isUpper, toUpper, ord, chr)
+
 
 -- Ex: Comprehend thy lists
 
@@ -67,3 +69,106 @@ mapval3 = map sum [[1..5], [1..5], [1..5]]
 
 
 ex6 = map (\x -> bool x (negate x) (x == 3))  [1..5]
+
+-- Ex: Filtering
+
+filterAnswer1 = filter (\x -> (rem x 3) == 0) [1..30]
+
+multiplesOfThree = filter (\x -> (rem x 3) == 0)
+
+howMany3X = length . multiplesOfThree
+
+articles = ["the", "a", "an"]
+
+myFilter :: String -> [String]
+myFilter x = filter (\x -> not (isArticle x)) tokens
+  where tokens = words x
+        isArticle x = elem x articles
+
+
+-- This is my hand written version of zip.
+myZip :: [a] -> [b] -> [(a, b)]
+myZip [] _ = []
+myZip _ [] = []
+myZip (x:xs) (y:ys) = (:) (x, y) (myZip xs ys)
+
+myZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+myZipWith f [] _ = []
+myZipWith f _ [] = []
+myZipWith f (x:xs) (y:ys) = (:) (f x y) (myZipWith f xs ys)
+
+-- Now we can define zip in terms of zipWith.
+myZip2 :: [a] -> [b] -> [(a, b)]
+myZip2 = myZipWith (,)
+
+-- Using point free notation
+retainUppercase :: [Char] -> [Char]
+retainUppercase = filter isUpper
+
+
+capitalizeFirstLetter :: [Char] -> [Char]
+capitalizeFirstLetter (x:xs) = (:) (toUpper x) xs
+
+
+-- Of course, this is basically just a map.
+shout :: [Char] -> [Char]
+shout [] = []
+shout (x:xs) = (:) (toUpper x) (shout xs)
+
+getUpperFirstElement :: String -> Char
+getUpperFirstElement x = toUpper $ head x
+
+
+getUpperFirstElementComposed :: String -> Char
+getUpperFirstElementComposed x = (toUpper . head) x
+
+getUpperFirstElementPointfree :: String -> Char
+getUpperFirstElementPointfree = toUpper . head
+
+
+shiftUp :: Enum a => Integer -> a -> a
+shiftUp 0 y = y
+shiftUp x y = shiftUp (x - 1) (succ y)
+
+-- This caesar works but has the problem that it doesn't wrap around properly.
+basicCaesar :: [Char] -> [Char]
+basicCaesar x = map (shiftUp 5) x
+
+variableCaesar :: Integer -> [Char] -> [Char]
+variableCaesar x y = map (shiftUp x) y
+
+
+-- we want to start off at the base, 97 (the value of ord 'a')
+-- let's say we are requested to shift 'b'
+-- ord 'b' is 98
+-- 98 + 5 = 103
+
+-- if we are requested to mod x by 5, the answer should be 'c' == 99
+-- naive way would give 120 + 5 == 125
+
+-- By doing 120 - ord 'a', we know that the relative position within the alphabet
+-- is 23.
+-- Now we do 23 + 5 = 28
+-- Now we do mod 28 26 == 3
+
+
+shiftUpModular :: Int -> Char -> Char
+shiftUpModular n x = chr $ base + (mod newPosition 26)
+  where base = ord 'a'
+        relativePosition = (ord x) - base
+        newPosition = relativePosition + n
+
+-- The change here is in the newPosition calculation.
+shiftDownModular :: Int -> Char -> Char
+shiftDownModular n x = chr $ base + (mod newPosition 26)
+  where base = ord 'a'
+        relativePosition = (ord x) - base
+        newPosition = relativePosition - n
+
+
+modularCaesar :: Int -> [Char] -> [Char]
+modularCaesar n xs = map (shiftUpModular n) xs        
+
+modularUncaesar :: Int -> [Char] -> [Char]
+modularUncaesar n xs = map (shiftDownModular n) xs        
+

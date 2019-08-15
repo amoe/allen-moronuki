@@ -92,10 +92,95 @@ The implementation looks like:
 
 This is pretty unclear IMO
 
+## Ex: Filtering
+
+1.  Write a function to give multiples of 3 from a list 1..30.
+
+x is a multiple of y if rem x y == 0.  Something is even if it is a multiple of
+2.
+
+Therefore,
+
+`filterAnswer1 = filter (\x -> (rem x 3) == 0) [1..30]` is
+`[3,6,9,12,15,18,21,24,27,30]`
+
+But it needs to be a function, so do a curried version.
+
+: filterAnswer2 = length . multiplesOfThree
+
+3.  Write a split function to remove articles.  Now we are allowed to use
+the built in Prelude function `words`.  The answer is quite simple and uses
+`elem` to check membership of the set of articles.
+
+## Zipping lists
+
+The default zip function pairs arguments using the 2-tuple constructor.
+
+zip only runs for the length of the shortest list.
+
+Unzip will do the inverse operation which is its even less clear why you'd
+want it, and return a tuple consisting of two lists.  But it's not a lossless
+process because zip can stop on the shortest list, so it's not guaranteed that
+all of the information will ever reach the unzip call.
+
+zipWith is a more interesting function that combines data from lists in an
+unspecified way.
+
+It's equal to (imperative pseudocode)
 
 
+    result = []
+    max_index = min(len(l1), len(l2))
+    for i in 0..max_index:
+        result.append(f(l1[i], l2[i]))
 
 
+## Exercises
+
+1.  Write your own version of zip.
+The key is to remember that pattern match destructuring syntax is (x:xs).
+
+In scheme this would be something like
+
+    (define (zip xs ys)
+      (cond
+        ((null? xs)  '())
+        ((null? ys)  '())
+        (else (cons (make-tuple (car xs) (car ys))
+                    (zip (cdr xs) (cdr ys))))))
+      
+        
+We learned that the name for the 2-tuple constructor is (,) and the name for the
+3-tuple constructor is (,,).
+
+## Chapter exercises
+
+1.  isUpper has the type `Char -> Bool`.   toUpper has the type `Char -> Char`.
+
+2.  We just write 'filter isUpper'.
+
+3.  We destructure to get the first item of the list then apply toUpper.
+
+4.  We add a base case and recurse on the cdr.
+
+5.  A&M introduce the 'head' function.  This function is notorious for some
+    reason.  My guess is that it's a partial function.  What's the head of an
+    empty list?  -- it's an exception.  I think that we have actually come
+    across this before when dealing with Maybe.  And writing this means that
+    we write a partial function, because there's no sensible value when the list
+    is empty.
+
+6.  Written as composed and pointfree now.
+
+## Cipher exercise
+
+Wanted to use Enum and succ/pred which is simple but doesn't wrap around the
+alphabet as it's supposed to.
+My solution seems to meet the requirements but has several problems
+Doesn't support capitals
+Doesn't support spaces
+Only supports 'a'..'z'
+Apart from that it seems OK.  As promised this was quite difficult.
 
 
 

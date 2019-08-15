@@ -178,3 +178,31 @@ mapped9 = map (\x -> x + 1)  [1..5]
 -- And you can do complex expressions.  note that the type of (a -> b) can still
 -- be inferred here.
 mapped10 = map (\x -> if x == 3 then negate x else x)  [1..5]
+
+
+filtered1 = filter even [1..10]
+filtered2 = filter (== 'a') "abracadabra"
+filtered3 = filter (\x -> (rem x 2) == 0) [1..10]
+filtered4 = [x | x <- "abracadabra", elem x "aeiou"]
+
+zipped1 = zip [1,2,3] [4,5,6]
+
+-- Does not fail, just produces a list of length 2
+-- (the length of the shortest list)
+zipped2 = zip [1,2,3] [4,5]
+
+-- Completes quickly
+zipped3 = zip [] [1..100000]
+
+-- We can also unzip.
+unzipped1 = unzip [(1, 4), (2, 5), (3, 6)]
+
+-- Note here again the use of the argument/tuple symmetry, as unzip yields a
+-- 2-tuple.
+
+zw1 = zipWith (+) [1, 2, 3] [10, 11, 12]
+
+zw2 = zipWith (*) [1, 2, 3] [10, 11, 12]
+
+-- Should just be true shurely -- and indeed it is.
+zw3 = zipWith (==) ['a'..'f'] ['a'..'m']
