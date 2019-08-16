@@ -226,3 +226,13 @@ myMaximumBy f xs = go f xs undefined
                                  LT -> go f xs last
                                  EQ -> go f xs last
                                  GT -> go f xs x
+
+
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy f xs = go f xs undefined
+  where go _ [] last = last
+        go _ [_] last = last
+        go f (x:(y:xs)) last = case f x  of
+                                 LT -> go f xs x
+                                 EQ -> go f xs last
+                                 GT -> go f xs last

@@ -31,6 +31,8 @@ this is actually a fold/reduce
 but we haven't encountered that yet so we can't use it
 it also needs an accumulator/go-function and 
 
+
+
 2019-08-15
 
 ## Writing stdlib functions
