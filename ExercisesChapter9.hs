@@ -2,6 +2,7 @@ module ExercisesChapter9 where
 
 import Data.Bool (bool)
 import Data.Char (isUpper, toUpper, ord, chr)
+import Data.List (maximumBy)
 
 
 -- Ex: Comprehend thy lists
@@ -172,3 +173,56 @@ modularCaesar n xs = map (shiftUpModular n) xs
 modularUncaesar :: Int -> [Char] -> [Char]
 modularUncaesar n xs = map (shiftDownModular n) xs        
 
+
+
+-- Writing your own version of Prelude functions...
+
+myAnd :: [Bool] -> Bool
+myAnd [] = True
+myAnd (False:_) = False
+myAnd (_:xs) = myAnd xs
+
+myOr :: [Bool] -> Bool
+myOr [] = False
+myOr (True:_) = True
+myOr (_:xs) = myOr xs
+
+-- A cheaty way
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny f xs = or $ map f xs
+
+-- Writing myElem recursively
+myElem :: (Eq a) => a -> [a] -> Bool
+myElem _ [] = False
+myElem x (y:ys)
+  | x == y = True
+  | otherwise = myElem x ys
+  
+
+myElem2 :: (Eq a) => a -> [a] -> Bool
+myElem2 x ys = any (== x) ys
+
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (x:xs) = myReverse xs ++ [x]
+
+-- squish is actually concat.
+squish :: [[a]] -> [a]
+squish [] = []
+squish (x:xs) = (++) x (squish xs)
+
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f xs = squish $ map f xs
+
+
+squishAgain :: [[a]] -> [a]
+squishAgain xs = squishMap id xs
+
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy f xs = go f xs undefined
+  where go _ [] last = last
+        go _ [_] last = last
+        go f (x:(y:xs)) last = case f x y of
+                                 LT -> go f xs last
+                                 EQ -> go f xs last
+                                 GT -> go f xs x

@@ -1,3 +1,51 @@
+2019-08-16
+
+The eventual way to do `reverse` is to use (++), which feels kind of cheap to
+me.  But I didn't even think about using it...
+
+myConcat just applies ++ recursively.  Hence concat is basically "apply append".
+There's some deep relationship between "apply" as a concept and primitive list
+recursion on 2-argument functions.
+
+"squishmap" -- is this mapcat in clojure?
+
+
+squishMap (\x -> [1, x, 3]) [2]
+
+squishMap can easily be implemented by just composing concat and map.
+
+myMaximumBy this is interesting.  It can be done by keeping a counter of the
+max-so-far
+But we probably want to do a  pattern match.  This means we need to use case?
+
+This is nice and difficult -- it introduces 2 new concepts:
+
+2-step pattern-match:
+
+    where go _ [] last = last
+          go _ [_] last = last
+          go f (x:(y:xs)) last = ...
+
+note that you need ot have the one-element case here.
+this is actually a fold/reduce
+but we haven't encountered that yet so we can't use it
+it also needs an accumulator/go-function and 
+
+2019-08-15
+
+## Writing stdlib functions
+
+Writing And was pretty fun because you can abuse pattern matching, the
+implementation basically being a direct translation of the thought process.
+
+
+reverse needs to have a think.
+
+I think that one way to do it is to use a tail recursion in a go function?  
+
+
+
+
 2019-08-08
 
 ## Transforming lists of values
