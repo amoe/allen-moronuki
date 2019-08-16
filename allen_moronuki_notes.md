@@ -18,20 +18,18 @@ myMaximumBy this is interesting.  It can be done by keeping a counter of the
 max-so-far
 But we probably want to do a  pattern match.  This means we need to use case?
 
-This is nice and difficult -- it introduces 2 new concepts:
-
-2-step pattern-match:
-
-    where go _ [] last = last
-          go _ [_] last = last
-          go f (x:(y:xs)) last = ...
+This is nice and difficult -- it introduces new concepts:
 
 note that you need ot have the one-element case here.
 this is actually a fold/reduce
 but we haven't encountered that yet so we can't use it
 it also needs an accumulator/go-function and 
 
-
+I eventually needed an explicit counter because how do you prevent trying to
+evaluate an undefined?  I am guessing that there is a clever head recursive
+version which I have overlooked.  Something that handles the first-element case
+by destructuring... or you could go through the list backwards?  which would
+allow you to recurse until (x:[]), then unwind
 
 2019-08-15
 

@@ -218,21 +218,29 @@ squishMap f xs = squish $ map f xs
 squishAgain :: [[a]] -> [a]
 squishAgain xs = squishMap id xs
 
+-- Introduce an explicit counter to prevent trying to evaluate (f x undefined)
 myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
-myMaximumBy f xs = go f xs undefined
-  where go _ [] last = last
-        go _ [_] last = last
-        go f (x:(y:xs)) last = case f x y of
-                                 LT -> go f xs last
-                                 EQ -> go f xs last
-                                 GT -> go f xs x
+myMaximumBy f xs = go f xs undefined 0
+  where go f [] last _ = last
+        go f (x:xs) _ 0 = go f xs x 1
+        go f (x:xs) last n = case f x last of
+                               LT -> go f xs last (n + 1)
+                               EQ -> go f xs last (n + 1)
+                               GT -> go f xs x (n + 1)
 
 
 myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
-myMinimumBy f xs = go f xs undefined
-  where go _ [] last = last
-        go _ [_] last = last
-        go f (x:(y:xs)) last = case f x  of
-                                 LT -> go f xs x
-                                 EQ -> go f xs last
-                                 GT -> go f xs last
+myMinimumBy f xs = go f xs undefined 0
+  where go f [] last _ = last
+        go f (x:xs) _ 0 = go f xs x 1
+        go f (x:xs) last n = case f x last of
+                               LT -> go f xs x (n + 1)
+                               EQ -> go f xs last (n + 1)
+                               GT -> go f xs last (n + 1)
+  
+
+myMaximum :: (Ord a) => [a] -> a
+myMaximum xs = myMaximumBy compare xs
+
+myMinimum :: (Ord a) => [a] -> a
+myMinimum xs = myMinimumBy compare xs
