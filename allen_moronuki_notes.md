@@ -1,3 +1,120 @@
+2019-08-20
+
+A 'product type' is a type that contains other types, a sum type is a type
+that's the disjunction of several other types.  It's denoted using data
+constructors with more than one argument.
+
+A&M show an example of how to define your own cons cell, much like we did
+earlier.
+
+"The spine is a way to refer to the structure that glues a collection of values
+together."
+i.e. it's the nesting of cons cells but with the values elided.  This is
+perfectly meaningful because of non-strict evaluation.
+
+# CHAPTER 10 -- folds
+
+Folds are also referred to as catamorphisms.  The prefix 'cata' means down or
+against.  Catamorphisms are a way of *deconstructing data* ie a reduction of the
+data.  (but they point out that folds can also return lists -- folds can build
+up a new structure as a result -- would be interesting to see an example of
+this???)
+
+There are also something called scans.
+
+foldr is given, the type signature seems to indicate that it's reduce.  And we
+can see that in practice it works the same as reduce.  Haskell does not have a
+function called reduce, so reduce is the same as fold-right.
+
+Something interesting is shown here, the type signature notation `[] a` as the
+more-regular-less-sugary way of writing `[a]`.  This works fine:
+
+    myFoo :: [a] -> [] a
+    myFoo xs = map id xs
+
+So in a very real sense, the list is a regular product tye that happens to
+be named `[]`.
+
+Although foldr is replaced with a type class called Foldable, you can still
+define your own version that's more concrete, by just rebinding the function
+with a new type signature.
+
+My question about the type signature is why make the type the same as the 2nd
+arg of the function???
+Also how does this actually work because the function f is defined to take
+a value of type `a` as its first argument.  But in the recursive step, it may be
+a different type.  Actually no, this is wrong, in the signature
+
+(a -> b -> b)
+
+b denotes the seed value.  So this will be where the direction (right or left)
+comes in.  Take the case of cons
+
+    (cons B-VAL [])
+    (cons 3 (cons B-VAL []))
+    (cons 2 (cons 3 (cons B-VAL [])))
+    (cons 1 (cons 2 (cons 3 (cons B-VAL []))))
+
+So as we can see the operation proceeds from the right.
+
+The relationship between map and foldr: Map traverses the spine and essentially
+replaces the values with function applications to the values.  Foldr replaces
+the spine itself with function applications.  (which are then inevitably
+reduced.  hence in the case where the function it replaced them with is "cons",
+it still returns a list, otherwise if the function is (+), it returns a single
+value.)
+
+
+
+
+2019-08-16
+
+The eventual way to do `reverse` is to use (++), which feels kind of cheap to
+me.  But I didn't even think about using it...
+
+myConcat just applies ++ recursively.  Hence concat is basically "apply append".
+There's some deep relationship between "apply" as a concept and primitive list
+recursion on 2-argument functions.
+
+"squishmap" -- is this mapcat in clojure?
+
+
+squishMap (\x -> [1, x, 3]) [2]
+
+squishMap can easily be implemented by just composing concat and map.
+
+myMaximumBy this is interesting.  It can be done by keeping a counter of the
+max-so-far
+But we probably want to do a  pattern match.  This means we need to use case?
+
+This is nice and difficult -- it introduces new concepts:
+
+note that you need ot have the one-element case here.
+this is actually a fold/reduce
+but we haven't encountered that yet so we can't use it
+it also needs an accumulator/go-function and 
+
+I eventually needed an explicit counter because how do you prevent trying to
+evaluate an undefined?  I am guessing that there is a clever head recursive
+version which I have overlooked.  Something that handles the first-element case
+by destructuring... or you could go through the list backwards?  which would
+allow you to recurse until (x:[]), then unwind
+
+2019-08-15
+
+## Writing stdlib functions
+
+Writing And was pretty fun because you can abuse pattern matching, the
+implementation basically being a direct translation of the thought process.
+
+
+reverse needs to have a think.
+
+I think that one way to do it is to use a tail recursion in a go function?  
+
+
+
+
 2019-08-08
 
 ## Transforming lists of values
@@ -65,6 +182,122 @@ itIsMystery :: [a] -> [Bool]
 
 WRONG -- The actual type is [Char] -> [Bool], the input x is restricted to Char
 by the context of the Elem call.
+
+5.  What will be the result of the following functions
+
+a) A list of the squares of the numbers 1..10 inclusive.  CORRECT
+
+b) minimum is going to be applied over the list.
+It returns 'the least element of a non-empty structure'.
+
+So, it's going to return [1, 10, 20].
+
+c) 5+4+3+2+1 = 15, so [15, 15, 15]
+
+6.  There is some function in Data.Bool
+
+its type signature is `a -> a -> Bool -> a`
+
+ie take two arguments of the same type and yield one of the values depending
+on the truth value of the argument.
+indeed -- if the value is false, the first value will be returned, otherwise
+the second value will be returned.
+
+The implementation looks like: 
+
+    ex6 = map (\x -> bool x (negate x) (x == 3)) [1..5]
+
+This is pretty unclear IMO
+
+## Ex: Filtering
+
+1.  Write a function to give multiples of 3 from a list 1..30.
+
+x is a multiple of y if rem x y == 0.  Something is even if it is a multiple of
+2.
+
+Therefore,
+
+`filterAnswer1 = filter (\x -> (rem x 3) == 0) [1..30]` is
+`[3,6,9,12,15,18,21,24,27,30]`
+
+But it needs to be a function, so do a curried version.
+
+: filterAnswer2 = length . multiplesOfThree
+
+3.  Write a split function to remove articles.  Now we are allowed to use
+the built in Prelude function `words`.  The answer is quite simple and uses
+`elem` to check membership of the set of articles.
+
+## Zipping lists
+
+The default zip function pairs arguments using the 2-tuple constructor.
+
+zip only runs for the length of the shortest list.
+
+Unzip will do the inverse operation which is its even less clear why you'd
+want it, and return a tuple consisting of two lists.  But it's not a lossless
+process because zip can stop on the shortest list, so it's not guaranteed that
+all of the information will ever reach the unzip call.
+
+zipWith is a more interesting function that combines data from lists in an
+unspecified way.
+
+It's equal to (imperative pseudocode)
+
+
+    result = []
+    max_index = min(len(l1), len(l2))
+    for i in 0..max_index:
+        result.append(f(l1[i], l2[i]))
+
+
+## Exercises
+
+1.  Write your own version of zip.
+The key is to remember that pattern match destructuring syntax is (x:xs).
+
+In scheme this would be something like
+
+    (define (zip xs ys)
+      (cond
+        ((null? xs)  '())
+        ((null? ys)  '())
+        (else (cons (make-tuple (car xs) (car ys))
+                    (zip (cdr xs) (cdr ys))))))
+      
+        
+We learned that the name for the 2-tuple constructor is (,) and the name for the
+3-tuple constructor is (,,).
+
+## Chapter exercises
+
+1.  isUpper has the type `Char -> Bool`.   toUpper has the type `Char -> Char`.
+
+2.  We just write 'filter isUpper'.
+
+3.  We destructure to get the first item of the list then apply toUpper.
+
+4.  We add a base case and recurse on the cdr.
+
+5.  A&M introduce the 'head' function.  This function is notorious for some
+    reason.  My guess is that it's a partial function.  What's the head of an
+    empty list?  -- it's an exception.  I think that we have actually come
+    across this before when dealing with Maybe.  And writing this means that
+    we write a partial function, because there's no sensible value when the list
+    is empty.
+
+6.  Written as composed and pointfree now.
+
+## Cipher exercise
+
+Wanted to use Enum and succ/pred which is simple but doesn't wrap around the
+alphabet as it's supposed to.
+My solution seems to meet the requirements but has several problems
+Doesn't support capitals
+Doesn't support spaces
+Only supports 'a'..'z'
+Apart from that it seems OK.  As promised this was quite difficult.
 
 
 
