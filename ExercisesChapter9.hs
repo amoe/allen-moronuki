@@ -244,3 +244,6 @@ myMaximum xs = myMaximumBy compare xs
 
 myMinimum :: (Ord a) => [a] -> a
 myMinimum xs = myMinimumBy compare xs
+
+            
+            

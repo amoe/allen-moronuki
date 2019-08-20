@@ -1,3 +1,72 @@
+2019-08-20
+
+A 'product type' is a type that contains other types, a sum type is a type
+that's the disjunction of several other types.  It's denoted using data
+constructors with more than one argument.
+
+A&M show an example of how to define your own cons cell, much like we did
+earlier.
+
+"The spine is a way to refer to the structure that glues a collection of values
+together."
+i.e. it's the nesting of cons cells but with the values elided.  This is
+perfectly meaningful because of non-strict evaluation.
+
+# CHAPTER 10 -- folds
+
+Folds are also referred to as catamorphisms.  The prefix 'cata' means down or
+against.  Catamorphisms are a way of *deconstructing data* ie a reduction of the
+data.  (but they point out that folds can also return lists -- folds can build
+up a new structure as a result -- would be interesting to see an example of
+this???)
+
+There are also something called scans.
+
+foldr is given, the type signature seems to indicate that it's reduce.  And we
+can see that in practice it works the same as reduce.  Haskell does not have a
+function called reduce, so reduce is the same as fold-right.
+
+Something interesting is shown here, the type signature notation `[] a` as the
+more-regular-less-sugary way of writing `[a]`.  This works fine:
+
+    myFoo :: [a] -> [] a
+    myFoo xs = map id xs
+
+So in a very real sense, the list is a regular product tye that happens to
+be named `[]`.
+
+Although foldr is replaced with a type class called Foldable, you can still
+define your own version that's more concrete, by just rebinding the function
+with a new type signature.
+
+My question about the type signature is why make the type the same as the 2nd
+arg of the function???
+Also how does this actually work because the function f is defined to take
+a value of type `a` as its first argument.  But in the recursive step, it may be
+a different type.  Actually no, this is wrong, in the signature
+
+(a -> b -> b)
+
+b denotes the seed value.  So this will be where the direction (right or left)
+comes in.  Take the case of cons
+
+    (cons B-VAL [])
+    (cons 3 (cons B-VAL []))
+    (cons 2 (cons 3 (cons B-VAL [])))
+    (cons 1 (cons 2 (cons 3 (cons B-VAL []))))
+
+So as we can see the operation proceeds from the right.
+
+The relationship between map and foldr: Map traverses the spine and essentially
+replaces the values with function applications to the values.  Foldr replaces
+the spine itself with function applications.  (which are then inevitably
+reduced.  hence in the case where the function it replaced them with is "cons",
+it still returns a list, otherwise if the function is (+), it returns a single
+value.)
+
+
+
+
 2019-08-16
 
 The eventual way to do `reverse` is to use (++), which feels kind of cheap to
