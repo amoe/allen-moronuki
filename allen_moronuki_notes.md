@@ -1,3 +1,528 @@
+2019-08-08
+
+## Transforming lists of values
+
+map is used with regular lists, fmap is used with something called `Functor`,
+but we don't know what that is yet.
+
+They work the same in many examples.
+
+The type of map is:
+
+    map :: (a -> b) -> [a] -> [b]
+    fmap :: Functor f => (a -> b) -> f a -> f b
+
+I understand the regular map but not the type of fmap.  What does 'f a' mean.
+
+Let's take a call to `map (+1)`
+
+In this case, `(a -> b)` resolves to `Num a => a -> a`
+
+In that case, the type becomes
+
+    expr :: Num a => (a -> a) -> [a] -> [a]
+
+Now try with fmap.
+
+    fmap (+1)
+
+The type of `fmap (+1)` according to ghci is:
+
+    (Functor f, Num b) => f b -> f b
+
+A&M go into some detail about the evaluation of map, and emphasize that it's
+basically threading the function into each cons cell.  However:
+
+> crucially, map doesn't traverse the whole list and apply the function
+> immediately.  The function is applied to the values you force out of the list
+> one by one.
+
+The proof of this is this expression, which was alluded to in the previous
+set of exercises:
+
+    take 2 $ map (+1) [1, 2, undefined]
+
+If we had eager (strict) evaluation, this would blow up, because it would
+attempt to evaluate the `undefined`.
+
+## Exercises: More Bottoms
+
+1.  Value or bottom?  `take 1 $ map (+1) [undefined, 2, 3]`
+
+Bottom.  CORRECT
+
+2.  Value or bottom?  `take 1 $ map (+1) [1, undefined, 3]`
+
+Value [2].  CORRECT.
+
+3.  Value or bottom?  `take 2 $ map (+1) [1, undefined, 3]`
+
+Bottom after evaluating to [2,].  CORRECT
+
+4.  The type of `itIsMystery` is
+
+itIsMystery :: [a] -> [Bool]
+
+WRONG -- The actual type is [Char] -> [Bool], the input x is restricted to Char
+by the context of the Elem call.
+
+
+
+2019-08-07
+
+Binding things to _ is not merely a convention.  It prevents the compiler
+from attempting to evaluate whatever is in that spot.
+
+Look at creating some weird lists:
+
+
+
+    weirdList = [1] ++ undefined ++ [3]
+
+You can't either a) print this list, or b) get the length of it.
+Why not?
+Because this is not actually consing together a list fresh: it's welding
+together existing spines.
+As a result, undefined appears directly in the spine, causing the `length`
+function to blow up.
+
+This is fine though: `weirdList2 = [1] ++ [undefined] ++ [3]`
+This one can be got the length of, but it can't be printed.
+
+## Exercises: Bottom Madness
+
+1.  It will be undefined because you can't evaluate the whole sequence.  However
+the first item can be evaluated.  The first one should be 1^2 = 1, then it
+should blow up.  CORRECT
+
+2.  Should be fine and result in `[1]`.  CORRECT
+
+3.  This should fail because it has to force and reduce the whole spine+values
+before it can return anything.  CORRECT
+
+4.  This should succeed and return 3.  CORRECT
+
+5.  This won't work because it's an attempt to cons onto a spine and length
+is spine strict. 
+
+6.  It's really difficult to tell what this one will do.  With the most lazy
+interpretation, it would return [2].    The outer expression `take 1` would
+cause the inner call to stop.  And indeed that is CORRECT.
+
+The question is though, do we have to write `take` specially to avoid forcing
+the values?  Probably not!
+
+7.  Without the 2 in the list, the `take` call will keep reducing the filter
+    expression, and will attempt to evaluate undefined, so it will blow up.
+CORRECT
+
+8.  This will stop after producing the initial value [1].  CORRECT
+
+9.  This will stop after producing [1, 2].  CORRECT
+
+10.  This will blow up.
+
+## Intermission: Is it in normal form?
+
+1.  `[1, 2, 3, 4, 5]`: This expression is in NF.
+
+2.  `1 : 2 : 3 : 4 : _`: 
+If _ is evaluated, it's in NF, otherwise, it's only WHNF.  Since _ (hole)
+can't be evaluated by definition, it's in WHNF.
+
+3.  `enumFromTo 1 10`: The head is enumFromTo so surely it is
+in neither.
+
+4.  Again it's in neither: the head is length.
+
+5.  Again it's in neither: the head is sum.
+
+6.  Again it's in neither: the head is ++.
+
+7.  `(_, 'b')`: This is in WHNF but not NF, by definition the hole is not
+    evaluated.
+
+
+
+
+
+
+
+2019-08-06
+
+:sprint is a command that can show to what extent some variable has been
+evaluated.
+If it hasn't been referenced yet, it will print as the underscore.
+
+Except in the case of Num a => a, which will not evlauate ever as it's 'waiting
+for a sort of argument' in A&M terms, so ignore it in this case.
+
+Stuff will only get made non-_ as you take it.  Eg,
+
+    Prelude> Prelude> l1 = enumFromTo 'a' 'z'
+    Prelude> take 1 l1
+    "a"
+    Prelude> :sprint l1
+    l1 = 'a' : _
+    Prelude> take 2 l1
+    "ab"
+    Prelude> :sprint l1
+    l1 = 'a' : 'b' : _
+
+As we have not reached the end of the list yet, the final item is the
+unevaluated cdr of a cons cell.
+
+`length` is one of those special functions that evaluates only the spine of the
+list.  Unfortunately due to optimizations, it will seem as if the whole list was
+evaluated.  eg it shows `"abc"` when it should show `_ : _ : _ : []`.
+
+There is something called weak head normal form, WHNF, which means that
+expressions can be reduced to the point where they are 'waiting' for another
+input, rather than completely reduced (normal form -- NF).
+
+If we evaluate to NF, we say the expression has been fully evaluated, as far as
+it will go.
+
+Haskell actually does have the 'exploding value' that I dreamt about: the
+literal `undefined`.  Evaluating `undefined` will throw an exception but only
+when it's actually evaluated.  You can store undefined in a list and ask
+for the length of a list without an exception being thrown, because the `length`
+function in prelude is spine-strict.  It's "spine-strict" in the sense that
+it forces the evaluation of the entire spine, but it's not *value-strict*
+because it doesn't evaluate the values in either the car or cdr of the cons
+cells constituting the spine.
+
+
+2019-08-05
+
+## Exercises: Comprehend Thy Lists
+
+1.  mySqr is a list of squares from 1..10.
+So the result will be a filtered list of even squares.
+Which means that it will be `[4, 16, 36, 64, 100]`  -- CORRECT
+
+2.  x and y are elements of mysqr.
+    The result is a tuple
+    x is restricted to less-than 50: [1,4,9,16,25,36,49]
+    y is restricted to greater-than 50: [64, 81, 100]
+
+So the result should be (giant long list called wanted2) -- and result is true.
+
+3.  It's just the result of taking the first 5 so it should be
+
+`(1, 64), (1, 81), (1, 100), (4, 64), (4, 81)`
+
+
+
+Now continue.
+
+'elem' is the `in` keyword in python -- linear search for an item and return a
+boolean value.
+Write a list comprehension to remove all of the lowercase letters from a string.
+
+
+## Spines and non strict evaluation
+
+A&M suggest that a tree is a data structure in Haskell.
+We say that a list has a spine.
+What constitutes the spine -- the cons cells.
+The infix notation encourages you to think that the value is primary, but
+actually the cons cell is primary.  Hence perhaps why I wanted to write
+cons in prefix instead.
+
+Some confusing statements:
+
+"It is possible to evaluate only the spine of a list without evaluating
+individual values"
+
+"Until a value is consumed, there are a series of placeholders as a blueprint
+of the list that can be constructed when it's needed."
+
+
+2019-08-01
+
+## list comprehensions
+
+these are denoted with a [<function> | <var> <- <input set>]
+
+These seem very similar to the ones in python.
+
+There is also a version that has a predicate.  Still very similar
+the predicate is separated by a comma.
+
+you can have multiple generators
+
+lcVal3 = [x^y | x <- [1..10], y <- [2..3], x ^ y < 200]
+
+This expands out to a loop like
+
+for x in [1..10]
+  for y in [2..3]
+
+
+You can use tuples in generator expressions to pair things up
+
+2019-07-29
+
+# Exercise: EnumFromTo
+
+The basic strategy for this is to loop and have 3 conditions, 2 base cases and
+one recursion step.
+
+take works as we expect.
+drop works as we expect.
+
+splitAt splits at an index and returns a 2-tuple
+The type signature basically says what it does.
+
+take can be used with infinite lists like the ones that result from enumFrom
+calls.
+
+takeWhile and dropWhile are weird
+takeWhile is like filter.  Except that it stops immediately on the first
+non-true.
+eg takeWhile (>3) [1..10]  evals to []
+but takeWhile (
+
+That's actually really really useful.
+
+## Exercise: Thy Fearful Symmetry
+
+1.  This is a tricky exercise because you have to remove the initial space that
+gets included as a result.  And you have to use this trimmed version at both
+sites.  Otherwise, it's a simple build-by-recursing thing.
+
+
+2.  Implemented in PoemLines.hs
+
+3.  Implemented in Chapter9.hs as `split`
+
+
+
+2019-07-25
+
+In Haskell, lists are both finite sequences and also infinite streams.
+
+: is an infix operator meaning cons.
+As in lisp, cons takes a head and a taila nd returns a list.
+It works in the same way, you can cons the head onto an empty list.
+
+Hence, `(:) 1 []` => `[1]`, we constructed a list from one item.
+
+This line noise:
+
+    (:) 1 $ (:) 1 []
+
+Gives a list of two items.  
+
+When looking at the list definition,
+
+    data [] a = [] | a : [a]
+
+You read that as:
+
+SUM([], PRODUCT(:, a, [a]))
+
+Recall that a product type is an aggregate.
+
+    data MyProductType a b = MyProductType a b
+
+In this case, MyProductType is just a prefix function.
+You can create a near identical, less magical type by the following.
+
+    data MyList a = EmptyList | MyList a (MyList a)
+      deriving (Show)
+
+Hence cons is not really a function per se!  It's just a data constructor.
+It doens't even have a definition.
+
+Now, writing this:
+
+    MyList "bar" (MyList "foo" EmptyList)
+
+Is completely isomorphic to this:
+
+    (:) "bar" $ (:) "foo" []
+   
+Although they have a special print syntax, which can just be defined by giving
+them an instance of the Show type class.
+
+The list in question is a singly-linked list.
+
+## Pattern matching on lists
+
+When we write `myHead (x : _) = x`, we define a function without a type
+signature.  This looks weird but we are just matching on the data constructor,
+which happens to be infix in this case.
+
+myHead and myTail are partial functions however.  Even the prelude from head is
+a partial function and as such you arguably shouldn't use it?
+
+The comma in lists is syntactic sugar.  Does it relate to the (,) tuple operator
+at all?  The ability to enclose lists in square brackets is all magic.
+Otherwise you would have to use explicit cons calls.
+
+There is something called a spine that 'is the connective structure that holds
+the cons cells together and in place'.  This isn't very clear.
+
+There is also sugar to construct list from ranges like Perl.
+
+[1..10] expands to [1,2,3,4,5,6,7,8,9,10]
+it's directly equivalent to an enumFrom
+You can also use [x,y...z]
+which will expand to enumFromThenTo, 
+this creates sequence with a step.  It might be called enumWithStep instead.
+enumFrom, enumFromThen creates infinite lists
+
+
+2019-07-22
+
+## Numbers into words
+
+See the solution to hundredsDigit
+
+    hundredsDigit :: Integral a => a -> a
+    hundredsDigit x = d
+      where (x', _) = divMod x 100
+            d = mod x' 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2019-07-19
+
+Implemented a dividedBy that handles all cases.  Confirmed against neallred's
+solution, although I like mine better because it has less if statements.
+
+mc91 is truly nuts, I have no idea how this was derived, although it's easy to
+write in Haskell.
+
+
+2019-07-18
+
+## Fixing dividedBy
+
+dividedBy will just loop infinitely when denom is 0
+
+why?  Because the n value will never decrease.
+
+In the case where denom is 2, we wnat the result to be -5
+This means that it's like we should just invert the result
+
+dividedBy' 20 0
+=> go 20 0 0
+
+
+2019-07-17
+
+In haskell, these internal functions that are used to provide a counter etc
+are called 'go' functions.
+
+## Chapter 8 Exercises
+
+1. The type of `[[True, False], [True, True], [False, True]]` is a) `[[Bool]]`
+check -- CORRECT.
+
+2.  a) Does not have the same type, because the inner type is the 2-tuple.
+    b) Does have the same type, even though the lists are different lengths
+    c) Does not have the same type (it's `[Bool]`)
+    d) Does not have the same type (it's `[String]`)
+
+So the answer is b).  check -- CORRECT
+
+3.  d) All of the above are true.  The type variable [a] fixes the content of
+the list.
+
+4.  b) is a valid application: func "Hello" "World".  CORRECT
+
+## Reviewing currying
+
+1.  The value should be "woops mrow woohoo!".  CORRECT
+2.  Flippy has fixed the last argument at haha, so the value will be "1 mrow
+    haha".  CORRECT
+3.  appedCatty "2" => "woops mrow 2"
+    So, `frappe (appedCatty "2")` => "woops mrow 2 mrow haha".  CORRECT
+4.  frappe "blue" should be "blue mrow haha".So, "woops mrow blue mrow haha".
+    CORRECT
+5.  This one takes a bit more working out 
+
+cattyConny (frappe "pink")
+           (cattyConny "green" (appedCatty "blue"))
+
+Evaluate (appedCatty  "blue") => "woops mrow blue"
+now eval the 2nd expr
+"green mrow woops mrow blue"
+
+=> "pink mrow hahah mrow green mrow woops mrow blue"
+CORRECT
+6.  "are mrow Pugs mrow awesome"
+CORRECT
+
+## Recursion
+
+1.  First go back to the definition of dividedBy.
+
+dividedBy 15 2
+=> go 15 2 0
+=> go 13 2 1
+=> go 11 2 2
+=> go  9 2 3
+=> go  7 2 4
+=> go  5 2 5
+=> go  3 2 6
+=> go  1 2 7
+
+Result is (7, 1) 
+
+2.  Several approaches but I will just do the naive one.
+
+3.  to multiply 3x3, you want 9
+    you add 3 to 3 two times
+
+to multiply 3x4, you want 12, you add 3 to 3 3 times.
+
+6*6, you want 36, so the result try
+
+The solution looks similar, see iteratedMultiply
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 2019-07-14
 
 # Chapter 8: Recursion
