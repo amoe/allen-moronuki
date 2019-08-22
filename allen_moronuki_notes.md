@@ -1,3 +1,87 @@
+2019-08-22
+
+Fold right is right associative, you can see this from the recursive step in
+its definition.
+
+    myFoldr f z (x:xs) = f x (foldr f z xs)
+
+evaluating it, z stays the same through every iteration and could actually
+be eschewed.
+When we hit this line --
+
+    (x:xs) -> f x (foldr f z xs)
+
+Whether the expression `(foldr f z xs)` is evaluated or not depends on the
+strictness of the function `f`.  As `(+)` is known to be 'strict in both its
+arguments', we force the whole thing.
+
+An example would be `const` which will always return the first argument.
+`const` will avoid even evaluating its second argument.  So we could pass it
+into fold and that would effectively short circuit the rest of the fold.
+
+When evaluating, calls "alternate between the folding function f and foldr".
+This means that the function f receives two unevaluated pieces, x and y, and can
+decide whether it wants to evaluate them.  If it evaluates y, control will pass
+back to `foldr`.
+
+A&M say that (some expression x) is 'implicitly wrapped around' (some other
+expression) to denote that X is the continuation (and write 'implicitly' to
+state that 'you cannot tell this from the code sample that we are about to
+show').
+
+> One way to think about the way Haskell evaluates is that it's like a text
+> rewriting system.
+
+-- and, surely, this 'rewriting' (substitution) is what referential transparency
+is all about.
+
+Traversal is the stage where "the fold recurses over the spine".
+Folding itself is the reduction of the folding function.
+
+Hence, foldr gives control of evaluation over both the spine traversal.  A
+function passed in to fold can not evaluate its arguments, for instance
+using (||).
+
+The function `repeat n` will repeat its argument infinitely.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2019-08-21
+
+'The base case is the identity for the function' ie the Y of that type
+whereby OP(X, Y) = X
+
+It's wrong to think of the value as a 'seed'  Rather it should be named a
+'zero'.
+
+Because of laziness folds can choose to exit the fold early.
+
+
 2019-08-20
 
 A 'product type' is a type that contains other types, a sum type is a type
