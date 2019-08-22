@@ -48,4 +48,16 @@ applyTimesComp :: (Eq a, Num a) => a -> (b -> b) -> b -> b
 applyTimesComp 0 f seed = seed
 applyTimesComp n f seed = (f . (applyTimesComp (n - 1) f)) seed
 
+-- A function that evaluates to bottom.
 
+f :: Bool -> Int
+f True = error "blah"
+f False = 0
+
+
+-- The real maybe derives show, and also seems to derive eq.
+data Maybe' a = Nothing' | Just' a
+
+f2 :: Bool -> Maybe Int
+f2 False = Just 0
+f2 True = Nothing

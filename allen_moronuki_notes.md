@@ -892,9 +892,28 @@ applyTimes 5 (+1) 5 = (+1) (applyTimes (5 - 1) (+1) 5)
   (+1) (+1) 8
   (+1) 9
   10
-  
 
+## Bottom
 
+There is a value named bottom that is written as an 'up tack'.
+⊥
+This is used for two things: errors and infinite recursions.
+
+    let x = x in x
+
+This is an infinite recursion.  Another case of bottom is when a function gives
+an error, either manually (using the `error` function) or due to being a partial
+function.  When you don't pattern match everything, you write a partial
+function.  Such a function will type check with a warning and then give an error
+(a bottom type) at runtime.
+
+They introduce `Maybe`, which is basically equivalent to optional.
+
+You can destructure a Maybe using pattern matching.
+
+    let (Just y) = (f2 False) in y
+
+Maybe is only skirted over here.
 
 
 

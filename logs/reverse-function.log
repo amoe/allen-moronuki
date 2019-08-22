@@ -1,0 +1,38 @@
+08:50         amoe > An exercise in haskellbook ch9 asks me to write a function to reverse a list.  I know that it sounds simple but I don't really have any idea of how to do it
+08:51         amoe > I get that for input [1,2,3] I would need to construct 3 : (2 : (1 : []))
+08:57  MarcelineVQ > start with the easy part. myReverse :: [a] -> [a]; myReverse [] = ?
+08:57         amoe > []
+08:57  MarcelineVQ > yep the reverse of an empty list is an empty list. now myReverse [x] = ?
+08:58         amoe > [x]
+08:58       merijn > MarcelineVQ: Why bother with a separate 1 element case?
+08:58  MarcelineVQ > to make sure x:[] isn't confusing
+09:01         amoe > Do you need to use a helper 'go' function to store intermediate state?
+09:02       merijn > You don't need to for the simplest (but bad performance) case, but you can make a much faster one using a helper
+09:04  MarcelineVQ > let's handle the next pattern, which actually also handles [x] as merijn is hinting at, myReverse (x:xs) = ?. x is the head of the list and xs is the tail. given that our goal
+                     is reversing, what might we want to do with the head of the list?
+09:06         amoe > well for input [1,2,3], the head is 1 and the tail is [2,3]
+09:06  MarcelineVQ > that's right
+09:07  MarcelineVQ > and in a reversed list where would 1 be?
+09:08         amoe > er, 1 would be at the end of the list, so I'd want the result to be (1: [])
+09:10       merijn > amoe: So, assuming you had a way to reverse [2,3] how would you combine the reverse of that with "1:[]"?
+09:11  MarcelineVQ > amoe: good insight, recognising you'd want 1:[]. merijn: nice follow up :>
+09:12         amoe > well, assuming I had [2,3] reversed, I would have [3,2]
+09:12         amoe > I'd want it to be on the end of the list
+09:12         amoe > er, use ++ ?
+09:12       merijn > amoe: Right, so you'd just have to append lists ;)
+09:13  MarcelineVQ > :>
+09:14         amoe > Ok, works now!
+09:15       merijn > amoe: Extra credit question: I mentioned this implementation was slow, can you figure out why?
+09:15         amoe > because it traverses the list at every step
+09:15       merijn > Right, so you end up being accidentally quadratic
+09:18         amoe > I was looking for a way to do it only with (:)
+09:18       merijn > Extra extra credit: Can you figure out how to avoid doing this? Hints: 1) you will need a helper function (well, I'm sure you absolutely *have* to have one, but to keep it sane
+                     you do), 2) you need to figure out how to "create a list with a specific tail without using (++)"
+09:18       merijn > amoe: 3rd hint, this solution will involve mostly (:) ;)
+09:29         amoe > this one I guess... http://paste.debian.net/plain/1095944
+09:31       merijn > Heh, that's not where I was going, but it works :)
+09:31       merijn > I'm not even sure whether it's actually different from what I had in mind or it ends up compiling to the same thing
+09:32       merijn > amoe: I was thinking of DLists, which have been better explained here: http://h2.jaguarpaw.co.uk/posts/demystifying-dlist/
+09:33         amoe > oh, interesting!
+09:33         amoe > I will check this out
+09:34       merijn > It's a fairly simple trick, but it generalises suprisingly well to many data structures
