@@ -1,4 +1,94 @@
-2019-08-22
+# 2019-09-03
+
+## Exercise: Understanding Folds
+
+1.  
+
+a) should not type check, as can't multiply Num a => a with a list
+indeed it does not
+
+b) flipping the args of *
+
+in foldl, y normally represents rest of the fold
+in this case x rep. rest of the fold
+
+So it intuitively seems like it should just invert the fold direction but it
+does not actually do that.  `foldl (flip (*)) 1 [1..5]` evaluates as
+
+    (5*(4*(3*(2*(1*1)))))
+
+BUT will yield the same outcome 
+
+checking this with the visualizer
+
+c) would evaluate as ((((1 * 1) * 2) * 3) * 4) * 5 = 120
+checked in vizFold
+
+So to summarize:
+
+    regular foldr:  (1*(2*(3*(4*(5*1)))))
+    flipped foldr:  (((((1*5)*4)*3)*2)*1
+    regular foldl:  (((((1*1)*2)*3)*4)*5)
+    flipped foldl:  (5*(4*(3*(2*(1*1)))))
+
+
+# 2019-09-02
+
+Summarizing the stuff on fold.  Fold can avoid evaluating the spine.  If fold
+evaluates a bottom value as part of its operation, it will return bottom.
+
+This is in contrast to a function like `length`, which is going to always
+evaluate the entire spine.  However if you preprocess with take to remove the
+bottom value like so:
+
+   length $ take 4 ([1,2,3,4] ++ undefined)
+
+This is still going to work (because take conses a new list I presume).
+
+A&M introduce this expression: 
+
+    length $ take 2 $ take 4 xs
+
+How does this work?  It does work, which means that `take 4` never fully
+evaluates.  The only way this could happen is if control & evaluation is passing
+through the pipeline from the `length` invocation to the `take` invocation.
+
+So `length` asks for one element of its continuation, `take 2` asks for 1
+element of its continuation, `take 4` yields one element, repeat for a while
+until `take 2` hits its limit.
+
+Remember that the identity value `z` forms the END of the recursive call.
+Hence --
+
+      > foldr const 0 [1..5]
+      1
+
+Foldl works in a more reasonable way: the first items are evaluated first,
+starting with the seed (named 'acc' in this example).
+
+Scanr and scanl are functions that execute folds but return lists of the
+intervening results (amazing)
+This sounds very useful for debugging folds.
+
+foldl moves the z to the start.
+
+Sketch the evaluation of
+
+    foldl (flip const) 0 [1..5]
+    
+Well, foldl passes the 'acc' value (0) and the argument representing the rest of
+the fold to its function.
+A flipped const looks like this
+
+    flippedConst _ y = y
+
+That means that y will be here.  But hang on, y represents the rest of the fold.
+So this reduces eventually to `flippedConst 4 5` at which point the fold will
+end.
+
+
+
+# 2019-08-22
 
 Fold right is right associative, you can see this from the recursive step in
 its definition.
@@ -43,33 +133,6 @@ function passed in to fold can not evaluate its arguments, for instance
 using (||).
 
 The function `repeat n` will repeat its argument infinitely.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 2019-08-21
 
