@@ -1,5 +1,7 @@
 module ExercisesChapter10 where
 
+import Data.Time
+
 exCh10 = 42
 
 
@@ -18,8 +20,79 @@ addFoldl = foldl (vizFold "+") "0" foldDemoXs
 mulFoldr = foldr (vizFold "*") "1" foldDemoXs
 mulFoldl = foldl (vizFold "*") "1" foldDemoXs
 
-
 mulFoldrFlip = foldr (vizFoldFlip "*") "1" foldDemoXs
 mulFoldlFlip = foldl (vizFoldFlip "*") "1" foldDemoXs
 
+
+myFoldl :: (b -> a -> b) -> b -> [a] -> b
+myFoldl f acc [] = acc
+myFoldl f acc (x:xs) = myFoldl f (f acc x) xs
+
+
+fixedFold5a = foldr (++) "" ["woot", "WOOT", "woot"]
+fixedFold5b = foldl max 'f' "ear is the little death"
+
+maxCharInString :: [Char] -> Char
+maxCharInString [] = undefined
+maxCharInString (x:xs) = go xs x 
+  where go [] val = val
+        go (x:xs) val = go xs (max val x)
+
+
+fixedFold5c = foldr (&&) True [False, True]
+
+fold5d = foldr (||) True [False, True]
+
+
+
+fixedFold5e = foldr ((++) . show) "" [1..5]
+
+
+-- Exercises: Database Processing
+
+
+
+data DatabaseItem = DbString String | DbNumber Integer | DbDate UTCTime
+  deriving (Eq, Ord, Show)
+
+time1 = UTCTime (fromGregorian 1911 5 1) (secondsToDiffTime 34123)
+time2 = UTCTime (fromGregorian 1921 5 1) (secondsToDiffTime 34123)
+
+theDatabase :: [DatabaseItem]
+theDatabase = [
+  DbDate (UTCTime theDay1 diffSeconds1),
+  DbNumber 9001,
+  DbString "Hello, world!",
+  DbDate (UTCTime theDay2 diffSeconds2)
+  ]
+  where theDay1 = fromGregorian 1911 5 1
+        diffSeconds1 = secondsToDiffTime 34123
+        theDay2 = fromGregorian 1921 5 1
+        diffSeconds2 = secondsToDiffTime 34123
+
+
+getTimes :: [DatabaseItem] -> [UTCTime]
+getTimes [] = []
+getTimes ((DbDate x):xs) = x : (getTimes xs)
+getTimes (_:xs) = getTimes xs
+
+
+getNumbers :: [DatabaseItem] -> [Integer]
+getNumbers [] = []
+getNumbers ((DbNumber x):xs) = x : (getNumbers xs)
+getNumbers (_:xs) = getNumbers xs
+
+-- We need foldr1 for this which hasn't been introduced yet.
+mostRecentDate :: [DatabaseItem] -> UTCTime
+mostRecentDate xs  = foldr1 max $ getTimes xs
+
+sumDb :: [DatabaseItem] -> Integer
+sumDb xs = foldr (+) 0 (getNumbers xs)
+
+
+-- use fromIntegral to coerce Integer to double
+avgDb :: [DatabaseItem] -> Double
+avgDb xs = s / n
+  where s = (fromIntegral (sumDb theDatabase)) :: Double
+        n = (fromIntegral (length (getNumbers theDatabase))) :: Double
 

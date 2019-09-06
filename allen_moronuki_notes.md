@@ -1,3 +1,154 @@
+# 2019-09-06
+
+foldl is bad because it has to evaluate the whole spine.
+
+foldl' is better when you don't need to worry about undefined.  I'm guessing
+this basically works the same as scheme's folds
+
+## Exercises: Database Processing
+
+Simple-ish...
+
+
+# 2019-09-04
+
+2.  Write out the evaluation steps for `foldl (flip (*)) 1 [1..3]`.
+
+In what sense, write them out?
+
+First, let's look at the definition of foldl.
+
+    foldl :: (b -> a -> b) -> b -> [a] -> b
+    foldl f acc [] = acc
+    foldl f acc (x:xs) = foldl f (f acc x) xs
+
+## Iteration 1
+
+foldl (flip (*)) 1 [1..3]
+foldl f acc (x:xs) = foldl f (f acc x) xs
+
+f = (flip (*))
+acc = 1
+x = 1
+xs = [2,3]
+
+=> foldl f (f acc x) xs
+  => (f acc x) = ((flip (*)) 1 1) = 1
+=> foldl f 1 [2,3]
+
+## Iteration 2
+
+foldl f 1 [2,3]
+
+f = (flip (*))
+acc = 1
+x = 2
+xs = [3]
+
+=> foldl f (f acc x) xs
+  => (f acc x) = ((flip (*)) 1 2)
+  => (*) 2 1
+  => 2
+=> foldl f 2 [3]
+
+## Iteration 3
+
+foldl f 2 [3]
+
+f = (flip (*))
+acc = 2
+x = 3
+xs = []
+
+=> foldl f (f acc x) xs
+  => (f acc x) = ((flip (*)) 2 3)
+  => (*) 3 2
+  => 6
+=> foldl f 6 []
+
+## Iteration 4
+
+foldl f 6 []
+
+=> foldl f acc [] = acc
+=> 6
+
+(base case has been hit)
+
+Note that in the foldl case we strictly evaluate the function to replace the
+accumulator -- it's parenthesized.
+
+3.  One difference between foldr and foldl is:
+
+A&M tell us above that both folds traverse the spine in the same direction, but
+the difference is in the way the evaluations associate.  Associativity means the
+rightmost brackets get evaluated first in the case of foldr.
+
+So the answer is c) foldr, but not foldl, associates to the right.
+
+4.  "Catamorphisms" are a means of deconstructing data, the roots being cata-
+'down' and morphism 'shape'.
+
+So the answer is a) Folds are generally used to *reduce structure*.
+
+5.  
+
+a) fixedFold5a = foldr (++) "" ["woot", "WOOT", "woot"]
+
+It needs the identity case z that will execute last.
+
+b)
+fixedFold5b = `foldr max [] "fear is the little death"`
+
+ Welp, a string is a list.  max is a two-argument function.
+I suppose that this is designed to find the highest char in the string.
+[] is not a sensible z-value.
+OTOH, we have no idea what a sensible z-value would be.
+I guess that it has to be a char.  So let's just pick a.
+
+How would we write it as a regular recursion?
+I wrote it like this
+
+    maxCharInString :: [Char] -> Char
+    maxCharInString [] = undefined
+    maxCharInString (x:xs) = go xs x 
+      where go [] val = val
+            go (x:xs) val = go xs (max val x)
+
+Which is a left fold.  That would translate as 
+
+    fixedFold5b = foldr max 'f' "ear is the little death"
+
+But that only expresses the `go` function not the outer `maxCharInString`
+function.
+
+c) `foldr and True [False, True]`
+
+The `and` function already takes a list, so this looks more like an
+implementation of the `and` function.  The binary function for logical-AND
+is denoted as (&&).
+
+So the answer is
+
+    fixedFold5c = foldr (&&) True [False, True]
+
+d) Can it ever return a different answer?  No, because of the use of || in the
+zero.  It's not a proper zero as it doesn't preserve the result.  Rather the
+|| True percolates all the way down the RHS of the fold.
+
+e) `foldl ((++) . show) "" [1..5]`
+
+What is going on here...
+
+The result type will be a String.
+It will just concatenate the stringified numbers, so the result should be
+"12345".
+The key is that the showable takes the arg in the wrong place.
+
+Replace foldl with foldr to win.
+
+I don't understand these ones that are using const.
+
 # 2019-09-03
 
 ## Exercise: Understanding Folds
