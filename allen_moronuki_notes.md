@@ -1,3 +1,164 @@
+# 2019-09-11
+
+Condensing the summary of the fold stuff.
+
+## foldr
+
+The folding function that you pass to foldr receives 'the rest of the fold',
+which it can choose to invoke, as its second argument.
+
+The function has the signature (a -> b -> b)
+The first `b` here represents the rest of the fold.
+
+Foldr works with infinite lists.  For instance, foldr const 42 [1..]
+In this case the result is 1.  Why?
+const returns its first argument.
+
+    const 1 REST-OF-FOLD
+
+at this point, REST-OF-FOLD is not evaluated and the whole thing unwinds.
+Foldr should be the default choice for all reduce-type operations.
+
+## foldl
+
+foldl tail-calls through the list iteratively.  Its use cases are limited.
+
+## Scans
+
+    foldr :: (a -> b -> b) -> b -> [a] -> b
+    scanr :: (a -> b -> b) -> b -> [a] -> [b]
+
+
+They show a definition of scanl and show that it can be used to define the
+fibonaccis as an infinite list. No idea how that works.
+
+They introduce the "bang bang" operator.  (!!)
+Type signature `[a] -> Int -> a`
+
+They show that factorials can also be written as an infinite list.  However the
+list itself does not need to be recursive, although the scanl is recursive.
+
+As we know, fib is a tree recursion, where fac is a linear recursion.  This 
+suggests that tree recursions can be notated through self-referential lists,
+where basically-iterative things can be notated with simple scanl invocations.
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 2019-09-09
+
+## Folding and evaluation
+
+The relationship between foldl and foldr is as folllows:
+
+    foldr f z xs = foldl (flip f) z (reverse xs)
+
+This means that foldr is the more 'normal' fold to do your average reduction.
+
+## Back to previous exercises...
+
+    fixedFold5f = foldr const 'a' [1..5]
+
+Think about it, what is this going to do?  Remember that the z applies last
+in a foldl.
+But also remmeber that the arguments are applied in order
+
+FOr instance,
+
+    foldr (/) 1 [5,2,3]
+
+This expands as
+
+(5 / (2 / (3 / 1)))
+
+This means that `foldr const 'a' [1..5]`
+
+would expand as
+
+    (const 1 (const 2 (const 3 (const 4 (const 5 'a')))))
+
+But that works :/
+Well think about the type signature.
+
+listOnlyFoldr :: (a -> b -> b) -> b -> [] a -> b
+
+here we try to bind const to the first arg.
+
+Const has to be a function of type (a -> b -> b)
+
+That means that it has to be unified with the value of the second argument.
+
+So it fails simply because const has the wrong type.  Not because it's
+logically incoherent.
+
+There is an IRC log that has some information on this: `foldr-const.log`
+
+
 # 2019-09-06
 
 foldl is bad because it has to evaluate the whole spine.
@@ -295,8 +456,7 @@ It's wrong to think of the value as a 'seed'  Rather it should be named a
 
 Because of laziness folds can choose to exit the fold early.
 
-
-2019-08-20
+# 2019-08-20
 
 A 'product type' is a type that contains other types, a sum type is a type
 that's the disjunction of several other types.  It's denoted using data
@@ -362,10 +522,7 @@ reduced.  hence in the case where the function it replaced them with is "cons",
 it still returns a list, otherwise if the function is (+), it returns a single
 value.)
 
-
-
-
-2019-08-16
+# 2019-08-16
 
 The eventual way to do `reverse` is to use (++), which feels kind of cheap to
 me.  But I didn't even think about using it...

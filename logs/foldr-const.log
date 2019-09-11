@@ -1,0 +1,49 @@
+09:25         amoe > Take the expression `foldr const 'a' [1..5]`
+09:26 * ski drops the expression on the floor
+09:26         amoe > Is it right to say that this would expand to `const 1 (const 2 (const 3 (const 4 (const 5 'a'))))` (if it would type check)
+09:27          ski > yes. this assumes `Num char', though
+09:27          ski > > foldr f z [0 .. 4]
+09:27    lambdabot >  f 0 (f 1 (f 2 (f 3 (f 4 z))))
+09:28         amoe > I don't really understand why it wants (Num Char)
+09:29          ski > because the output from `const' will be fed back as input (second argument) to `const'. so those two types needs to be the same
+09:30         amoe > OK
+09:30          ski > but  'a'  is also fed as second argument. so that type is  Char
+09:30          ski > but the output type of `const' is the type of the first argument, so those numeric literals must have type `Char'. hence `Num Char'
+09:31         amoe > OK, it makes sense
+09:32         amoe > This is all enforced by the type signatures of foldr and const?
+09:32       merijn > amoe: Yes
+09:32          ski > yes. and type of character and integer literals
+09:32       merijn > :t foldr
+09:32    lambdabot > Foldable t => (a -> b -> b) -> b -> t a -> b
+09:33          ski > @type foldr `asAppliedTo` const
+09:33    lambdabot > Foldable t => (b -> b -> b) -> b -> t b -> b
+09:33       merijn > amoe: Essentially what the type checker does is make a bunch of equations and checks if they hold
+09:34       merijn > So if we have (using different variable names for clarity) "foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b", "const :: x -> y -> x", "[1..5] :: Num t => [t]" and "'a' :: Char" the 
+                     type checker just does:
+09:35       merijn > (a -> b -> b) = (x -> y -> x), therefore a = x, b = y, b = x
+09:35       merijn > b = Char
+09:35       merijn > (let's pretends I used "[1..5] :: Num z => [z]" for the list...
+09:36 * ski pretends merijn used `[1 .. 5] :: [z]' for some `z' with `Num z'
+09:36       merijn > t a = Num z => [z], therefore t = [] and a = z
+09:37       merijn > amoe: After all that, the compiler checks if all those equations hold
+09:37       merijn > The conclusion from "a = x, b = y, b = x" is then that a, b, x, and y must all be the same type
+09:38       merijn > And since b = Char, that type is Char
+09:38       merijn > amoe: Since we also have "a = z" we also know z must be Char
+09:39       merijn > amoe: But z must *also* be an instance of Num (per the constraint on [1..5])
+09:40       merijn > amoe: Logical conclusion: This is valid IFF "instance Num Char", then the compiler checks "do all the typeclass constraints hold?" -> no, because there is no instance "Num Char", therefore 
+                     the error is "Missing instance Num Char"
+09:40       merijn > amoe: Make some sort of sense?
+09:40         amoe > merijn: Yep, I think it makes sense.  It's useful to hear it put in this way (forming these set of equations and they all have to hold)
+09:41          ski > those equations are a way to say "values from here may go there"
+09:42       merijn > amoe: The "set of equation approach" is pretty accurate analogy. The main tricky bit is tracking names of type variables (as you see the "default" names clash between foldr, const, etc. so 
+                     I renamed them for simplicity, there's a bit of complexity in there to track which variables with the same names are actually different)
+09:43       merijn > amoe: The real culprit that makes the error rather inscrutable for beginners is the typeclass polymorphic values
+09:43       merijn > amoe: If you try the same thing with "[1..5] :: [Int]" you will get a much more obvious error
+09:44       merijn > amoe: This leads to the number 1 debugging strategy for complex type errors: Add *lots* of type signatures, as many as you can
+09:44       merijn > amoe: The more fine-grained your type annotations, the easier it becomes to precisely pinpoint *where* you and GHC disagree on things
+09:44       merijn > amoe: Additionally, over time you'll become much better at quickly doing this stuff in your head.
+09:45       merijn > amoe: In the beginning I can definitely recommend occasionally grabbing a piece of paper and pen and working out the equations by hand like I did, it will help quite a lot with being able 
+                     to quickly do it in your head
+09:46       merijn > amoe: That said, 10 years in if I get errors where I get lost my first step is to move every part of the expression into a let or where block and give each part a type signature by hand, 
+                     repeat until I find the culprit :)
+09:47 * ski . o O ( type error slicing )

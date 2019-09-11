@@ -48,9 +48,20 @@ fold5d = foldr (||) True [False, True]
 fixedFold5e = foldr ((++) . show) "" [1..5]
 
 
+-- When using foldl, you can short circuit the rest of the fold.
+fixedFold5f = foldl const 'a' [1..5]
+
+-- Even when the argument is a list.
+fixedFold5g = foldl const 0 "tacos"
+
+-- You can also do it by using a right fold.
+fixedFold5h = foldr (flip const) 0 "burritos"
+
+-- You can also do it by using a right fold.
+fixedFold5i = foldr (flip const) 'z' [1..5]
+
+
 -- Exercises: Database Processing
-
-
 
 data DatabaseItem = DbString String | DbNumber Integer | DbDate UTCTime
   deriving (Eq, Ord, Show)
@@ -83,6 +94,7 @@ getNumbers ((DbNumber x):xs) = x : (getNumbers xs)
 getNumbers (_:xs) = getNumbers xs
 
 -- We need foldr1 for this which hasn't been introduced yet.
+-- There's another solution to this but I'm not sure what it is.
 mostRecentDate :: [DatabaseItem] -> UTCTime
 mostRecentDate xs  = foldr1 max $ getTimes xs
 
@@ -95,4 +107,66 @@ avgDb :: [DatabaseItem] -> Double
 avgDb xs = s / n
   where s = (fromIntegral (sumDb theDatabase)) :: Double
         n = (fromIntegral (length (getNumbers theDatabase))) :: Double
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Scan exercises
+
+fibs = 1 : scanl (+) 1 fibs
+
+nthFib :: Int -> Integer
+nthFib n = fibs !! n
+
+
+-- Restrict fibs to the first fibs only.
+fibs' = take 20 $ (1 : scanl (+) 1 fibs')
+
+fibs'' = [ x | x <- fibs, x < 100 ]
+
+
+scanFac :: Integer -> [Integer]
+scanFac x = scanl (*) 1 [1..]
+
+-- Somehow you can write factorial as an infinite list using scanl.
+facs = scanl (*) 1 [1..]
+
+nthFac :: Int -> Integer
+nthFac n = facs !! n
+
 

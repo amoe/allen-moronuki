@@ -53,3 +53,126 @@ myFoldl f acc [] = acc
 myFoldl f acc (x:xs) = myFoldl f (f acc x) xs
 
 foldlDemo = foldl (\x y -> concat ["(", x, "+", y, ")"]) "0" foldDemoXs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Demonstrate how foldl always evaluates the whole spine.
+
+
+rcf = myFoldr (:) []
+xs = [1,2,3] ++ undefined
+evalDemo1 = take 3 $ rcf xs       -- Yep, works fine
+
+lcf = myFoldl (flip (:)) [] 
+evalDemo2 = take 3 $ lcf xs       -- Nope.  Definitely not fine
+
+
+-- Works fine, we never evaluate const's second argument.
+evalDemo3 = foldr const 0 ([1] ++ undefined)
+
+
+-- Foldl will recurse to the final cons cell and evaluate the flipped const,
+-- returning 5.
+evalDemo4 = foldl (flip const) 0 [1..5]
+
+
+xs0 = repeat 0 ++ [1,2,3]
+xs1 = reverse xs0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Demonstration of defining scanl.
+
+-- infinite type attempt can happen when you have the wrong type signature.
+
+-- The case expression here is only used to deduplicate the "q : <foo>" part.
+
+myScanl :: (a -> b -> a) -> a -> [b] -> [a]
+myScanl f q ls =
+  q : (case ls of
+          [] -> []
+          x:xs -> myScanl f (f q x) xs)
+
+-- Rewritten without using case.
+myScanl2 :: (a -> b -> a) -> a -> [b] -> [a]
+myScanl2 f q [] = q : []
+myScanl2 f q (x:xs) = q : (myScanl2 f (f q x) xs)
+
+
+-- Produce the fibs by a scanl.  (!)
+fibs = 1 : scanl (+) 1 fibs
+
+nthFib :: Int -> Integer
+nthFib n = fibs !! n
