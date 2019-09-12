@@ -1,3 +1,94 @@
+# 2019-09-12
+
+## Warm up and review
+
+1) a) stop-vowel-stop combinations in tuples.
+
+How many are there, dunno.
+
+What's the type signature?
+
+    [Char] -> [Char] -> [(Char, Char, Char)]
+
+well how should it work?
+
+For each stop, we want:
+
+pap, pep, pip, pop, pup
+
+But we also want
+
+pak, pat, pad, pip.
+
+So you want to fix a certain point.  For instance we could start by getting
+the prefixes.
+
+Actually the answer is clear: It's a list comprehension the classic one, this
+will basically do a cubic loop.  
+
+1b.  Just put a condition on the end of the list comprehension, and the length
+of the resulting combinations list will go down to 30.
+
+
+1c.  The sentences don't sound very good because they're not past tense, but
+you get the idea.
+
+
+2.
+
+Well, the behaviour of `seekritFunc` depends on the definition of the `words`
+Words splits on whitespace.
+
+
+So what it will do is transform the list to a list of lengths of words in the
+string input.
+
+Then sum these, giving a total of word lengths.
+
+And divide this by the number of words.
+I think this gives you the mean length of a word in the string, constrained
+to be an integer by the use of integer division.
+
+To fix it to return the fractional value, use `fromIntegral` to cast.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 2019-09-11
 
 Condensing the summary of the fold stuff.

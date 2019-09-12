@@ -170,3 +170,87 @@ nthFac :: Int -> Integer
 nthFac n = facs !! n
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Chapter exercises...
+
+-- 1 -- generating tuples
+
+stops = "pktdkg"
+vowels = "aeiou"
+
+plosives1a :: [Char] -> [Char] -> [(Char, Char, Char)]
+plosives1a ss vs = [(s1, v, s2) | s1 <- ss, v <- vs, s2 <- ss]
+
+
+plosives1b :: [Char] -> [Char] -> [(Char, Char, Char)]
+plosives1b ss vs = [(s1, v, s2) | s1 <- ss, v <- vs, s2 <- ss, s1 == 'p']
+
+nouns = ["door", "box", "dog", "house", "car"]
+verbs = ["drive", "open", "visit", "hit", "close"]
+
+-- 1c
+
+sentences :: [String] -> [String] -> [(String, String, String)]
+sentences ns vs = [(n1, v, n2) | n1 <- ns, v <- vs, n2 <- ns]
+
+
+-- 2.
+
+seekritFunc :: Fractional a => String -> a
+seekritFunc x = (/) (fromIntegral num) (fromIntegral denom)
+  where num = sum (map length (words x))
+        denom = length (words x)
+
