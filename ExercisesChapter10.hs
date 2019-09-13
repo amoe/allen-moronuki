@@ -327,3 +327,39 @@ myAny5 f = foldr ((||) . f) False
 
 -- I'm sure there's a way to go "more-point-free" than this, but just going to
 -- leave it there for the while.
+
+-- 3 -- elem. (member?)
+
+-- Direct recursion
+myElem1 :: (Eq a) => a -> [a] -> Bool
+myElem1 _ [] = False
+myElem1 x (y:ys) = if x == y
+                   then True
+                   else myElem1 x ys
+
+-- Using the or function
+myElem2 :: (Eq a) => a -> [a] -> Bool
+myElem2 _ [] = False
+myElem2 x (y:ys) =  x == y || myElem2 x ys
+
+
+-- Fold with lambda
+-- We see again the variable `b` directly represents the right-hand-side of the
+-- recursion.
+-- Don't forget that this is short-circuiting since the argument 'b' isn't
+-- evaluated if the equality-predicate matches.
+myElem3 :: (Eq a) => a -> [a] -> Bool
+myElem3 x xs = foldr (\a b -> a == x || b) False xs
+
+
+-- Partially apply the equality function and compose it with or.
+myElem4 :: (Eq a) => a -> [a] -> Bool
+myElem4 x = foldr ((||) . (== x)) False
+
+-- Using the any function.
+myElem5 :: (Eq a) => a -> [a] -> Bool
+myElem5 x xs = any (\a -> a == x) xs
+
+-- Pretty point free, I think this is as far as it goes
+myElem6 :: (Eq a) => a -> [a] -> Bool
+myElem6 x = any (== x)
