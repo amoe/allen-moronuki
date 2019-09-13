@@ -1,3 +1,15 @@
+# 2019-09-13
+
+Writing many versions of many and elem, the most notable result is that
+it makes sense to compose functions with different arities.
+
+If I have some function with two args f, and a one-arg function g,
+
+then h = (f . g)  will mean that `h 1 2` => `h (f 1) 2`.
+That is, the first argument is gated through the f function.
+I imagine some pretty fun stuff could happen here with respect to 'flip',
+'const', etc.
+
 # 2019-09-12
 
 ## Warm up and review

@@ -363,3 +363,4 @@ myElem5 x xs = any (\a -> a == x) xs
 -- Pretty point free, I think this is as far as it goes
 myElem6 :: (Eq a) => a -> [a] -> Bool
 myElem6 x = any (== x)
+
