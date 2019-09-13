@@ -254,3 +254,76 @@ seekritFunc x = (/) (fromIntegral num) (fromIntegral denom)
   where num = sum (map length (words x))
         denom = length (words x)
 
+
+-- 3.
+
+-- 3a.  Prelude#or
+
+
+-- Direct recursion, not using (||)
+myOr1 :: [Bool] -> Bool
+myOr1 [] = False
+myOr1 (x:xs) = if x
+               then True
+               else myOr1 xs
+
+
+-- Direct recursion, using (||)
+myOr2 :: [Bool] -> Bool
+myOr2 [] = False
+myOr2 (x:xs) = x || myOr2 xs
+
+
+-- Fold, not point free
+
+-- Notice here the way that "the rest of the fold" corresponds very literally to
+-- the recursive call in 'myOr1'.
+myOr3 :: [Bool] -> Bool
+myOr3 xs = foldr (\a b -> if a then True else b) False xs
+
+myOr4 :: [Bool] -> Bool
+myOr4 = foldr (||) False
+                       
+
+-- 3b.  Prelude#any
+
+-- Direct recursion
+myAny1 :: (a -> Bool) -> [a] -> Bool
+myAny1 f [] = False
+myAny1 f (x:xs) = if (f x)
+                  then True
+                  else myAny1 f xs
+
+-- Direct recursion using (||)
+myAny2 :: (a -> Bool) -> [a] -> Bool
+myAny2 f [] = False
+myAny2 f (x:xs) = (f x) || myAny2 f xs
+
+-- Foldr version, not point free
+myAny3 :: (a -> Bool) -> [a] -> Bool
+myAny3 f xs = foldr (\a b -> if (f a) then True else b) False xs
+
+-- ???
+
+-- Break it down
+
+
+foldAny :: (a -> Bool) -> a -> Bool -> Bool
+foldAny f a b = if (f a) then True else b
+
+-- Write it like this...
+myAny4 :: (a -> Bool) -> [a] -> Bool
+myAny4 f xs = foldr (foldAny f) False xs
+
+-- But  -- composing ?  As we can see that foldAny basically is OR...
+-- This is a bit odd, because we're composing with different number of arguments.
+-- We can assume that only the first argument gets its bit "composed onto" it.
+
+-- myAny4 even [1,2,3]
+-- myAny4 even [1,3,5]
+
+myAny5 :: (a -> Bool) -> [a] -> Bool
+myAny5 f = foldr ((||) . f) False
+
+-- I'm sure there's a way to go "more-point-free" than this, but just going to
+-- leave it there for the while.
