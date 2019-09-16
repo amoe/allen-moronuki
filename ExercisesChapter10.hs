@@ -364,3 +364,105 @@ myElem5 x xs = any (\a -> a == x) xs
 myElem6 :: (Eq a) => a -> [a] -> Bool
 myElem6 x = any (== x)
 
+
+
+-- Reverse.
+
+-- Direct recursion
+myReverse1 :: [a] -> [a]
+myReverse1 [] = []
+myReverse1 (x:xs) = (myReverse1 xs) ++ [x]
+
+-- As a fold??
+myReverse2 :: [a] -> [a]
+myReverse2 xs = foldl (flip (:)) [] xs
+
+-- As a point free fold
+myReverse3 :: [a] -> [a]
+myReverse3 = foldl (flip (:)) []
+
+
+-- Map.
+
+-- Direct recursion
+
+myMap :: (a -> b) -> [a] -> [b]
+myMap f [] = []
+myMap f (x:xs) = (:) (f x) (myMap f xs)
+
+-- As a foldr.
+myMap2 :: (a -> b) -> [a] -> [b]
+myMap2 f xs = foldr (\a b -> (:) (f a) b) [] xs
+
+-- Compose cons operator with f.  Maps the first argument, the second is left
+-- untouched.
+myMap3 :: (a -> b) -> [a] -> [b]
+myMap3 f = foldr ((:) . f) []
+
+
+-- Filter.
+
+-- Direct recursion.
+myFilter1 :: (a -> Bool) -> [a] -> [a]
+myFilter1 f [] = []
+myFilter1 f (x:xs) = if (f x)
+                     then x : (myFilter1 f xs)
+                     else (myFilter1 f xs)
+
+-- Foldr with lambda
+-- Here you can see how 'b' directly represents "the rest of the computation".
+myFilter2 :: (a -> Bool) -> [a] -> [a]
+myFilter2 f xs = foldr (\a b -> if (f a) then a : b else b) [] xs
+
+-- It might be possible to do something with (||) here but can't really figure
+-- it out.
+
+
+-- Squish.
+
+-- Direct recursion.
+mySquish1 :: [[a]] -> [a]
+mySquish1 [] = []
+mySquish1 (x:xs) = (++) x (mySquish1 xs)
+
+
+-- Foldr?
+mySquish2 :: [[a]] -> [a]
+mySquish2 xs = foldr (\a b -> (++) a b) [] xs
+
+-- And simpler
+mySquish3 :: [[a]] -> [a]
+mySquish3 xs = foldr (++) [] xs
+
+-- And even more point free
+mySquish4 :: [[a]] -> [a]
+mySquish4 = foldr (++) []
+
+-- Squishmap.
+
+-- A function for testing it.
+getMultiples :: (Num a) => a -> [a]
+getMultiples x = [x * 2, x * 3, x * 4]
+
+-- Direct recursion.
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f [] = []
+squishMap f (x:xs) = (++) (f x) (squishMap f xs)
+
+-- Foldr/lambda
+squishMap2 :: (a -> [b]) -> [a] -> [b]
+squishMap2 f xs = foldr (\a b -> (++) (f a) b) [] xs
+
+-- Foldr pointfree, this works in the same way as the map example.
+squishMap3 :: (a -> [b]) -> [a] -> [b]
+squishMap3 f xs = foldr ((++) . (f)) [] xs
+
+
+-- Squishagain.
+squishAgain :: [[a]] -> [a]
+squishAgain xs = squishMap id xs
+
+-- Maximumby.
+-- No idea how to do this, I only know the foldl version.
+-- I think it's impossible with foldr
+-- Need to look at the solution to maximumBy, which is from chapter 9
