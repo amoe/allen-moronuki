@@ -1,3 +1,7 @@
+# 2019-09-17
+
+Unsatisfyingly implement maximumBy using the cheap method of destructuring.
+
 # 2019-09-13
 
 Writing many versions of many and elem, the most notable result is that

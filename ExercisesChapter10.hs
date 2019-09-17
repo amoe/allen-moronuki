@@ -466,3 +466,38 @@ squishAgain xs = squishMap id xs
 -- No idea how to do this, I only know the foldl version.
 -- I think it's impossible with foldr
 -- Need to look at the solution to maximumBy, which is from chapter 9
+
+-- myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+-- myMaximumBy f xs = foldr go undefined xs
+--   where go a b = if (f a b) == GT
+--                  then a
+--                  else b
+
+-- Sigh, this is the correct way of doing it, which is so close.
+-- This seems to be a common stumbling block...
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy f (x:xs) = foldr go x xs
+  where go a b = if (f a b) == GT
+                 then a
+                 else b
+
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy f (x:xs) = foldr go x xs
+  where go a b = if (f a b) == LT
+                 then a
+                 else b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
