@@ -2,6 +2,18 @@
 
 Unsatisfyingly implement maximumBy using the cheap method of destructuring.
 
+It's possible that we can use `bool` from Data.Bool to make some of these
+if statements more point free.
+
+In the definitions, they talk a bit more abour catamorphisms, and they mention
+that `bool`, `maybe`, and `either` are examples of catamorphisms.  These all
+seem to be a kind of selection/branching functions.  I couldn't see any
+particular pattern in their type signatures.
+
+A&M also define tail recursion and mention that (as expected) foldr is not tail
+recursive, but foldl is tail recursive.  The position of the tail call remains
+syntactically visible.
+
 # 2019-09-13
 
 Writing many versions of many and elem, the most notable result is that

@@ -1,6 +1,7 @@
 module ExercisesChapter10 where
 
 import Data.Time
+import Data.Bool (bool)
 
 exCh10 = 42
 
@@ -486,6 +487,11 @@ myMinimumBy f (x:xs) = foldr go x xs
   where go a b = if (f a b) == LT
                  then a
                  else b
+
+myMinimumBy2 :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy2 f (x:xs) = foldr go x xs
+  where go a b = bool b a ((f a b) == LT)
+
 
 
 
