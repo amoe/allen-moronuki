@@ -34,3 +34,8 @@ myOtherHusky = HuskyData
 
 myOtherOtherHusky :: HuskyType [[[[Int]]]]
 myOtherOtherHusky = HuskyData
+
+myDoge :: DogueDeBordeaux Int
+myDoge = DogueDeBordeaux 10
+
+data Doggies a = Husky a | Mastiff a deriving (Eq, Show)

@@ -1,5 +1,42 @@
 # 2019-09-19
 
+## Exercises: Dog Types
+
+1.  `Doggies` is a type constructor.  CORRECT
+
+
+2.  What is the kind of Doggies?
+
+`* -> *`, as it's not fully applied.  CORRECT
+
+3.  What is the kind of `Doggies String`?
+
+Should be `*` I think.  CORRECT
+
+4.  What is the type of `Husky 10`? 
+
+Should be `Num a => Doggies a`, I think.  CORRECT
+
+5.  What is the type of `Husky (10 :: Integer)`?
+
+Should be `Doggies Integer`.  CORRECT
+
+6.  What is the type of `Mastiff "Scooby Doo"`?
+
+Should be `Doggies [Char]` I think.  CORRECT
+
+7.  Is DogueDeBordeaux a type constructor or a data constructor?
+
+It's both.  CORRECT
+
+8.  What is the type of DogueDeBordeaux?
+
+Type can only refer to the data constructor, so it's `a -> DogueDeBordeaux a`.
+CORRECT.
+
+9.  What is the type of `DogueDeBordeaux "doggie!"`
+
+The type is `DogueDeBordeaux [Char]`.  CORRECT
 
 
 # 2019-09-18
