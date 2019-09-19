@@ -1,3 +1,60 @@
+# 2019-09-19
+
+
+
+# 2019-09-18
+
+In the declaration
+
+    data Bool = False | True
+
+`Bool` is the 'type constructor'.
+`False` and `True` are both 'data constructors'.
+Type constructors are used only at the type level.
+A type constructor without any arguments, eg plain `Bool`, can be referred to as
+a 'type constant'.
+
+Type constructors like 'Maybe a' are basically generic.  Maybe<A> in java.
+
+You CAN think of `UnaryTypeCon a` as a box to put a value in.  That's how I've
+been thinking of it.  But according to A&M:
+
+> [this analogy] will betray you later -- not all type arguments to constructors
+> have value-level witnesses!  Some are _phantom_.
+
+No idea what this notion of 'phantom' means, really.
+
+"Kinds are the types of types", oh dear.
+
+We know that something is a fully applied, concrete type when it is represented
+as `*`.  This is its kind.
+
+When it is  `* -> *`, this means it's still waiting for another type argument.
+
+Eg, the type-level expression `UnaryTypeCon` is `* -> *`.
+
+You can actually examine the "kind signature" of a type constructor in ghci.
+How cool is that?
+
+    > :k Bool
+    Bool :: *
+
+This tells us that Bool is a fully 'applied' type.  A _type constant_.
+
+Where, 
+
+    > :k UnaryTypeCon
+    UnaryTypeCon :: * -> *
+
+This is why we call it a type 'constructor', because it's applied at typelevel
+to the argument of a concrete type.
+
+This is similar to the distinction between data constructors and constant
+values.  Which are visible using :t in ghci.
+
+
+
+
 # 2019-09-17
 
 Unsatisfyingly implement maximumBy using the cheap method of destructuring.
