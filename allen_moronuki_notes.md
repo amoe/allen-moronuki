@@ -39,6 +39,21 @@ CORRECT.
 The type is `DogueDeBordeaux [Char]`.  CORRECT
 
 
+## What's a type and what's data?
+
+There is no run time type information in Haskell.  Types are erased before
+runtime.
+Type constructors operate at compile time.  This is the sense in which they
+are "applied".
+Everything after the = is a data constructor, by definition.
+
+A&M define a Price data type.
+
+The argument to a data constructor can be a specific TYPE; but it can't be a
+specific VALUE.  You must always accept every possible value for a certain type.
+
+
+
 # 2019-09-18
 
 In the declaration
