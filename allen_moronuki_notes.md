@@ -27,6 +27,8 @@ having the error clause.
 4.  Error: non-exhaustive patterns.
 
 5.  Refactor to add the size of the plane.
+Create a wrapper type for Size.
+Patterns for isPlane need to be adjusted.
 
 
 
