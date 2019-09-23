@@ -67,3 +67,4 @@ data Vehicle = Car Manufacturer Price | Plane Airline
 
 -- In a way, it's too late to get this lesson so sharply, because I already
 -- realized it.
+

@@ -1,9 +1,41 @@
+# 2019-09-23
+
+## Exercises: Vehicles
+
+1.  What is the type of `myCar`?
+
+Its type is `Vehicle`.
+
+2.  Define `isCar`, etc.
+
+Do this with pattern matching -- `isCar (Car _ _) = True`
+Same pattern for all types.  You must match all arguments for the data
+constructor though.
+
+Define `areCars` -- just map `isCar` over the Vehicle list.
+
+3.  getManu
+
+    getManu :: Vehicle -> Manufacturer
+    getManu (Car x _) = x
+    getManu _ = error "not a car"
+
+This illustrates that for sum types, we only have a single type constructor to
+play with.  We can't write `Car x` directly in the type signature, to avoid
+having the error clause.  
+
+4.  Error: non-exhaustive patterns.
+
+5.  Refactor to add the size of the plane.
+
+
+
+
 # 2019-09-19
 
 ## Exercises: Dog Types
 
 1.  `Doggies` is a type constructor.  CORRECT
-
 
 2.  What is the kind of Doggies?
 
