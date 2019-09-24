@@ -1,3 +1,80 @@
+# 2019-09-24
+
+Tuples are a product type.
+
+The reason that we say data types are 'algebraic' is just because of the sum and
+product types.
+Type theory has a large debt to set theory.
+Cardinality is a notion from set theory.
+
+The cardinality of a datatype is the number of values it defines.
+It could define zero values, or some positive N, or infinite values.
+What defines infinite set of values?  Numeric types.
+
+We want to calculate the cardinality of a datatype based on its definition.
+This enables us to do things such as calculate how many different
+implementations of a function with a given type signature there are.  (really?)
+
+We look at two datatypes with easy cardinalities.
+
+Those are Bool and Int.
+
+I predict that Bool has cardinality 2.
+As the data constructors to Bool are both nullary, it's cear the cardinality is
+two.
+
+So I predict that sum and product types means that you either sum or multiply
+the cardinality of the subtypes to get the resulting cardinality.
+
+Eg.  Product type MyFoo Bool Bool.  2*2 = total cardinality 4.
+
+Int has a cardinality with a certain upper and lower bounds (note that A&M did
+not talk about Integer which presumably does actually have an infinite
+cardinality).
+
+Int8 has a lower bound of (-128), attempting (-129) will overflow and generate
+a warning.  These bounds are retrieved using the type class `Bounded`.
+
+Int8 has a cardinality of 256.
+
+## Exercises: Cardinality
+
+1.  `data PugType = PugData`
+
+This has Cardinality 1.
+
+2.  `data Airline = PapuAir | CatapultsR'Us | TakeYourChancesUnited`
+
+This has cardinality 3.  Summing across the types.
+
+3.  The cardinality of Int16 is 65536 (2**16).
+
+4.  Checking Int in the repl.
+
+`minBound :: Int` = -9223372036854775808
+`maxBound :: Int` = 9223372036854775807
+
+This tells us that the cardinality is 18446744073709551616.
+
+Checking Integer in the repl.  This gives us:
+
+    • No instance for (Bounded Integer)
+        arising from a use of ‘minBound’
+    • In the expression: minBound :: Integer
+      In an equation for ‘it’: it = minBound :: Integer
+
+Integer doesn't have an instance of the `Bounded` type class, so it's not
+possible for us to query its bounds.
+It's likely that this means that it has infinite cardinality.
+
+
+5.  What’s the connection between the 8 in Int8 and that type’s cardinality of
+    256?
+
+One's the binary power of the other.  2**8 = 256
+Because it uses 8 bits to store its value.
+
+
 # 2019-09-23
 
 ## Exercises: Vehicles
@@ -30,7 +107,12 @@ having the error clause.
 Create a wrapper type for Size.
 Patterns for isPlane need to be adjusted.
 
+## Data constructor arities
 
+To be a product type, a data constructor must take more than one argument.
+eg `Car Manufacturer Price` is a product type.
+
+`Vehicle` is a sum type.
 
 
 # 2019-09-19

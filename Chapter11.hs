@@ -1,5 +1,7 @@
 module Chapter11 where
 
+import Data.Int (Int8)
+
 ch11 = 42
 
 data MyBool = MyFalse | MyTrue
@@ -68,3 +70,37 @@ data Vehicle = Car Manufacturer Price | Plane Airline
 -- In a way, it's too late to get this lesson so sharply, because I already
 -- realized it.
 
+
+-- Arities of data constructors
+
+-- Nullary
+data Example0 = Example0 deriving (Eq, Show)
+
+-- Unary data constructor
+data Example1 = Example1 Int deriving (Eq, Show)
+
+-- Binary data constructor and therefore also a product type.
+data Example2 = Example2 Int String deriving (Eq, Show)
+
+-- A unary data constructor (MyVal)
+data MyType = MyVal Int deriving (Eq, Show)
+
+-- The type of MyVal is `Int -> MyType`.  There is 1 arrow, therefore there is
+-- 1 argument.
+
+-- Calculate the cardinality, but because we overflow the Int8 type we must use
+-- toInteger to up-cast at runtime.
+cardinalityOfInt8 :: Integer
+cardinalityOfInt8 = (negate arche) + 1 + telos
+  where arche = toInteger $ (minBound :: Int8)
+        telos = toInteger $ (maxBound :: Int8)
+
+cardinalityOfInt :: Integer
+cardinalityOfInt = (negate arche) + 1 + telos
+  where arche = toInteger $ (minBound :: Int)
+        telos = toInteger $ (maxBound :: Int)
+
+
+-- The value produced by the data constructor `MakeExample` inhabits the type
+-- `Example`.  The cardinality of the type `Example` is 1.
+data Example = MakeExample deriving (Show);
