@@ -104,3 +104,34 @@ cardinalityOfInt = (negate arche) + 1 + telos
 -- The value produced by the data constructor `MakeExample` inhabits the type
 -- `Example`.  The cardinality of the type `Example` is 1.
 data Example = MakeExample deriving (Show);
+
+-- data Goats = Goats Int deriving (Eq, Show);
+
+
+-- 43 goats is too many.
+tooManyGoats :: Int -> Bool
+tooManyGoats n = n > 42
+
+newtype Goats = Goats Int deriving (Eq, Show)
+
+-- Declare a wrapper type for Goats.  It might be better called GoatLimitation?
+tooManyGoats' :: Goats -> Bool
+tooManyGoats' (Goats n) = n > 42  
+
+class TooMany a where
+  tooMany :: a -> Bool
+
+instance TooMany Int where
+  tooMany n = n > 42
+
+-- Despite really being an Int, we can still define different type class instances
+-- for goats.
+instance TooMany Goats where
+  tooMany (Goats n) = n > 64
+  
+
+type Goats' = Int
+
+-- Won't work
+-- instance TooMany Goats' where
+--   tooMany n = n > 64

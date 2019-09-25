@@ -1,3 +1,96 @@
+# 2019-09-25
+
+## Exercises: For Example
+
+1.
+
+a) What is the type of MakeExample?
+
+As it's a zero argument function it's already a value.  So its type should
+just be Example.  Mentioning its name is indistinguishable from applying it.
+
+b) What happens when you request the type of Example?
+
+It should be an error, because Example exists at the type-level, not at the
+term-level.  And indeed the result is.
+
+    <interactive>:1:1: error: Data constructor not in scope: Example
+
+Here we notice that ghci assumed that the syntax `Example` was a data
+constructor because it is capitalized.
+
+2.  Try :info on Example.
+
+:info does work on things at the type level.  The result is
+
+    data Example = MakeExample
+        -- Defined at ExercisesChapter11.hs:42:1
+    instance [safe] Show Example
+      -- Defined at ExercisesChapter11.hs:42:38
+
+This tells us that Example has an instance of `Show`.  So type class instances
+are a property of the type rather than a property of a data constructor. (?)
+
+3.  Make another type with a unary data constructor, how does it change what
+appears under :t?
+
+I think that it should change the type to `MakeExample' :: Int -> Example`.
+CORRECT.  The data constructor now needs an instance of that concrete type.
+
+
+## Unary constructors
+
+Data types with a unary constructor always have the same cardinality as the
+one type they contain.
+
+## 11.9 newtype
+
+Newtype is, according to a&m, "a way to define a type that can only ever have
+a single unary data constructor".
+
+Newtype seems to be basically a performance hack.
+
+You can define type class instances for a newtype.
+
+So the rule is, 'type' is a compile-time text replacement.  It doesn't create
+new data constructors.  eg, `String "foo"` has no meaning.  Accordingly it can't
+be used in pattern matching.
+
+`newtype` is a compile time entity that can affect dispatch on type classes.
+But has no run time existence.  
+
+`data` is an item with some run time machinery (which?  is it like reflective?)
+
+If we try to give a type class instance to a type synonym, we find out that this
+is explicitly forbidden.
+
+    • Illegal instance declaration for ‘TooMany Goats'’
+        (All instance types must be of the form (T t1 ... tn)
+         where T is not a synonym.
+
+(note the last line)
+
+Commonly you might want to reuse the type class instances that have been
+provided
+by the wrapped type of a newtype.  This is already working automatically for
+most type classes that are built into ghci.
+
+However for our own purposes we must use `GeneralizedNewtypeDeriving` compiler
+extension.
+
+If we don't have this extension turned on using the pragma, and we try to derive
+our own class, we'll get this error.
+
+    • Can't make a derived instance of ‘TooMany Goats’:
+        ‘TooMany’ is not a stock derivable class (Eq, Show, etc.)
+        Try GeneralizedNewtypeDeriving for GHC's newtype-deriving extension
+    • In the newtype declaration for ‘Goats’
+
+Note the wording used here; 'stock derivable class'.
+
+There is still a bit of an open question as to what advantages `newtype` has
+over a `data` declaration, aside from being less memory heavy.
+
 # 2019-09-24
 
 Tuples are a product type.

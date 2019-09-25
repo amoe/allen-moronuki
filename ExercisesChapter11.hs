@@ -38,3 +38,9 @@ getManu (Car x _) = x
 getManu _ = error "not a car"
 
 
+-- Exercises: For Example
+data Example = MakeExample deriving (Show);
+
+
+data Example' = MakeExample' Int deriving (Show);
+
