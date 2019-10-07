@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 module ExercisesChapter11 where
 
 ch11 = 42
@@ -44,3 +45,22 @@ data Example = MakeExample deriving (Show);
 
 data Example' = MakeExample' Int deriving (Show);
 
+
+-- Exercises: Logic Goats
+
+class TooMany a where
+  tooMany :: a -> Bool
+
+newtype TupleWrapper = TupleWrapper (Int, String) deriving (Show)
+
+-- Pattern matching works fine inside the tuple.
+instance TooMany TupleWrapper where
+  tooMany (TupleWrapper (x, y)) = x > 42
+
+
+newtype GoatsInTwoFields = GoatsInTwoFields (Int, Int) deriving (Show)
+
+instance TooMany GoatsInTwoFields where
+  tooMany (GoatsInTwoFields (x, y)) = (x + y) > 42
+
+-- Stuck on exercise 3

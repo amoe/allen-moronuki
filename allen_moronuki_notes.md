@@ -1,3 +1,26 @@
+# 2019-10-07
+
+## Exercises: Logic Goats
+
+1.  What is the type (Int, String)?  It's a 2-tuple.
+
+Using a newtype, you do it in the same way.  Declare a wrapper type. and add
+a definition for it.
+
+2.  Works in the same way.
+
+3.  Look up the declaration syntax for integers.
+
+It's 
+
+    instance (<CONSTRAINT> => )? <CLASSNAME> <TYPE-EXPR>
+
+Where CONSTRAINT gives constraints that can be used on type variables within
+TYPE-EXPR.
+
+Really not very clear what this does.  I don't see how I can derive a newtype
+from a typeclass constraint such as this.
+
 # 2019-09-25
 
 ## Exercises: For Example

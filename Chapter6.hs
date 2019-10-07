@@ -134,7 +134,8 @@ sumNumberish a a' = fromNumber summed
 add :: Num a => a -> a -> a
 add x y = x + y
 
-addWeird :: (Num a) => a -> a -> a
+-- Needs both Num AND Ord to type check, because we use > from Ord.
+addWeird :: (Num a, Ord a) => a -> a -> a
 addWeird x y = 
   if x > 1
   then x + y
@@ -142,5 +143,5 @@ addWeird x y =
 
 -- We don't need to add any more types here because Int already implies its
 -- various type class instances, in this case Eq.  But this is bad practice.
-check' :: Int -> Int -> Bool
-check' a a' = a == a'
+check'' :: Int -> Int -> Bool
+check'' a a' = a == a'
