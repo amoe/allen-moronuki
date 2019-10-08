@@ -63,4 +63,6 @@ newtype GoatsInTwoFields = GoatsInTwoFields (Int, Int) deriving (Show)
 instance TooMany GoatsInTwoFields where
   tooMany (GoatsInTwoFields (x, y)) = (x + y) > 42
 
--- Stuck on exercise 3
+-- Difficult to test this.   Note that this part NEEDS FlexibleInstances.
+instance (Num a, TooMany a) => TooMany (a, a) where
+  tooMany (x, y) = tooMany x || tooMany y

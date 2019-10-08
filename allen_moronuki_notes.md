@@ -21,6 +21,10 @@ TYPE-EXPR.
 Really not very clear what this does.  I don't see how I can derive a newtype
 from a typeclass constraint such as this.
 
+HPFFP p406: "Make another TooMany instance, this time for (Num a, TooMany a)
+=> (a, a)."  I don't understand how to write this.  Is this the correct way:
+"instance (Num a, TooMany a) => TooMany (a, a) where..."  That type checks.
+
 # 2019-09-25
 
 ## Exercises: For Example
