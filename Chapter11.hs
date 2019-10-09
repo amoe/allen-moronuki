@@ -135,3 +135,50 @@ type Goats' = Int
 -- Won't work
 -- instance TooMany Goats' where
 --   tooMany n = n > 64
+
+
+-- A type which clearly has cardinality 3.
+
+data QuantumBool = QuantumTrue | QuantumFalse | QuantumBoth deriving (Eq, Show)
+
+
+-- This type:
+-- (*) 3 3
+-- Hence has cardinality 6.
+data TwoQs = MkTwoQs QuantumBool QuantumBool deriving (Eq, Show)
+
+-- Same cardinality.  This just creates a type but doesn't provide any means
+-- to create data that's OF the type.
+type TwoQsTpl = (QuantumBool, QuantumBool)
+
+
+-- A simple product type
+-- But its cardinality is basically infinite.
+data Person = MkPerson String Int
+
+jm = MkPerson "julie" 108
+ca = MkPerson "chris" 16
+
+namae :: Person -> String
+namae (MkPerson x _) = x
+
+
+data Person' = 
+  Person' { name :: String
+          , age :: Int }
+  deriving (Eq, Show)
+
+-- Defining two special types.  Doing this means that we can match directly
+-- on the type.  eg you can't write a type signature to match only True.
+-- (although you can write such a pattern match.)
+
+-- Cardinality 1
+data Fiction = MkFiction deriving Show
+-- Cardinality 1
+data Nonfiction = MkNonfiction deriving Show
+
+-- Cardinality = 2
+-- Data constructors are parameterized by the type constructors of the previous
+-- definitions.
+data BookType = FictionBook Fiction | NonfictionBook Nonfiction 
+  deriving Show

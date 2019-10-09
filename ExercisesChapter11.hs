@@ -1,6 +1,8 @@
 {-# LANGUAGE FlexibleInstances #-}
 module ExercisesChapter11 where
 
+import Data.Int
+
 ch11 = 42
 
 -- Type definitions for Vehicle exercise.
@@ -66,3 +68,11 @@ instance TooMany GoatsInTwoFields where
 -- Difficult to test this.   Note that this part NEEDS FlexibleInstances.
 instance (Num a, TooMany a) => TooMany (a, a) where
   tooMany (x, y) = tooMany x || tooMany y
+
+-- a type with two data constructors.
+-- It wraps a bool.
+-- Think that the answer is (2 in first of sum type) + (2 in second)
+data BigSmall = Big Bool | Small Bool deriving (Eq, Show)
+
+-- Cardinality = 258
+data NumberOrBool = Numba Int8 | BoolyBool Bool deriving (Eq, Show)

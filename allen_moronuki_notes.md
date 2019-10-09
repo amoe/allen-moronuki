@@ -1,3 +1,73 @@
+# 2019-10-09
+
+Sum types:
+
+- To know the cardinality of sum types, we add the cardinality of their data
+constructors.  eg True | False = 2 cardinality.
+
+## Exercise: Pity the Bool
+
+1.  
+
+    Big Bool | Small Bool
+
+    Big (False | True) | Small (False | True)
+
+    (1 (1 + 1)) + (1 (1 + 1))
+
+    2 + 2 = 4
+
+Hence cardinality is 4.
+
+2. 
+
+The cardinality of the type is.
+
+
+    Numba Int8 | BoolyBool Bool
+    1 (256) | 1 (2)
+    256 + 2 = 258
+
+This is intuitively correct, it doesn't combine these types in any way.  It's
+just an enum of them, essentially.
+
+You get an overflow warning if you use -129, etc.
+
+> The reason it’s important to understand cardinality is that the
+> cardinality of a datatype roughly equates to how difficult it is to
+> reason about.
+
+And now the best part, Records...
+They demonstrate the weird indentation style.
+Record syntax uses curly brackets to delimit a series of name / type
+annotations.
+Record syntax brings a whole bunch of named accessor functions into scope.
+Note that they don't have any sort of 'get' prefix or anything like that.
+
+In the discussion of normal form, they talk about 'distributivity'.  This
+roughly means the operation in elementary algebra where you 'multiply out'
+brackets.  If you have X*(Y+Z) you transform to XY + XZ, giving you a 'sum of
+products'.
+
+So in the type system, product types distribute over sum types; I suppose in the
+sense of calculating cardinality.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 2019-10-07
 
 ## Exercises: Logic Goats
