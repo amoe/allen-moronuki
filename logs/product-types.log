@@ -1,0 +1,30 @@
+07:30         amoe > In HPFFP Ch11 they say they "define a product type 'Author'" as such: `data Author = Author (AuthorName, BookType)`.  But it seems to me that it's not a product type, as I thought that a 
+                     product type had to contain more than one other type.  But it only contains one other type which is a 2-tuple.
+07:46         amoe > so earlier they say: "Haskell also has product types...The data constructors in product types have more than one parameter."
+07:47         amoe > to me, that data constructor has only 1 parameter which is a tuple and therefore Author isn't a product type
+07:49         amoe > although I can see how the tuple itself *is* a product type
+07:49       merijn > amoe: Tuples *are* product types :)
+07:49         jle` > amoe: yeah, i think that might not be super clear
+07:49         jle` > if i were to say define a product type i would interpret it as data Author = Author AuthorName BookType
+07:49         jle` > *if i were told to
+07:49       merijn > amoe: product/sum types refer to the "algebraic" part of "algebraic datatypes" :)
+07:50       merijn > Oh, I think I miss some crucial context :p
+07:50         jle` > yeah, the context was "define a product type Author: data Author = Author (AuthorName, BookType)"
+07:51         jle` > i think that wouldn't be way i would interpret a suggestion to define a product type; it'd hear that and say Author AuthorName BookType
+07:51         amoe > they define that product type to demonstrate distributivity, I guess that using the tuple is required for that example
+07:51         jle` > however, it is true that Author, even containing a tuple, is a product of AuthorName and BookType
+07:51         amoe > don't understand the example enough to say why
+07:51         jle` > so even if you have `data Author = Author (AuthorName, BookType)`, you can say that Author is a product of AuthorName and BookType
+07:53         amoe > I guess my question is... how deep do you go when you analyze this?  Eg `data Foo = Foo MyOpaqueType`, is it a product type?  you can't tell without knowing what `MyOpaqueType` is, right
+07:53         jle` > yeah, "is it a product type" isn't really a well-defined question with a yes or no answer
+07:53         jle` > if you take it at its literal value, anything is a product type
+07:53  MarcelineVQ > indeed, some will say data Foo = MkFoo Char is a product type too, it's a product of one type, Char.
+07:53         jle` > since type X is a product of X and ()
+07:54         jle` > but really the 'point' of calling something a product type is saying that it can be decomposed in a way that helps with a certain line of reasoning you want to do
+07:55         jle` > you wouldn't specifically draw attention to the productiness of something without also saying 'product of what'
+07:56         jle` > it's like saying a natural number is factorizable.  yeah, sure, every single natural number is factorizable
+07:56         jle` > 23 can be factorised as 1 x 23
+07:57         jle` > but usually you wouldn't say something is factorizable unless you intend to do something with the factorization :)
+07:57         amoe > right, makes sense
+07:59         jle` > but in this case, in the context of defining an ADT, "product type" is usually interpreted as a multi-field ADT. so in this case they aren't going quite with the established interpretation 
+                     in this context

@@ -1,3 +1,9 @@
+# 2019-10-10
+
+It seems that this is really difficult.
+
+"Haskell also has product types...The data constructors in product types have more than one parameter."
+
 # 2019-10-09
 
 Sum types:

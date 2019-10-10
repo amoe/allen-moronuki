@@ -182,3 +182,14 @@ data Nonfiction = MkNonfiction deriving Show
 -- definitions.
 data BookType = FictionBook Fiction | NonfictionBook Nonfiction 
   deriving Show
+
+type AuthorName = String
+
+-- Product type but is it?
+-- "Not in normal form as not a sum of products"
+data Author = Author (AuthorName, BookType) deriving (Show)
+
+-- Applying the distributive property
+-- a*(b+c) = ab + ac
+-- We have created two data constructors 
+data Author' = Fiction AuthorName | Nonfiction AuthorName deriving (Eq, Show)
