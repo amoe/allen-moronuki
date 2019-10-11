@@ -33,6 +33,13 @@ A&M note that this is all very infrequently used, and I'm glad about that,
 because it's hard to understand.  But you can see that the list type uses
 similar types of thing to this.
 
+A long extended example of creating sum types.  The upshot was, don't use
+type aliases (the type keyword) on stuff like Strings.  The cardinality of these
+types is too large.
+
+The record type syntax allows us to create data more descriptively, in a
+manner similar to namedtuples / data maps in clojure.
+
 
 
 

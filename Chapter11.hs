@@ -312,3 +312,137 @@ data Animal = Cow CowInfo | Pig PigInfo | Sheep SheepInfo
 
 type Animal' = Sum CowInfo (Sum PigInfo SheepInfo)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Constructing values
+
+trivialValue :: GuessWhat
+trivialValue = Chickenbutt
+
+
+idInt :: Id Integer
+idInt = MkId 10
+
+-- Type aliases to make the construction function more readable.
+type Awesome = Bool
+type SomeName = String
+
+-- Create a person
+person :: Product SomeName Awesome
+person = Product "Simon" True
+
+
+data Twitter = Twitter deriving (Eq, Show)
+
+data AskFm = AskFm deriving (Eq, Show)
+
+-- Now we use the Sum type.  It mandates that we use the correct data
+-- constructor in the correct place.  It can only be "First Twitter" when we list
+-- the types in this particular order within the type signature.
+socialNetwork :: Sum Twitter AskFm
+socialNetwork = First Twitter
+
+
+type SN = Sum Twitter AskFm
+
+-- That's equivalent to the following.
+data SocialNetwork = Twitter' | AskFm' deriving (Eq, Show)
+
+
+
+-- Now how would it look were we to use type aliases (the 'type' keyword) instead
+-- of 'data'.
+type Twitter'' = String
+type AskFm'' = String
+
+-- We have to use a string, because Twitter'' has no data constructor.
+twitter :: Sum Twitter'' AskFm''
+twitter = First "Twitter"
+
+-- Both are strings.  So it's not type safe.
+-- We use First here, but we shouldn't actually be able to use First.
+askfm :: Sum Twitter'' AskFm''
+askfm = First "AskFm"
+
+-- And now record types.  They use the same syntax as regular product types.
+myRecord :: RecordProduct Integer Float
+myRecord = RecordProduct 42 0.00001
+
+-- There's also another more explicit syntax for record initialization
+myRecord' :: RecordProduct Integer Float
+myRecord' = RecordProduct { pfirst = 42
+                          , psecond = 0.0001 }
+
+
+
+-- sum type of OS
+data OperatingSystem =
+  GnuPlusLinux
+  | OpenBSDPlusNevermindJustBSDStill
+  | Mac
+  | Windows
+  deriving (Eq, Show)
+
+
+data ProgLang = 
+  Haskell
+  | Agda
+  | Idris
+  | PureScript
+  deriving (Eq, Show)
+
+data Programmer = Programmer { os :: OperatingSystem
+                             , lang :: ProgLang }
+  deriving (Eq, Show)
+
+-- It's more easy to reorder fields when using this specific syntax.
+nineToFive :: Programmer
+nineToFive = Programmer { os = Mac
+                        , lang = Haskell }
+
+-- We can write the record fields in the constructor in a much different order
+-- here.
+feelingWizardly :: Programmer
+feelingWizardly = Programmer { lang = Agda
+                             , os = GnuPlusLinux }
