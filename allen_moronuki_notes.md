@@ -1,3 +1,63 @@
+# 2019-10-11
+
+CowInfo, what type is it -- it's a product type of String and Int.
+
+bess' is simply a CowInfo, a product type or struct.
+
+What is First?  it's a data constructor for a sum type.
+
+First bess' should take the CowInfo and wrap it ina Sum.
+
+And that's exactly what it does.
+
+Second does the same except it specializes the second parameter of the Sum.
+
+We wrap it in two other Sums.
+
+If you then try to 'cast' it to Animal', it will see that the structure doesn't
+look like (Sum (Sum x y) z), instead, it looks like (Sum x (Sum y z)), and
+will complain that the type did not match.  It expected type CowInfo but
+actually got a Sum.
+
+in ghci's words, 
+
+    First elmo' :: Sum (Sum a SheepInfo) b
+
+while the Animal' type has the expectation
+
+    type Animal' = Sum CowInfo (Sum PigInfo SheepInfo)
+
+This reminds us of structural typing in typescript.
+
+A&M note that this is all very infrequently used, and I'm glad about that,
+because it's hard to understand.  But you can see that the list type uses
+similar types of thing to this.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 2019-10-10
 
 It seems that this is really difficult.

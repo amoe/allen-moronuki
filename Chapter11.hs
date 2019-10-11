@@ -312,8 +312,3 @@ data Animal = Cow CowInfo | Pig PigInfo | Sheep SheepInfo
 
 type Animal' = Sum CowInfo (Sum PigInfo SheepInfo)
 
-
-
-
-
-
