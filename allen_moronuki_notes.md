@@ -2,7 +2,21 @@
 
 It seems that this is really difficult.
 
-"Haskell also has product types...The data constructors in product types have more than one parameter."
+"Haskell also has product types...The data constructors in product types have
+more than one parameter."
+
+## Exercise: How does your garden grow?
+
+From the exercise, we basically end up proving that 'sum of products' normal
+form is an 'evaluation/reduction' of the total type space.
+
+That is to say that it ELIMINATES the sum type from the type universe.  So it
+doesn't matter that it clashes with the data constructors for the sum type.
+Because the non-normal form and the normal form, if they use the same
+identifiers, are mutually exclusive.
+
+So that's why the answer for this exercise is located within `Garden.hs`.
+
 
 # 2019-10-09
 

@@ -76,3 +76,16 @@ data BigSmall = Big Bool | Small Bool deriving (Eq, Show)
 
 -- Cardinality = 258
 data NumberOrBool = Numba Int8 | BoolyBool Bool deriving (Eq, Show)
+
+-- Exercises: How does your garden grow?
+
+-- Non-normal form version:
+
+data FlowerType = Gardenia | Daisy | Rose | Lilac deriving (Show);
+
+type Gardener = String
+  
+data Garden = Garden Gardener FlowerType deriving Show
+
+-- Normal form version:
+-- See Garden.hs, by definition, it has to live in a fresh module.

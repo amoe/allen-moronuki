@@ -193,3 +193,127 @@ data Author = Author (AuthorName, BookType) deriving (Show)
 -- a*(b+c) = ab + ac
 -- We have created two data constructors 
 data Author' = Fiction AuthorName | Nonfiction AuthorName deriving (Eq, Show)
+
+
+-- In normal form because it's a sum of products.
+-- data Expr = Number Int | Add Expr Expr | Minus Expr | Mult Expr Expr | Divide Expr Expr
+
+-- Stricter interpretation of normal form.
+-- type Number = Int
+-- type Add = (Expr, Expr)
+-- type Minus = Expr
+-- type Mult = (Expr, Expr)
+-- type Divide = (Expr, Expr)
+
+-- Can't declare this because it is a cycle for some reason?
+-- type Expr = Either Number (Either Add (Either Minus (Either Mult Divide)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Type with a nullary data constructor
+data GuessWhat = Chickenbutt deriving (Eq, Show)
+
+-- A type with a unary data constructor
+data Id a = MkId a deriving (Eq, Show)
+
+-- A product type
+data Product a b = Product a b deriving (Eq, Show)
+
+
+-- A sum type with two type arguments
+data Sum a b = First a | Second b deriving (Eq, Show)
+
+
+data RecordProduct a b = 
+  RecordProduct { pfirst :: a
+                , psecond :: b }
+  deriving (Eq, Show)
+
+
+newtype NumCow = NumCow Int deriving (Eq, Show)
+
+newtype NumPig = NumPig Int deriving (Eq, Show)
+
+data Farmhouse = Farmhouse NumCow NumPig deriving (Eq, Show)
+
+type Farmhouse' = Product NumCow NumPig
+
+-- A&M: Farmhouse & Farmhouse' are 'the same'.  But the same in what sense?
+-- Farmhouse' doesn't have a specialized data constructor, for one.
+
+-- wrapper value for a number of sheep
+newtype NumSheep = NumSheep Int deriving (Eq, Show)
+
+-- the regular product type representation of a big farmhouse
+data BigFarmhouse = BigFarmhouse NumCow NumPig NumSheep deriving (Eq, Show)
+
+-- Alternative representation of BigFarmhouse.
+type BigFarmhouse' = Product NumCow (Product NumPig NumSheep)
+
+
+-- Let's define some of the characteristics of some animals
+type Name = String
+type Age = Int
+type LovesMud = Bool
+
+type PoundsOfWool = Int
+
+data CowInfo = CowInfo Name Age deriving (Eq, Show)
+
+data PigInfo = PigInfo Name Age LovesMud deriving (Eq, Show)
+
+data SheepInfo = SheepInfo Name Age PoundsOfWool deriving (Eq, Show)
+
+data Animal = Cow CowInfo | Pig PigInfo | Sheep SheepInfo 
+  deriving (Eq, Show)
+
+type Animal' = Sum CowInfo (Sum PigInfo SheepInfo)
+
+
+
+
+
+
