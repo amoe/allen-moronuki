@@ -1,3 +1,22 @@
+# 2019-10-14
+
+The answer to the 'generate all programmers' exercise just uses list
+comprehensions.
+
+As Programmer is a product of two types, you can find its cardinality as the
+product of the length of all inhabitants of its constituent types.
+
+eg, in this case the value is
+
+    (length allOperatingSystems) * (length allLanguages)
+    = 4 * 4
+    = 16
+
+A&M introduce a function called `nub`.  This function will scrub duplicate
+values.
+
+
+
 # 2019-10-11
 
 CowInfo, what type is it -- it's a product type of String and Int.
@@ -39,6 +58,8 @@ types is too large.
 
 The record type syntax allows us to create data more descriptively, in a
 manner similar to namedtuples / data maps in clojure.
+
+Exercises, the coming exercise should be done with list comprehensions.
 
 
 

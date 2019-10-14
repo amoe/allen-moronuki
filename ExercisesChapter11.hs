@@ -2,6 +2,7 @@
 module ExercisesChapter11 where
 
 import Data.Int
+import Data.List (nub)
 
 ch11 = 42
 
@@ -89,3 +90,108 @@ data Garden = Garden Gardener FlowerType deriving Show
 
 -- Normal form version:
 -- See Garden.hs, by definition, it has to live in a fresh module.
+
+-- Operating system data.
+
+data OperatingSystem =
+  GnuPlusLinux
+  | OpenBSDPlusNevermindJustBSDStill
+  | Mac
+  | Windows
+  deriving (Eq, Show)
+
+
+data ProgLang = 
+  Haskell
+  | Agda
+  | Idris
+  | PureScript
+  deriving (Eq, Show)
+
+data Programmer = Programmer { os :: OperatingSystem
+                             , lang :: ProgLang }
+  deriving (Eq, Show)
+
+-- It's more easy to reorder fields when using this specific syntax.
+nineToFive :: Programmer
+nineToFive = Programmer { os = Mac
+                        , lang = Haskell }
+
+-- We can write the record fields in the constructor in a much different order
+-- here.
+feelingWizardly :: Programmer
+feelingWizardly = Programmer { lang = Agda
+                             , os = GnuPlusLinux }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+allOperatingSystems :: [OperatingSystem]
+allOperatingSystems = [
+  GnuPlusLinux,
+  OpenBSDPlusNevermindJustBSDStill,
+  Mac,
+  Windows
+  ]
+
+allLanguages :: [ProgLang]
+allLanguages = [
+  Haskell,
+  Agda,
+  Idris,
+  PureScript
+  ]
+
+allProgrammers :: [Programmer]
+allProgrammers = [Programmer x y | x <- allOperatingSystems, y <- allLanguages]
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

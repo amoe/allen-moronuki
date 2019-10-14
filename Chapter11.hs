@@ -446,3 +446,26 @@ nineToFive = Programmer { os = Mac
 feelingWizardly :: Programmer
 feelingWizardly = Programmer { lang = Agda
                              , os = GnuPlusLinux }
+
+
+
+
+-- We forgot to initialize the 'lang'.  We'll get a warning on load, but no
+-- error.  We'll get an exception when we try to evaluate or print the record.
+--halfARecord = Programmer { os = GnuPlusLinux }
+
+
+-- A trinary product type.  Demonstrate partial application
+-- Don't use record types that aren't fully evaluated as a 'template'.
+data ThereYet = There Float Int Bool deriving (Eq, Show)
+
+nope = There
+
+notYet :: Int -> Bool -> ThereYet
+notYet = nope 25.5
+
+notQuite :: Bool -> ThereYet
+notQuite = notYet 10
+
+yussss :: ThereYet
+yussss = notQuite False
