@@ -1,3 +1,45 @@
+# 2019-10-15
+
+## Function type is exponential
+
+Note that given a function `a -> b`, the number of inhabitants is not calculated
+as (a^b), rather it's calculated as (b^a).
+
+
+## Exercises: The Quad
+
+1.  How many values for `Either Quad Quad`?  Welp, `Either` is an archetypal
+    SUM type.  So it just acts as a plus.  And there is no arrow
+    in the function's type.
+
+So the answer is:
+
+    4 + 4 = 8
+
+2.  What is the type of the 2 tuple of Quad?
+It's a product type, so it's 
+
+    4 * 4 = 16
+
+3.  funcQuad is a function type so the answer is b^a, ie 4^4, ie 256.
+
+4.  It's a product type of 3 bools.
+So it's 2*2*2 = 8
+
+5.  It's an exponential, this is difficult
+
+a -> b -> c evaluates as (c^b)^a
+
+So the result is 
+
+    (2^2)^2 = 16
+
+6.  Ordering means that:
+
+    (4^4)^2
+    256^2
+
+
 # 2019-10-14
 
 The answer to the 'generate all programmers' exercise just uses list
@@ -14,6 +56,38 @@ eg, in this case the value is
 
 A&M introduce a function called `nub`.  This function will scrub duplicate
 values.
+
+-- Don't do this!
+-- 1.  Use Maybe, not Null | ...
+-- 2.  This creates the possibility of using `model Null` which will throw an
+ --    exception at runtime.
+-- data Automobile = Null | Car { make :: String
+--                              , model :: String
+--                              , year :: Integer }
+--   deriving (Eq, Show)
+
+-- A better version
+
+-- data Car' = Car' { make :: String
+--                  , model :: String
+--                  , year :: Integer }
+
+-- data Automobile' = Null' | Automobile' Car'
+--   deriving (Eq, Show)
+
+-- Saying `make Null` is now a compile-time error.
+
+
+In ADTs, function type is exponent operator.
+What does this mean?
+
+Let's ask, what's the cardinality of a function Bool -> Bool?
+It's 2^2 = 4.  This means there are 4 implementations of such a function.
+
+Whereas Bool -> Bool -> Bool
+would parse as
+
+(x^y)^z -- standard algebraic order
 
 
 

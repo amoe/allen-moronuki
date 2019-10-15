@@ -469,3 +469,144 @@ notQuite = notYet 10
 
 yussss :: ThereYet
 yussss = notQuite False
+
+-- For explication on deconstructing values, see DeconstructingValues.hs
+
+
+-- Function type is exponential
+
+data FuturamaCharacter = Fry | Bender | Leela deriving (Eq, Show)
+
+quantSum1 :: Either FuturamaCharacter FuturamaCharacter
+quantSum1 = Right Fry
+
+quantSum2 :: Either FuturamaCharacter FuturamaCharacter
+quantSum2 = Right Bender
+
+quantSum3 :: Either FuturamaCharacter FuturamaCharacter
+quantSum3 = Right Leela
+
+quantSum4 :: Either FuturamaCharacter FuturamaCharacter
+quantSum4 = Left Fry
+
+quantSum5 :: Either FuturamaCharacter FuturamaCharacter
+quantSum5 = Left Bender
+
+quantSum6 :: Either FuturamaCharacter FuturamaCharacter
+quantSum6 = Left Leela
+
+-- 3 * 3 = 9 cardinality on the type of this result.
+-- So our enumeration of the possible product types goes all the way up to 10.
+quantProd1 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd1 = (Fry, Fry)
+
+quantProd2 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd2 = (Fry, Bender)
+
+quantProd3 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd3 = (Fry, Leela)
+
+quantProd4 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd4 = (Bender, Fry)
+
+quantProd5 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd5 = (Bender, Bender)
+
+quantProd6 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd6 = (Bender, Leela)
+
+quantProd7 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd7 = (Leela, Fry)
+
+quantProd8 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd8 = (Leela, Bender)
+
+quantProd9 :: (FuturamaCharacter, FuturamaCharacter)
+quantProd9 = (Leela, Leela)
+
+
+
+-- Now we extend that to the function type.
+
+-- We handle all cases.
+
+-- We start off by iterating on the final case, all values of the 3-valued sum
+-- type.
+quantFlip1 :: FuturamaCharacter -> FuturamaCharacter
+quantFlip1 Fry = Fry
+quantFlip1 Bender = Fry
+quantFlip1 Leela = Fry
+
+quantFlip2 :: FuturamaCharacter -> FuturamaCharacter
+quantFlip2 Fry = Fry
+quantFlip2 Bender = Fry
+quantFlip2 Leela = Bender
+
+quantFlip3 :: FuturamaCharacter -> FuturamaCharacter
+quantFlip3 Fry = Fry
+quantFlip3 Bender = Fry
+quantFlip3 Leela = Leela
+
+-- On the fourth case, we start iterating the second-last value on all remaining
+-- values that it has.
+quantFlip4 :: FuturamaCharacter -> FuturamaCharacter
+quantFlip4 Fry = Fry
+quantFlip4 Bender = Bender
+quantFlip4 Leela = Fry
+
+quantFlip5 :: FuturamaCharacter -> FuturamaCharacter
+quantFlip5 Fry = Fry
+quantFlip5 Bender = Leela
+quantFlip5 Leela = Fry
+
+-- ... There should be 27 possibilities in total.
+
+-- Exponentiation in what order?
+
+-- As the type algebra operates in the order (b^a), there should be
+-- 2^3 = 8 implementations of this function.
+-- These are all of them written out...
+-- Confirmed in sort | uniq that this is all correct implementations.
+-- So exponential means -- given the lack of any information about the argument
+-- beside its type.  We know that the expression `myFn x` has N possible values
+-- as long as it type checks.
+convert1 :: FuturamaCharacter -> Bool
+convert1 Fry = False
+convert1 Bender = False
+convert1 Leela = False
+
+convert2 :: FuturamaCharacter -> Bool
+convert2 Fry = False
+convert2 Bender = False
+convert2 Leela = True
+
+convert3 :: FuturamaCharacter -> Bool
+convert3 Fry = False
+convert3 Bender = True
+convert3 Leela = False
+
+convert4 :: FuturamaCharacter -> Bool
+convert4 Fry = True
+convert4 Bender = False
+convert4 Leela = False
+
+convert5 :: FuturamaCharacter -> Bool
+convert5 Fry = False
+convert5 Bender = True
+convert5 Leela = True
+
+convert6 :: FuturamaCharacter -> Bool
+convert6 Fry = True
+convert6 Bender = False
+convert6 Leela = True
+
+convert7 :: FuturamaCharacter -> Bool
+convert7 Fry = True
+convert7 Bender = True
+convert7 Leela = False
+
+convert8 :: FuturamaCharacter -> Bool
+convert8 Fry = True
+convert8 Bender = True
+convert8 Leela = True
+

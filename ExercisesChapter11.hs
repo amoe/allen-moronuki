@@ -181,10 +181,33 @@ allProgrammers :: [Programmer]
 allProgrammers = [Programmer x y | x <- allOperatingSystems, y <- allLanguages]
   
 
+-- Exercise: The Quad
+
+data Quad = One | Two | Three | Four deriving (Eq, Show)
 
 
+-- Has cardinality 8
+eQuad :: Either Quad Quad
+eQuad = undefined
 
+-- Has cardinality 16
+prodQuad :: (Quad, Quad)
+prodQuad = undefined
 
+-- Has cardinality 4^4 = 256
+funcQuad :: Quad -> Quad
+funcQuad = undefined
+
+-- Has cardinality 2*2*2 = 8
+prodTBool :: (Bool, Bool, Bool)
+prodTBool = undefined
+
+-- Has cardinality (2^2)^2 = 16
+gTwo :: Bool -> Bool -> Bool
+gTwo = undefined
+
+-- Has cardinality (4^4)^2 = 65536
+fTwo :: Bool -> Quad -> Quad
 
 
 
