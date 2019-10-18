@@ -1,3 +1,37 @@
+# 2019-10-18
+
+Higher-kinded type = type with a kind that isn't `*`, AFAICS.
+
+It's a type that's not 'fully applied'.  Types can be applied at the type level
+in ghci.  Eg
+
+    :kind Silly Int
+
+This is analogous to partial application of a 4-argument function.  The number
+of arrows in its kind signature reduces by one.
+
+A higher kinded type makes sense -- in Java some generic List<T> is a higher
+kinded type.  It enables you to build 'holes' in your types that can be filled
+in generically by the consumer.  Much as List<MyType>.  You can then declare
+eg fields in a record type as being of type 'a' where 'a' is a type variable.
+
+Declaring an operator with non-alnum name will automatically cause it to be
+infix.
+
+A&M define binary trees as a recursive structure.  "A tree that only branches
+to the right is indistinguishable from a normal list".
+
+    degenerateCase = Node Leaf 1 (Node Leaf 2 (Node Leaf 3 Leaf))
+
+This case is functionally equivalent to a list [1,2,3].
+
+The rules for binary trees:
+
+1.  If something is lower, we insert it somewhere on the left hand part (transitively).
+2.  If something is higher, we insert it somewhere on the right hand part
+
+There's going to need a recursive call here.
+
 # 2019-10-15
 
 ## Function type is exponential

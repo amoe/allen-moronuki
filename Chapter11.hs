@@ -610,3 +610,68 @@ convert8 Fry = True
 convert8 Bender = True
 convert8 Leela = True
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+data MyType2 a b = MyType2 a b
+
+-- The type 'Silly' is identical to a 4-tuple from a kinds perspective. 
+data Silly a b c d = MkSilly a b c d deriving (Show);
+
+
+-- It's a leaf, or a node holding a value and left/right branches.
+-- The leaf holds no value at all.
+data BinaryTree  a = Leaf | Node (BinaryTree a) a (BinaryTree a)
+  deriving (Eq, Ord, Show)
+
+degenerateCase = Node Leaf 1 (Node Leaf 2 (Node Leaf 3 Leaf))
+
+
+-- We take an orderable item and yield a new binary tree.
+insert' :: Ord a => a 
+        -> BinaryTree a
+        -> BinaryTree a
+insert' x Leaf = Node Leaf x Leaf
+insert' x (Node l y r)
+  | x == y = Node l y r    -- We just leave the value???  A value can never be present twice
+  | x < y = Node (insert' x l) y r
+  | x > y = Node l y (insert' x r)
+  
+  
+
