@@ -301,3 +301,26 @@ mapExpected =
 mapOkay = if mapTree (+1) testTree' == mapExpected
           then print "yup okay!"
           else error "test failed!"
+
+-- Write function to convert binary tree to a list.
+testTree :: BinaryTree Integer
+testTree = Node (Node Leaf 1 Leaf) 2 (Node Leaf 3 Leaf)
+
+testPreorder :: IO ()
+testPreorder = if preorder testTree == [2, 1, 3]
+               then putStrLn "Preorder fine!"
+               else putStrLn "Bad news bears."
+
+-- So this works but looks insanely slow...
+preorder :: BinaryTree a -> [a]
+preorder Leaf = []
+preorder (Node l x r) = (++) ((++) [x] ll) rl
+  where ll = preorder l
+        rl = preorder r
+
+-- This doesn't work because it recurses down the whole left side.
+preorder' :: BinaryTree a -> [a]
+preorder' Leaf = []
+preorder' (Node Leaf x r) = (:) x (preorder' r)
+preorder' (Node l x r) = (:) x (preorder' l)
+
