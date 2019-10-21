@@ -287,3 +287,17 @@ addOne x = x + 10
 mapTree :: (Ord a, Ord b) => (a -> b) -> BinaryTree a -> BinaryTree b
 mapTree f Leaf = Leaf
 mapTree f (Node l x r) = Node (mapTree f l) (f x) (mapTree f r)
+
+
+testTree' :: BinaryTree Integer
+testTree' = 
+  Node (Node Leaf 3 Leaf) 1 (Node Leaf 4 Leaf)
+
+mapExpected :: BinaryTree Integer
+mapExpected = 
+  Node (Node Leaf 4 Leaf) 2 (Node Leaf 5 Leaf)
+
+-- The test passes!
+mapOkay = if mapTree (+1) testTree' == mapExpected
+          then print "yup okay!"
+          else error "test failed!"
