@@ -208,6 +208,7 @@ gTwo = undefined
 
 -- Has cardinality (4^4)^2 = 65536
 fTwo :: Bool -> Quad -> Quad
+fTwo = undefined
 
 
 
@@ -218,3 +219,71 @@ fTwo :: Bool -> Quad -> Quad
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+data BinaryTree  a = Leaf | Node (BinaryTree a) a (BinaryTree a)
+  deriving (Eq, Ord, Show)
+  
+
+
+-- map but specifying a typeclass constraint on the function
+ordmap :: (Ord a, Ord b) => (a -> b) -> [a] -> [b]
+ordmap f xs = map f xs
+
+addOne :: Integer -> Integer
+addOne x = x + 10
+
+
+-- Recurse down both sides and always replace the node contents
+-- It's not clear that it stays balanced, though?
+-- There must be an alternative way that uses insert' in the recursive call
+mapTree :: (Ord a, Ord b) => (a -> b) -> BinaryTree a -> BinaryTree b
+mapTree f Leaf = Leaf
+mapTree f (Node l x r) = Node (mapTree f l) (f x) (mapTree f r)
