@@ -1,4 +1,7 @@
+p442
+
 # 2019-10-18
+
 
 Higher-kinded type = type with a kind that isn't `*`, AFAICS.
 
