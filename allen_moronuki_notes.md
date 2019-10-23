@@ -1,4 +1,71 @@
-p442
+# 2019-10-23
+
+## Chapter exercises
+
+1.  Given `data Weekday = Monday | Tuesday | Wednesday | Thursday | Friday`
+
+we can say:
+
+a) Weekday is a type with five data constructors
+
+2.  What's the type of the following in that context?
+
+    f Friday = "Miller Time"
+
+The type should be 
+
+    f :: Weekday -> String
+
+As there are no dependent types.  CORRECT
+
+3.  Types defined with the `data` keyword:
+
+b) Must begin with a capital letter.
+
+Not sure if types can be imported from modules?  Confirmed that they can.
+
+4.  The function `g xs = xs !! (length xs - 1)`
+
+c) delivers the final element of xs.  Check: CORRECT
+
+
+
+
+# 2019-10-22
+
+Thinking about how to define foldr.  Just write the regular foldr's definition.
+
+    myFoldr :: (a -> b -> b) -> b -> [] a -> b
+    myFoldr f z [] = z
+    myFoldr f z (x:xs) = f x (foldr f z xs)
+
+And remember the definition of treemap
+
+    mapTree :: (Ord a, Ord b) => (a -> b) -> BinaryTree a -> BinaryTree b
+    mapTree f Leaf = Leaf
+    mapTree f (Node l x r) = Node (mapTree f l) (f x) (mapTree f r)
+
+
+Remember the definition of testTree
+
+    testTree = Node (Node Leaf 1 Leaf) 2 (Node Leaf 3 Leaf)
+
+I think that the result of an inorder traversal should be:
+
+(+ 1 0)
+
+(+ (1) (2) (3)) =  6
+This means applying f twice:
+
+If we fold down the left tree only, we end up with the result 2.
+
+
+
+Test expr is
+
+    foldTree (+) 0 testTree
+
+so when we reach the base case, we return the z value
 
 # 2019-10-18
 

@@ -3,6 +3,7 @@ module ExercisesChapter11 where
 
 import Data.Int
 import Data.List (nub)
+--import ModuleDemo (xyzzy, MyBool)
 
 ch11 = 42
 
@@ -345,3 +346,29 @@ inorder (Node l x r) = inorder l ++ [x] ++ inorder r
 postorder :: BinaryTree a -> [a]
 postorder Leaf = []
 postorder (Node l x r) = inorder l ++ inorder r ++ [x]
+
+
+-- The regular type of foldr is
+-- foldr :: (a -> b -> b) -> b -> [a] -> b
+-- foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
+-- foldTree f z Leaf = z
+-- foldTree f z (Node l x r) = f x (foldTree f z l) (foldTree f z r)
+
+simplerTree :: BinaryTree Integer
+simplerTree = Node (Node Leaf 18 Leaf) 2 (Node Leaf 7 Leaf)
+
+
+-- In order to avoid having to combine the two 'b' values of the 2 branches, we
+-- replace the z-value on the recursive call.  That will cause the bottomed-out
+-- leaf value to end up yielding the replaced 'z' instead of 0.
+-- This was fucking hard to figure out!
+foldTree :: (a -> b -> b) -> b -> BinaryTree a -> b
+foldTree f z Leaf = z
+foldTree f z (Node l x r) = f x (foldTree f (foldTree f z r) l)
+
+data Weekday = Monday | Tuesday | Wednesday | Thursday | Friday
+
+f Friday = "Miller Time"
+
+
+g xs = xs !! (length xs - 1)
