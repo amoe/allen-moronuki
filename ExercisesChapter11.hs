@@ -372,3 +372,72 @@ f Friday = "Miller Time"
 
 
 g xs = xs !! (length xs - 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- As-patterns
+
+-- An example of an as-pattern
+
+-- t@X means that we capture the entire thing-that-matched as the variable 't'
+-- inside the scope.  There's an equivalent thing in clojure
+
+f' :: Show a => (a, b) -> IO (a, b)
+f' t@(a, _) = do
+  print a
+  return t
+
+-- No need to do it in weird actions. 
+-- asPatternDemo [1,2,3] => [1,2,3,2,3]
+asPatternDemo :: [a] -> [a]
+asPatternDemo l@(x:xs) = l ++ xs
+
+-- This will repeat the first item
+doubleUp :: [a] -> [a]
+doubleUp [] = []
+doubleUp xs@(x:_) = x:xs
+
+-- The subsequence has to be in the original order
+isSubseqOf :: (Eq a) => [a] -> [a] -> Bool
+isSubseqOf xs ys = True

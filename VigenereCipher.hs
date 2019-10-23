@@ -41,3 +41,4 @@ decodeText keyword message = map decodeTuple $ generatePairs keyword message
 generatePairs :: [a] -> [b] -> [(a, b)]
 generatePairs keyword message = zip loopedKey message
   where loopedKey = keyword ++ loopedKey
+

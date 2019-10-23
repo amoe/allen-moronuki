@@ -62,6 +62,10 @@ that we should reuse our modular shift functions.
 Implemented in VigenereCipher.hs.  There isn't really much to this.  Except
 that you can approach it using infinite list.
 
+## As-patterns
+
+Difficult exercise about as-patterns that I can't really understand.
+
 
 # 2019-10-22
 
