@@ -2,6 +2,9 @@
 
 ## Chapter exercises
 
+### Multiple choice
+
+
 1.  Given `data Weekday = Monday | Tuesday | Wednesday | Thursday | Friday`
 
 we can say:
@@ -28,7 +31,36 @@ Not sure if types can be imported from modules?  Confirmed that they can.
 
 c) delivers the final element of xs.  Check: CORRECT
 
+### Ciphers
 
+Vigenere cipher.  This entails picking a key.
+
+Keyword = ALLY
+
+MEET AT DAWN
+ALLY AL LYAL
+
+A encodes a zero shift.  -- it's the start of the alphabet.
+L encodes a shift of 11.  -- because (ord 'L' - ord 'A') == 11.
+
+
+So let's re-look at our caesar chipher.  Remember that we have to write code
+to both cipher and uncipher
+
+That's fairly fine to write, but the answer is wrong:
+
+the first one to go wrong is T
+
+MPP is correct.
+The key is 'Y'
+The letter is 'T'
+'T' means a shift of 24 letters.
+
+So the problems come when we have to shift up by more than 24.  This means
+that we should reuse our modular shift functions.
+
+Implemented in VigenereCipher.hs.  There isn't really much to this.  Except
+that you can approach it using infinite list.
 
 
 # 2019-10-22

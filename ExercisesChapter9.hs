@@ -152,7 +152,6 @@ variableCaesar x y = map (shiftUp x) y
 -- Now we do 23 + 5 = 28
 -- Now we do mod 28 26 == 3
 
-
 shiftUpModular :: Int -> Char -> Char
 shiftUpModular n x = chr $ base + (mod newPosition 26)
   where base = ord 'a'
