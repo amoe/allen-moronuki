@@ -3,6 +3,7 @@ module ExercisesChapter11 where
 
 import Data.Int
 import Data.List (nub)
+import Data.Char (toUpper)
 --import ModuleDemo (xyzzy, MyBool)
 
 ch11 = 42
@@ -445,8 +446,14 @@ isSubseqOf _ [] = False    -- Fail if we reached the end of ys
 -- Test membership on the full list, but still recurse down
 isSubseqOf xs'@(x:xs) ys'@(y:ys) = (elem x ys') && isSubseqOf xs ys
 
+testInput = "hello world"
 
 
+-- Use as-pattern to both take off the first character AND ALSO return the
+-- unmodified version in the same pattern.
+capitalizeHelper :: String -> (String, String)
+capitalizeHelper xs'@(x:xs) = (xs', (toUpper x) : xs)
 
-
-
+capitalizeWords :: String -> [(String, String)]
+capitalizeWords x = map capitalizeHelper $ words x
+  
