@@ -1,9 +1,11 @@
+# 2019-10-28
+
+
 # 2019-10-23
 
 ## Chapter exercises
 
 ### Multiple choice
-
 
 1.  Given `data Weekday = Monday | Tuesday | Wednesday | Thursday | Friday`
 

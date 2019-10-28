@@ -440,4 +440,13 @@ doubleUp xs@(x:_) = x:xs
 
 -- The subsequence has to be in the original order
 isSubseqOf :: (Eq a) => [a] -> [a] -> Bool
-isSubseqOf xs ys = True
+isSubseqOf [] _ = True
+isSubseqOf _ [] = False    -- Fail if we reached the end of ys
+-- Test membership on the full list, but still recurse down
+isSubseqOf xs'@(x:xs) ys'@(y:ys) = (elem x ys') && isSubseqOf xs ys
+
+
+
+
+
+
