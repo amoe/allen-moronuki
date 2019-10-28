@@ -2,6 +2,10 @@
 
 As-patterns seem ok.
 
+### Language exercises
+
+
+
 # 2019-10-23
 
 ## Chapter exercises

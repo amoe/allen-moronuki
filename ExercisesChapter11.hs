@@ -3,7 +3,7 @@ module ExercisesChapter11 where
 
 import Data.Int
 import Data.List (nub)
-import Data.Char (toUpper)
+import Data.Char (toUpper, isSpace)
 --import ModuleDemo (xyzzy, MyBool)
 
 ch11 = 42
@@ -457,3 +457,23 @@ capitalizeHelper xs'@(x:xs) = (xs', (toUpper x) : xs)
 capitalizeWords :: String -> [(String, String)]
 capitalizeWords x = map capitalizeHelper $ words x
   
+capitalizeWord :: String -> String
+capitalizeWord (x:xs) = (toUpper x) : xs
+
+sentenceInput = "blah. woot ha."
+
+
+-- Not clear how to do this.  Something like takeWhile.  I don't think that
+-- we know about any generic split function yet.  need to use isSpace
+
+-- We need to know how to negate a function to do this properly
+-- otherwise we'll have to repeat the separator stuff a lot.
+
+capitalizeParagraph :: String -> String
+capitalizeParagraph "" = ""
+capitalizeParagraph x = capitalizeWord sentence ++ "." ++ capitalizeParagraph remaining
+  where separatorChar = '.'
+        isSeparator = (== separatorChar)
+        isNotSeparator = (/= separatorChar)
+        sentence = takeWhile isNotSeparator x
+        remaining = dropWhile isSeparator $ dropWhile isNotSeparator x
