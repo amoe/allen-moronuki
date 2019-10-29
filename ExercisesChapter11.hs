@@ -477,3 +477,51 @@ capitalizeParagraph x = capitalizeWord sentence ++ "." ++ capitalizeParagraph re
         isNotSeparator = (/= separatorChar)
         sentence = takeWhile isNotSeparator x
         remaining = dropWhile isSeparator $ dropWhile isNotSeparator x
+
+-- Phone exercise
+
+data DaPhone = DaPhone
+
+convo :: [String]
+convo = 
+  ["Wanna play 20 questions",
+   "Ya",
+   "U 1st haha",
+   "Lol ok. Have u ever tasted alcohol",
+   "Lol ya",
+   "Wow ur cool haha. Ur turn",
+   "Ok. Do u think I am pretty Lol",
+   "Lol ya",
+   "Just making sure rofl ur turn"]
+
+-- validButtons = "1234567890*#"
+type Digit = Char
+
+type Presses = Int
+
+-- In this case, 'a' should map to [('2', 1)] -- Press two once on the keypad.
+
+-- DaPhone should be something that we can look up 'a' in.
+-- Think about how we would support 'A'
+
+-- It should be like:
+-- if isupper:
+--    Add 1 tap of '*'
+--    Convert the char to lower
+--    Find the index -- not sure we've seen a function for this yet (recursive call?)
+--Otherwise
+--       Find the index
+
+
+
+reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
+reverseTaps = findIndex 
+
+
+findIndex :: Eq a => a -> [a] -> Int
+findIndex y [] = -1
+findIndex y (x:xs)
+  | y == x = 0
+  | otherwise = 1 + (findIndex y xs)
+  
+
