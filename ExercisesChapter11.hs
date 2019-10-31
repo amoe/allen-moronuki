@@ -507,21 +507,41 @@ type Presses = Int
 -- It should be like:
 -- if isupper:
 --    Add 1 tap of '*'
---    Convert the char to lower
+--    Convert the char to lower  (not sure we can actually do this yet)
+--    although there would be some hack involving ord/chr
 --    Find the index -- not sure we've seen a function for this yet (recursive call?)
 --Otherwise
 --       Find the index
 
+-- the fact that there is wrap around is interesting but doesn't apply to reverseTaps
 
 
-reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTaps = findIndex 
+thePhone = [('2', "abc")]
 
+-- reversetaps goes from a char like 'c' to ('2', 3)
+-- reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
+reverseTaps p c = [(digit, position + 1)]
+  where (digit, spec) = lookupChar c p
+        position = findIndex c spec
+        
 
+-- find index by predicate
 findIndex :: Eq a => a -> [a] -> Int
 findIndex y [] = -1
 findIndex y (x:xs)
   | y == x = 0
   | otherwise = 1 + (findIndex y xs)
   
+
+
+findByPredicate :: (a -> Bool) -> [a] -> a
+findByPredicate _ [] = error "not found"
+findByPredicate f (x:xs)
+  | f x = x
+  | otherwise = findByPredicate f xs
+
+
+
+lookupChar c p = findByPredicate (\x -> elem c (snd x)) thePhone
+
 
