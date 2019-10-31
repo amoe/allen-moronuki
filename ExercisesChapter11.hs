@@ -3,7 +3,7 @@ module ExercisesChapter11 where
 
 import Data.Int
 import Data.List (nub)
-import Data.Char (toUpper, isSpace)
+import Data.Char (toUpper, isSpace, isUpper)
 --import ModuleDemo (xyzzy, MyBool)
 
 ch11 = 42
@@ -516,13 +516,16 @@ type Presses = Int
 -- the fact that there is wrap around is interesting but doesn't apply to reverseTaps
 
 
-thePhone = [('2', "abc")]
+thePhone = [('2', "abc2")]
 
 -- reversetaps goes from a char like 'c' to ('2', 3)
 -- reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTaps p c = [(digit, position + 1)]
+reverseTaps p c = [(digit, numberOfPresses c)]
   where (digit, spec) = lookupChar c p
-        position = findIndex c spec
+
+
+numberOfPresses c = (findIndex c spec) + 1
+  where (digit, spec) = lookupChar c thePhone
         
 
 -- find index by predicate
