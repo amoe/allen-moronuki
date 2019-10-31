@@ -3,7 +3,7 @@ module ExercisesChapter11 where
 
 import Data.Int
 import Data.List (nub)
-import Data.Char (toUpper, isSpace, isUpper)
+import Data.Char (toUpper, isSpace, isUpper, toLower)
 --import ModuleDemo (xyzzy, MyBool)
 
 ch11 = 42
@@ -480,8 +480,6 @@ capitalizeParagraph x = capitalizeWord sentence ++ "." ++ capitalizeParagraph re
 
 -- Phone exercise
 
-data DaPhone = DaPhone
-
 convo :: [String]
 convo = 
   ["Wanna play 20 questions",
@@ -516,17 +514,36 @@ type Presses = Int
 -- the fact that there is wrap around is interesting but doesn't apply to reverseTaps
 
 
-thePhone = [('2', "abc2")]
+
+type DaPhone = [(Char, String)]
+
+thePhone = 
+  [('1', "1"),
+   ('2', "abc2"),
+   ('3', "def3"),
+   ('4', "ghi4"),
+   ('5', "jkl5"),
+   ('6', "mno6"),
+   ('7', "pqrs7"),
+   ('8', "tuv8"),
+   ('9', "wxyz9"),
+   ('0', " 0")]
+
 
 -- reversetaps goes from a char like 'c' to ('2', 3)
--- reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTaps p c = [(digit, numberOfPresses c)]
+reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
+reverseTaps p c 
+  | isUpper c = (:) ('*', 1) (reverseTaps p (toLower c))
+  | otherwise = [reverseTapsForLowercase p c]
+
+-- lowercase letter means always a single press, so no list needed in the type
+reverseTapsForLowercase :: DaPhone -> Char -> (Digit, Presses)
+reverseTapsForLowercase p c = (digit, (findIndex c spec) + 1)
   where (digit, spec) = lookupChar c p
 
-
-numberOfPresses c = (findIndex c spec) + 1
-  where (digit, spec) = lookupChar c thePhone
-        
+-- This will be something like foldr with concat.
+cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
+cellPhonesDead p msg = foldr (++) [] $ map (reverseTaps p) msg
 
 -- find index by predicate
 findIndex :: Eq a => a -> [a] -> Int
@@ -536,7 +553,6 @@ findIndex y (x:xs)
   | otherwise = 1 + (findIndex y xs)
   
 
-
 findByPredicate :: (a -> Bool) -> [a] -> a
 findByPredicate _ [] = error "not found"
 findByPredicate f (x:xs)
@@ -544,7 +560,6 @@ findByPredicate f (x:xs)
   | otherwise = findByPredicate f xs
 
 
-
-lookupChar c p = findByPredicate (\x -> elem c (snd x)) thePhone
+lookupChar c p = findByPredicate (\x -> elem c (snd x)) p
 
 
