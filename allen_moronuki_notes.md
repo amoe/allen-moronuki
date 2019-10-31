@@ -1,3 +1,14 @@
+# 2019-10-31
+
+## Phone exercise
+
+Needed two helper functions findIndex which hasn't been introduced yet, and
+findByPredicate which is basically head $ filter.
+
+List-of-lists can have their nesting removed by folding ++ over them.
+
+It's weird to combine guards and where clauses.
+
 # 2019-10-28
 
 As-patterns seem ok.
