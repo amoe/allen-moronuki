@@ -502,6 +502,7 @@ type Presses = Int
 -- DaPhone should be something that we can look up 'a' in.
 -- Think about how we would support 'A'
 
+
 -- It should be like:
 -- if isupper:
 --    Add 1 tap of '*'
@@ -512,8 +513,6 @@ type Presses = Int
 --       Find the index
 
 -- the fact that there is wrap around is interesting but doesn't apply to reverseTaps
-
-
 
 type DaPhone = [(Char, String)]
 
@@ -527,7 +526,8 @@ thePhone =
    ('7', "pqrs7"),
    ('8', "tuv8"),
    ('9', "wxyz9"),
-   ('0', " 0")]
+   ('0', " 0"),
+   ('#', ".,")]
 
 
 -- reversetaps goes from a char like 'c' to ('2', 3)
