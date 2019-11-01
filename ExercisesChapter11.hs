@@ -2,7 +2,7 @@
 module ExercisesChapter11 where
 
 import Data.Int
-import Data.List (nub)
+import Data.List (nub, maximumBy)
 import Data.Char (toUpper, isSpace, isUpper, toLower)
 --import ModuleDemo (xyzzy, MyBool)
 
@@ -570,11 +570,6 @@ lookupChar c p = findByPredicate (\x -> elem c (snd x)) p
 fingerTaps :: [(Digit, Presses)] -> Presses
 fingerTaps xs = foldr (+) 0 $ map snd xs
 
--- The most popular letter, basically meaning the most commonly occurring letter
--- in the string.  Sort of tough, not sure how to do this without hash tables.
-mostPopularLetter :: String -> Char
-mostPopularLetter msg = undefined
-  where taps = cellPhonesDead thePhone msg
 
 inHistogram :: Eq a => a -> [(a, b)] -> Bool
 inHistogram x xs = elem x $ map fst xs
@@ -598,8 +593,6 @@ update x y (orig@(x', _):xs) =
   else orig : update x y xs
 
 
-
-
 listHistogramHelper :: Eq a => [a] -> [(a, Integer)] -> [(a, Integer)]
 listHistogramHelper [] z = z
 listHistogramHelper (x:xs) z =
@@ -611,4 +604,12 @@ listHistogramHelper (x:xs) z =
 listHistogram :: Eq a => [a] -> [(a, Integer)]
 listHistogram xs = listHistogramHelper xs []
 
+compareHistogram :: Ord a => (a, b) -> (a, b) -> Ordering
+compareHistogram (x, _) (y, _)  = compare x y
+
+-- Now we can do maximumBy compareHistogram (someHistogram)
+testData = listHistogram [1,1,2,2,2]
+
+mostPopularLetter :: String -> Char
+mostPopularLetter msg = fst $ maximumBy compareHistogram (listHistogram msg)
 

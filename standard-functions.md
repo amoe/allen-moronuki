@@ -45,3 +45,5 @@
 * nub (Data.List)
 * toUpper (Data.Char)
 * isSpace (Data.Char)
+* maximumBy (Data.List)
+* bool
