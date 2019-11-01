@@ -538,7 +538,7 @@ reverseTaps p c
 
 -- lowercase letter means always a single press, so no list needed in the type
 reverseTapsForLowercase :: DaPhone -> Char -> (Digit, Presses)
-reverseTapsForLowercase p c = (digit, (findIndex c spec) + 1)
+reverseTapsForLowercase p c = (digit, (findIndex' c spec) + 1)
   where (digit, spec) = lookupChar c p
 
 -- This will be something like foldr with concat.
@@ -546,11 +546,13 @@ cellPhonesDead :: DaPhone -> String -> [(Digit, Presses)]
 cellPhonesDead p msg = foldr (++) [] $ map (reverseTaps p) msg
 
 -- find index by predicate
-findIndex :: Eq a => a -> [a] -> Int
-findIndex y [] = -1
-findIndex y (x:xs)
+-- It looks like something like this already exists but we haven't been told
+-- about it yet.
+findIndex' :: Eq a => a -> [a] -> Int
+findIndex' y [] = -1
+findIndex' y (x:xs)
   | y == x = 0
-  | otherwise = 1 + (findIndex y xs)
+  | otherwise = 1 + (findIndex' y xs)
   
 
 findByPredicate :: (a -> Bool) -> [a] -> a
@@ -567,3 +569,46 @@ lookupChar c p = findByPredicate (\x -> elem c (snd x)) p
 --   fingerTaps $ cellPhonesDead thePhone $ convo !! 0
 fingerTaps :: [(Digit, Presses)] -> Presses
 fingerTaps xs = foldr (+) 0 $ map snd xs
+
+-- The most popular letter, basically meaning the most commonly occurring letter
+-- in the string.  Sort of tough, not sure how to do this without hash tables.
+mostPopularLetter :: String -> Char
+mostPopularLetter msg = undefined
+  where taps = cellPhonesDead thePhone msg
+
+inHistogram :: Eq a => a -> [(a, b)] -> Bool
+inHistogram x xs = elem x $ map fst xs
+
+histogramValue :: Eq a => a -> [(a, b)] -> b
+histogramValue x [] = error "not found"
+histogramValue x ((x', y'):xs) = 
+  if x == x'
+  then y'
+  else histogramValue x xs
+  
+
+-- Update a value in a alist and return a new list
+-- This is kind of Clojure-ish?
+-- Using as-patterns to preserve and destructure at the same time
+update :: Eq a => a -> b -> [(a, b)] -> [(a, b)]
+update x y [] = []
+update x y (orig@(x', _):xs) = 
+  if x' == x
+  then (x, y) : update x y xs
+  else orig : update x y xs
+
+
+
+
+listHistogramHelper :: Eq a => [a] -> [(a, Integer)] -> [(a, Integer)]
+listHistogramHelper [] z = z
+listHistogramHelper (x:xs) z =
+  if inHistogram x z
+  then listHistogramHelper xs (update x ((histogramValue x z) + 1) z)
+  else listHistogramHelper xs ((x, 1) : z)
+  
+
+listHistogram :: Eq a => [a] -> [(a, Integer)]
+listHistogram xs = listHistogramHelper xs []
+
+
