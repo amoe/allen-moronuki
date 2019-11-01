@@ -9,6 +9,8 @@ List-of-lists can have their nesting removed by folding ++ over them.
 
 It's weird to combine guards and where clauses.
 
+3 -- Relatively simple map/foldr combo.
+
 # 2019-10-28
 
 As-patterns seem ok.

@@ -562,4 +562,8 @@ findByPredicate f (x:xs)
 
 lookupChar c p = findByPredicate (\x -> elem c (snd x)) p
 
-
+-- How many times do digits need to be pressed for each message?
+-- Usage:
+--   fingerTaps $ cellPhonesDead thePhone $ convo !! 0
+fingerTaps :: [(Digit, Presses)] -> Presses
+fingerTaps xs = foldr (+) 0 $ map snd xs
