@@ -613,3 +613,19 @@ testData = listHistogram [1,1,2,2,2]
 mostPopularLetter :: String -> Char
 mostPopularLetter msg = fst $ maximumBy compareHistogram (listHistogram msg)
 
+
+-- To get the per-occurrence cost surely you can actually just sum the counts no
+-- you can't because you would end up including the other characters So it's
+-- better to get the count of the letter, sum the cost of the result, that gives
+-- per occurrence cost, then multiply by occurrences
+
+-- This is cool but tie breaks can be confusing.
+
+costOfMostPopularLetter :: String -> Integer
+costOfMostPopularLetter msg = (costOfChar c) * occurrences
+  where (c, occurrences) = maximumBy compareHistogram (listHistogram msg)
+
+-- Since reverseTaps results in an int, we have to coerce it
+costOfChar :: Char -> Integer
+costOfChar c = foldr (+) 0 (map toInteger (map snd taps))
+  where taps = reverseTaps thePhone c
