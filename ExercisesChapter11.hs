@@ -604,8 +604,8 @@ listHistogramHelper (x:xs) z =
 listHistogram :: Eq a => [a] -> [(a, Integer)]
 listHistogram xs = listHistogramHelper xs []
 
-compareHistogram :: Ord a => (a, b) -> (a, b) -> Ordering
-compareHistogram (x, _) (y, _)  = compare x y
+compareHistogram :: Ord b => (a, b) -> (a, b) -> Ordering
+compareHistogram (_, x) (_, y)  = compare x y
 
 -- Now we can do maximumBy compareHistogram (someHistogram)
 testData = listHistogram [1,1,2,2,2]
@@ -629,3 +629,16 @@ costOfMostPopularLetter msg = (costOfChar c) * occurrences
 costOfChar :: Char -> Integer
 costOfChar c = foldr (+) 0 (map toInteger (map snd taps))
   where taps = reverseTaps thePhone c
+
+
+-- This wants to know the OVERALL most popular letter in the dataset, convo.
+-- Numerous approaches to this.
+-- I feel like the best way is just to append them all with foldr.
+coolestLtr :: [String] -> Char
+coolestLtr conv = mostPopularLetter s
+  where s = foldr (++) [] conv
+
+coolestWord :: [String] -> String
+coolestWord conv = fst $ maximumBy compareHistogram h
+  where s = concat $ map words convo
+        h = listHistogram s

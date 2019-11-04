@@ -1,3 +1,32 @@
+# 2019-11-04
+
+## Phone exercise -- continued.
+
+I made several mistakes!  compareHistogram was wrongly implemented, it was
+comparing the letter.  Because chars are also Ord, I didn't notice the result.
+
+4.  What was the most popular letter for each message?
+
+    [("Wanna play 20 questions",'a'),
+     ("Ya",'Y'),
+     ("U 1st haha",' '),
+     ("Lol ok. Have u ever tasted alcohol",' '),
+     ("Lol ya",'L'),
+     ("Wow ur cool haha. Ur turn",' '),
+     ("Ok. Do u think I am pretty Lol",' '),
+     ("Lol ya",'L'),
+     ("Just making sure rofl ur turn",' ')]
+
+Costs:
+
+    [1,4,1,1,4,1,1,4,1]
+
+5.
+
+a) What was the most popular letter overall?  It was the space, ' '.
+b) What was the most popular word?  Most popular word was 'Lol'.
+
+
 # 2019-10-31
 
 ## Phone exercise
