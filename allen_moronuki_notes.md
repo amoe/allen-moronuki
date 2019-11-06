@@ -1,3 +1,8 @@
+# 2019-11-06
+
+Hutton's razor -- easy.
+
+
 # 2019-11-04
 
 ## Phone exercise -- continued.
