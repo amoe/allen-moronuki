@@ -1,3 +1,78 @@
+# 2019-11-19
+
+Either is for the case when you want to inform the user of an error.
+
+Pattern matching on constants of a sum type works fine without Eq somehow;
+probably because they're just equal if they're written the same.
+
+When using Either, it's conventional to use the data constructor named `Left` to
+indicate the error case.
+
+p458
+
+> Functor will not map over the left type argument because it has been applied
+> away.
+
+Don't know that this means.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 2019-11-06
 
 Hutton's razor -- easy.
