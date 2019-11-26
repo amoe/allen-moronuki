@@ -66,3 +66,17 @@ mkPerson''' (Left err1) (Left err2) = Left (err1 ++ err2)
 mkPerson''' (Left err1) _ = Left err1
 mkPerson''' _ (Left err2) = Left err2
 
+
+
+
+data Example a = Blah | Woot a deriving (Show)
+
+-- Demonstrate that newtypes can still accept bottom values
+newtype TestNewtype = TestNewtype Integer
+
+foo :: TestNewtype -> String
+foo x = "I returned"
+
+data Identity a = Identity a
+
+

@@ -1,3 +1,65 @@
+# 2019-11-26
+
+Were there new concepts from this?  Not really, just the breaking out of the
+pattern matching so that you can return a list of errors.  They tease some
+function called `liftA2`.
+
+
+They go on to discuss kinds.  "Higher-kinded types" are just a type that takes a
+type argument.  We repeat that a 'type constant' is a type with no type
+arguments.  Its kind is `*`.
+
+    data PugType = PugData
+    > :k PugType
+    PugType :: *
+
+`Int` is a type constant, so are `Bool` and `Char`.  They are just regular
+types.  In this snippet,
+
+    data Example a = Blah | Woot a deriving (Show)
+
+Example is called a 'type constructor'.  We use the type argument `a` with the
+`Woot` data constructor.  `:k Example` yields `* -> *`.
+
+The two-tuple has two type arguments.  `:k (,)` yields `* -> * -> *`.
+
+But an expression at the typelevel `(Int, Int)` applies the type constructor `,`
+and its kind is `*`.
+
+`Maybe` and `Either` are also not type constants.  `Maybe` takes just one type
+argument.  In some way you could argue that something isomorphic to `Maybe` is
+the only valid use for a type with kind `* -> *` (this is Dave's speculation, it
+may or may not be true.)
+
+Example of applying the type constructor `Maybe`: `Maybe Int` has kind `*`.
+
+You can also write `Either Int String`, this applies both and ends with kind
+star.  The message is: kind `*` represents a concrete type.
+
+Now we get deeper:
+Kind * is the kind of all standard _lifted types_.
+Kind # means unlifted, although I've not seen that.
+
+All self-defined data types are 'lifted' and it means that bottom is a valid
+value for them.
+
+Unlifted types can't be inhabited by bottom, and they are only some weird types
+(which?)
+
+When you use a newtype, you don't create any 'wrapper' for the value that it
+wraps.  As a result there's no extra pointer created (in the GHC runtime).  So
+newtypes are actually unlifted, but don't show up with a `#` kind, confusingly.
+However, you can still pass undefined into newtype field slots (but can't pass
+the un-wrapped value).
+
+So you can do `Maybe Int` but not `Maybe Maybe'`.  The type constructor `Maybe`
+must itself accept an argument of a fully applied type constant.  So it's like a
+type constraint in a function.
+
+List syntax `[]` is kind `* -> *`, it's a type constructor, and as such, `Maybe
+[]` will not work.
+
+
 # 2019-11-19
 
 Either is for the case when you want to inform the user of an error.
@@ -14,64 +76,6 @@ p458
 > away.
 
 Don't know that this means.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # 2019-11-06
 
