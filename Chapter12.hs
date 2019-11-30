@@ -85,3 +85,27 @@ safeTail :: [a] -> Maybe [a]
 safeTail [] = Nothing
 safeTail (x:xs) = Just xs
 
+
+data Trivial = Trivial deriving Show
+
+
+data Unary a = Unary a deriving Show
+
+-- The type of the variable below is: Num a => Unary a
+-- i.e. a Unary holding a value of type Num a => a.
+myUnary = Unary 10
+
+
+-- Foo can store any type, but doesn't have a Show instance, so printing will
+-- give an error.
+data Foo a = Foo a
+
+-- You can construct Unary (Foo 12) successfully.  But you can't print it,
+-- because the derived Show instance will just try to call `show` on the contents.
+
+-- This is acceptable type signature, but has no valid implementations
+myFunction :: a -> f a
+myFunction = undefined
+
+
+

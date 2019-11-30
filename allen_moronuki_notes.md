@@ -1,3 +1,45 @@
+# 2019-11-30
+
+[1..10] -- remember that [x..y] is sugar for `enumFromTo`
+
+When using `deriving Show`, if you have some unary data type, the derived Show
+instance will just try to call `show` on the result, wihch will fail.  But it
+will only fail when something tries to print it. -- however such a failure will
+still happen at type-check time.  If you manually write an instance for Show,
+you can just show a marker value instead of ever accessing the boxed data.
+
+In a way you can think of this as being equivalent:
+
+    data Foo a = Bar a
+    Bar :: a -> Foo
+    bar x = <MAGICALLY-CONSTRUCT-FOO>
+
+Note that we introduced the type variable `a` as an argument to the type
+constructor, this is always necessary.  Unlike with functions where you can just
+write `id :: a -> a`.
+
+They still haven't talked about fmap and why it's different from map yet.
+
+## Exercises
+
+### Determine the kind
+
+1.  id :: a -> a
+
+What's the kind of `a`?  Well -- it has to be a fully applied type.  Becuase the
+type constructor doesn't have any type arguments.  So it's *
+
+2.  r :: a -> f a
+
+The kind of a is *.
+The kind of f is * -> *.
+
+We haven't seen this syntax before -- two type variables -- one naming a unary
+product type.
+
+3.  
+
+
 # 2019-11-26
 
 Were there new concepts from this?  Not really, just the breaking out of the
@@ -61,7 +103,7 @@ List syntax `[]` is kind `* -> *`, it's a type constructor, and as such, `Maybe
 
     (Num a, Enum a) => [a]
 
-[1..10] -- remember that [x..y] is sugar for `enumFromTo`
+
 
 # 2019-11-19
 
