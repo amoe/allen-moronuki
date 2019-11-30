@@ -79,4 +79,9 @@ foo x = "I returned"
 
 data Identity a = Identity a
 
+-- Doing `safeTail "julie"` -> Maybe [Char]
+
+safeTail :: [a] -> Maybe [a]
+safeTail [] = Nothing
+safeTail (x:xs) = Just xs
 

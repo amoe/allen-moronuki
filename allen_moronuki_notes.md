@@ -59,6 +59,9 @@ type constraint in a function.
 List syntax `[]` is kind `* -> *`, it's a type constructor, and as such, `Maybe
 []` will not work.
 
+    (Num a, Enum a) => [a]
+
+[1..10] -- remember that [x..y] is sugar for `enumFromTo`
 
 # 2019-11-19
 
