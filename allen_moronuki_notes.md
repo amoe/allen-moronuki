@@ -1,3 +1,10 @@
+# 2019-12-04
+
+## Exercise: String processing
+
+We can use intersperse to glue the string back together with spaces, and use
+case statements to do the pattern matching.
+
 # 2019-11-30
 
 [1..10] -- remember that [x..y] is sugar for `enumFromTo`

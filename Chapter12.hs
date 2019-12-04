@@ -107,5 +107,3 @@ data Foo a = Foo a
 myFunction :: a -> f a
 myFunction = undefined
 
-
-

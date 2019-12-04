@@ -47,3 +47,4 @@
 * isSpace (Data.Char)
 * maximumBy (Data.List)
 * bool
+* intersperse (Data.List)
