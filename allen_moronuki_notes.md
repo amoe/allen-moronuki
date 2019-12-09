@@ -1,3 +1,11 @@
+# 2019-12-09
+
+Note that the function is specified to be recursive.  Counting 'the' before
+vowel exercise: we used some new features of pattern matching, like specifying
+[x] to match just a single list.  The basic strategy is to use take and drop
+to iterate over pairs, but we could just as well do this with destructuring.
+The implementation of pairCount is deeply bogus.
+
 # 2019-12-04
 
 ## Exercise: String processing
