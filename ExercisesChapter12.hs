@@ -46,3 +46,31 @@ countTheBeforeVowelHelper [x] = 0
 countTheBeforeVowelHelper xs = (+) (pairCount thisPair) (countTheBeforeVowelHelper nextPair)
   where thisPair = take 2 xs
         nextPair = drop 1 xs
+
+-- 12.5, "String processing", ex3
+
+-- Cool use of flip here.
+countVowels :: String -> Integer
+countVowels w = toInteger $ length $ filter ((flip elem) vowels) w
+
+-- 12.5, "Validate the word"
+
+-- Is the fact that it's a newtype actually relevant here?
+newtype Word' = Word' String deriving (Eq, Show)
+
+isVowel :: Char -> Bool
+isVowel x = elem x vowels
+
+isConsonant :: Char -> Bool
+isConsonant x = not $ isVowel x
+
+countPredicate :: (a -> Bool) -> [a] -> Integer
+countPredicate f xs = toInteger $ length $ filter f xs
+
+mkWord :: String -> Maybe Word'
+mkWord x 
+  | nv > nc = Nothing
+  | otherwise = Just $ Word' x
+  where nv = countPredicate isVowel x
+        nc = countPredicate isConsonant x
+

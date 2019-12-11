@@ -1,3 +1,9 @@
+# 2019-12-11
+
+Return the number of letters that are vowels in a word -- This is easy peasy
+Pretty clean solution to mkWord' validation.
+
+
 # 2019-12-09
 
 Note that the function is specified to be recursive.  Counting 'the' before
