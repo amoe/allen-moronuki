@@ -74,3 +74,12 @@ mkWord x
   where nv = countPredicate isVowel x
         nc = countPredicate isConsonant x
 
+-- 12.5, "It's only Natural"
+
+data Nat = Zero | Succ Nat deriving (Eq, Show)
+
+natToInteger :: Nat -> Integer
+natToInteger Zero = 0
+natToInteger (Succ x) = 1 + natToInteger x
+
+

@@ -3,6 +3,16 @@
 Return the number of letters that are vowels in a word -- This is easy peasy
 Pretty clean solution to mkWord' validation.
 
+Natural numbers are positive and zero only.  No negatives allowed
+Naturals are defined recursively.  Every natural number is the successor of
+a given number of zeros.   Isn't this peano arithmetic?
+
+The conversion is nice and elegant when expressed recursively.  integerToNat,
+otoh...
+
+Don't think you can combine a pattern match with a case
+
+This is a bit interesting, actually...
 
 # 2019-12-09
 
