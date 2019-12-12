@@ -82,4 +82,18 @@ natToInteger :: Nat -> Integer
 natToInteger Zero = 0
 natToInteger (Succ x) = 1 + natToInteger x
 
+nonNegativeIntegerToNat :: Integer -> Nat
+nonNegativeIntegerToNat 0 = Zero
+nonNegativeIntegerToNat x = Succ (nonNegativeIntegerToNat (x - 1))
 
+integerToNat :: Integer -> Maybe Nat
+integerToNat x
+  | x < 0 = Nothing
+  | otherwise = Just (nonNegativeIntegerToNat (x - 1))
+
+-- roundtrips successfully
+roundTrip = case (integerToNat 10) of
+              (Just x) -> natToInteger x
+              Nothing -> error "foo"            
+                 
+  
