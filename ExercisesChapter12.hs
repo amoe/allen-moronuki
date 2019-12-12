@@ -97,3 +97,36 @@ roundTrip = case (integerToNat 10) of
               Nothing -> error "foo"            
                  
   
+-- 12.5, "Small library for Maybe"
+
+-- Simple boolean checks for Maybe
+
+isJust :: Maybe a -> Bool
+isJust (Just _) = True
+isJust _ = False
+
+isNothing :: Maybe a -> Bool
+isNothing Nothing = True
+isNothing _ = False
+
+-- The 'Maybe catamorphism'
+
+-- In the call: mayybee 0 (+1) (Just 1)
+-- b is bound to 0, type Num a => a
+-- the second arg is a function from a -> b
+-- concretely, Num a => a -> a
+-- intuitively this will just unwrap the Maybe and apply it.
+-- In the case of the Nothing, you don't even ever apply the function.
+-- It's impossible for you to apply it, because z is of type b.
+-- So just return b directly.
+-- So this is basically quite similar to a function that I used to want in clojure
+-- that encapsulates the (if (predicate) (f x) x) pattern.
+
+-- Practically, it lets you provide a fallback for the nothing case, and
+-- transform the contained value in the Just case.  You could pass 'id' to return
+-- the unwrapped value directly.  But the z fallback-value must type-match the
+-- type of the result function, so you always get "one type" at the call site.
+
+mayybee :: b -> (a -> b) -> Maybe a -> b
+mayybee z f Nothing = z
+mayybee z f (Just x) = f x
