@@ -127,6 +127,20 @@ isNothing _ = False
 -- the unwrapped value directly.  But the z fallback-value must type-match the
 -- type of the result function, so you always get "one type" at the call site.
 
+-- It's sort of like a combination of orElse() and flatMap().
+
 mayybee :: b -> (a -> b) -> Maybe a -> b
 mayybee z f Nothing = z
 mayybee z f (Just x) = f x
+
+-- fromMaybe, a simplified version with no transform step
+
+fromMaybe :: a -> Maybe a -> a
+fromMaybe x Nothing = x
+fromMaybe _ (Just y) = y
+
+-- When it's written in terms of the previous one:
+
+-- java is Optional.orElse()
+fromMaybe' :: a -> Maybe a -> a
+fromMaybe' x y = mayybee x id y
