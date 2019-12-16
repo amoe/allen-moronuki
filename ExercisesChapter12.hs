@@ -177,3 +177,13 @@ possiblyCons (Just x) ys = (:) x ys
 catMaybe :: [Maybe a] -> [a]
 catMaybe xs = foldr possiblyCons [] xs
 
+-- This demonstrates the alternate way to do it using case.
+-- We could also write 'integerToNat' in this way, probably.
+flipMaybe :: [Maybe a] -> Maybe [a]
+flipMaybe [] = Just []
+flipMaybe (Nothing:xs) = Nothing
+flipMaybe ((Just x):xs) = case (flipMaybe xs) of
+                            Nothing -> Nothing
+                            (Just y) -> Just (x:y)
+
+
