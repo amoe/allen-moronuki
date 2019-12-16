@@ -144,3 +144,10 @@ fromMaybe _ (Just y) = y
 -- java is Optional.orElse()
 fromMaybe' :: a -> Maybe a -> a
 fromMaybe' x y = mayybee x id y
+
+
+-- listToMaybe
+
+listToMaybe :: [a] -> Maybe a
+listToMaybe [] = Nothing
+listToMaybe (x:xs) = Just x
