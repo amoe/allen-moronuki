@@ -146,8 +146,34 @@ fromMaybe' :: a -> Maybe a -> a
 fromMaybe' x y = mayybee x id y
 
 
--- listToMaybe
+-- listToMaybe pulls out the first element or nothing.   It's sort of referencing
+
 
 listToMaybe :: [a] -> Maybe a
 listToMaybe [] = Nothing
 listToMaybe (x:xs) = Just x
+
+maybeToList :: Maybe a -> [a]
+maybeToList Nothing = []
+maybeToList (Just x) = [x]
+
+-- catMaybes -- cats maybes and drops nothing
+
+
+-- catMaybes :: [Maybe a] -> [a]
+-- catMaybes [] = []
+-- catMaybes (Nothing:xs) = catMaybes xs
+-- catMaybes ((Just x):xs) = x : catMaybes xs
+
+
+-- A function that will be folded with foldr, (a -> b -> b)
+possiblyCons :: Maybe a -> [a] -> [a]
+possiblyCons Nothing ys = ys
+possiblyCons (Just x) ys = (:) x ys
+
+-- or alternately can it be written as a fold?  Remember that we have to both
+-- destructure and filter.
+-- I don't think that you can have pattern matching on a lambda.
+catMaybe :: [Maybe a] -> [a]
+catMaybe xs = foldr possiblyCons [] xs
+
