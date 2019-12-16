@@ -89,7 +89,7 @@ nonNegativeIntegerToNat x = Succ (nonNegativeIntegerToNat (x - 1))
 integerToNat :: Integer -> Maybe Nat
 integerToNat x
   | x < 0 = Nothing
-  | otherwise = Just (nonNegativeIntegerToNat (x - 1))
+  | otherwise = Just (nonNegativeIntegerToNat x)
 
 -- roundtrips successfully
 roundTrip = case (integerToNat 10) of
