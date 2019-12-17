@@ -187,3 +187,31 @@ flipMaybe ((Just x):xs) = case (flipMaybe xs) of
                             (Just y) -> Just (x:y)
 
 
+-- go from a list of eithers and locate all of the Justs
+lefts :: [Either a b] -> [a]
+lefts [] = []
+lefts ((Right _):xs) = lefts xs
+lefts ((Left x):xs) = x : lefts xs
+
+foldFn1 :: Either a b -> [a] -> [a]
+foldFn1 x xs = case x of
+  (Left y) -> y : xs
+  (Right y) -> xs
+
+lefts' :: [Either a b] -> [a]
+lefts' xs = foldr foldFn1 [] xs
+
+-- Even more compact
+
+lefts'' :: [Either a b] -> [a]
+lefts'' xs = foldr f [] xs
+  where f x xs = case x of
+          (Left y) -> y : xs
+          (Right y) -> xs
+
+-- Yet even more compact
+lefts''' :: [Either a b] -> [a]
+lefts''' xs = foldr f [] xs
+  where f (Left x) xs = x:xs
+        f (Right _) xs = xs
+                    
