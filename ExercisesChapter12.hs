@@ -211,7 +211,47 @@ lefts'' xs = foldr f [] xs
 
 -- Yet even more compact
 lefts''' :: [Either a b] -> [a]
-lefts''' xs = foldr f [] xs
+lefts''' = foldr f []
   where f (Left x) xs = x:xs
         f (Right _) xs = xs
-                    
+
+
+-- Same approach
+rights :: [Either a b] -> [b]
+rights = foldr f []
+  where f (Left _) xs = xs
+        f (Right x) xs = x:xs
+
+
+-- The simple recursive one
+-- note that we repeat the where clause -- we could avoid this by using a case
+partitionEithers :: [Either a b] -> ([a], [b])
+partitionEithers [] = ([], [])
+partitionEithers ((Left x):xs) = (x:ls, rs)
+  where (ls, rs) = partitionEithers xs
+partitionEithers ((Right x):xs) = (ls, x:rs)
+  where (ls, rs) = partitionEithers xs
+
+
+-- Yeah nice ...
+-- Destructure the rest-of-the-computation (z) into ls and rs,
+-- then just case on the result.
+foldFn2 :: Either a b -> ([a], [b]) -> ([a], [b])
+foldFn2 x z = case x of
+                (Left y) -> (y:ls, rs)
+                (Right y) -> (ls, y:rs)
+  where (ls, rs) = z
+
+partitionEithers' :: [Either a b] -> ([a], [b])
+partitionEithers' xs = foldr foldFn2 ([], []) xs
+
+
+-- Here's an innovation, destructure inside the function pattern, obviating
+-- the need to nest the where clause.
+-- Think that this is the most compact version.
+partitionEithers'' :: [Either a b] -> ([a], [b])
+partitionEithers'' = foldr f ([], [])
+  where f x (ls, rs) = case x of
+                         (Left y) -> (y:ls, rs)
+                         (Right y) -> (ls, y:rs)
+
