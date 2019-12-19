@@ -261,3 +261,9 @@ partitionEithers'' = foldr f ([], [])
 eitherMaybe :: (b -> c) -> Either a b -> Maybe c
 eitherMaybe f (Left _) = Nothing
 eitherMaybe f (Right x) = Just (f x)
+
+
+-- General Either catamorphism
+either' :: (a -> c) -> (b -> c) -> Either a b -> c
+either' fl fr (Left x) = fl x
+either' fl fr (Right x) = fr x
