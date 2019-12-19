@@ -48,3 +48,4 @@
 * maximumBy (Data.List)
 * bool
 * intersperse (Data.List)
+* const

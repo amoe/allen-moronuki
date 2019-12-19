@@ -267,3 +267,8 @@ eitherMaybe f (Right x) = Just (f x)
 either' :: (a -> c) -> (b -> c) -> Either a b -> c
 either' fl fr (Left x) = fl x
 either' fl fr (Right x) = fr x
+
+-- This is pretty neat -- use const to accept one-argument and return Nothing.
+-- Compose Just with the supplied function to obtain a Maybe.
+eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe'' f x = either' (const Nothing) (Just . f) x
