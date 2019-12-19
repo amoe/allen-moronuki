@@ -255,3 +255,9 @@ partitionEithers'' = foldr f ([], [])
                          (Left y) -> (y:ls, rs)
                          (Right y) -> (ls, y:rs)
 
+
+-- The Left case is usually used to indicate an error.  So this converts the
+-- idiomatic (Either SomeError RealValue) to (Maybe RealValue)
+eitherMaybe :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe f (Left _) = Nothing
+eitherMaybe f (Right x) = Just (f x)
