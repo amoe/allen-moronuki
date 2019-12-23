@@ -1,6 +1,6 @@
 module ExercisesChapter12 where
 
-import Data.List (intersperse)
+import Data.List (intersperse, unfoldr)
 
 ch12 = "foo"
 
@@ -272,3 +272,4 @@ either' fl fr (Right x) = fr x
 -- Compose Just with the supplied function to obtain a Maybe.
 eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
 eitherMaybe'' f x = either' (const Nothing) (Just . f) x
+

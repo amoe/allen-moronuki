@@ -1,6 +1,27 @@
 # 2019-12-19
 
 
+Unfold is an 'anamorphism'.
+
+They introduce 'iterate'.  `(a -> a) -> a -> [a]`.  This looks like a successor
+function.  And indeed it is.  `iterate (+1) 0` generates the infinite list of
+natural numbers.
+
+unfoldr, on the other hand, includes a stop condition.  It's in Data.List.
+
+It eventually yields [a], a list of `a`.  So you can have a function, a seed,
+and you can return Nothing to stop unfolding.  Not clear what the tuple is,
+actually.  So in the case of applying unfoldFunction with unfoldr,
+
+    unfoldr :: (b -> Maybe (a, b)) -> b -> [a]
+
+a is bound to Integer, b is bound to Integer, the seed is an Integer, so the
+result is an [Integer].  unfoldFunction never returns Nothing presently.
+
+However the unfold function just has to return Nothing to stop unfolding.
+this is actually much clearer than the scheme srfi-1 version.  But why is the
+argument a tuple?
+
 
 # 2019-12-11
 

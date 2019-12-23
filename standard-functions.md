@@ -49,3 +49,5 @@
 * bool
 * intersperse (Data.List)
 * const
+* iterate
+* foldl' (Data.List)

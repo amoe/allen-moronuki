@@ -1,5 +1,7 @@
 module Chapter12 where
 
+import Data.List (foldl')
+
 ch12 = "foo"
 
 data Maybe' a = Nothing' | Just' a
@@ -107,3 +109,42 @@ data Foo a = Foo a
 myFunction :: a -> f a
 myFunction = undefined
 
+
+-- UNFOLDS
+
+
+limitedSeries = take 10 $ iterate (+1) 0
+
+-- Apply with unfoldr.
+unfoldFunction :: Integer -> Maybe (Integer, Integer)
+unfoldFunction x = Just (x, x + 1)
+
+-- Equivalent to the above.
+unfoldFunction' :: Integer -> Maybe (Integer, Integer)
+unfoldFunction' x 
+  | x > 10 = Nothing
+  | otherwise = Just (x, x + 1)
+
+
+-- Why bother with folds?  (Revision)
+
+-- Tail recursive version of a sum function.
+mehSum :: Num a => [a] -> a
+mehSum xs = go 0 xs
+  where go n [] = n
+        go n (x:xs) = (go (n + x) xs)
+
+-- But, using foldl we can do it more easily.  Look how simple this is and
+-- it's still tail-recursive.
+niceSum :: Num a => [a] -> a
+niceSum xs = foldl (+) 0 xs
+
+
+-- Tail recursive version of a product function.
+mehProduct :: Num a => [a] -> a
+mehProduct xs = go 1 xs
+  where go n [] = n
+        go n (x:xs) = (go (n * x) xs)
+
+niceProduct :: Num a => [a] -> a
+niceProduct xs = foldl (*) 1 xs
