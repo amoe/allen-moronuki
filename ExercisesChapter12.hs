@@ -348,12 +348,19 @@ unfoldTree f z = case m of
   where m = f z
 
 
-unfoldTreeFunction :: Integer -> Maybe (Integer, Integer, Integer)
-unfoldTreeFunction 0 = Nothing
-unfoldTreeFunction n = Just ((n - 1), n, (n - 1))
+-- unfoldTreeFunction :: Integer -> Maybe (Integer, Integer, Integer)
+-- unfoldTreeFunction 0 = Nothing
+-- unfoldTreeFunction n = Just ((n - 1), n, (n - 1))
 
 
+-- So this is basically equivalent to unfoldFunction -- we have to do an exact
+-- check instead of a greater-than check for some reason.  If we did a
+-- counting-down equivalent, it produces a tree that is sorted in a different
+-- order, with the highest value at the root.
 treeBuild :: Integer -> BinaryTree Integer
-treeBuild n = unfoldTree unfoldTreeFunction n
-
+treeBuild n = unfoldTree f 0
+  where f :: Integer -> Maybe (Integer, Integer, Integer)
+        f x = if x == n
+              then Nothing
+              else Just ((x + 1), x, (x + 1))
         
