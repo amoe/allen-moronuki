@@ -16,7 +16,15 @@ step.
 Quite simple.  Apply the value and then keep applying it recursively.  There's
 no stopping condition.
 
+2.  Write unfoldr using direct recursion
 
+Easy, it's just a where/case Maybe handling pattern, and applying the two
+values.
+
+3. Write betterIterate using unfoldr.
+
+It's easy, replace the function with another function tha applies the inner
+function and returns its value in both cases, and never returns nothing.
 
 
 

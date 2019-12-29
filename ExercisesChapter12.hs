@@ -311,8 +311,26 @@ eitherMaybe'' f x = either' (const Nothing) (Just . f) x
 
 -- Unfolds / anamorphisms
 
+unfoldFunction' :: Integer -> Maybe (Integer, Integer)
+unfoldFunction' x 
+  | x > 10 = Nothing
+  | otherwise = Just (x, x + 1)
+
+
 -- Note that there's no stopping condition, so the list is always going to be
 -- infinite.
 myIterate :: (a -> a) -> a -> [a]
 myIterate f z = x : myIterate f x
   where x = f z
+
+myUnfoldr :: (b -> Maybe (a, b)) -> b -> [a]
+myUnfoldr f z = case m of
+                  (Just (x, y)) -> x : myUnfoldr f y
+                  Nothing -> []
+  where m = f z
+
+-- It works!
+betterIterate :: (a -> a) -> a -> [a]
+betterIterate f z = myUnfoldr f' z
+  where f' x = Just (y, y)
+          where y = f x
