@@ -1,5 +1,47 @@
-# 2019-12-19
+# 2019-12-29
 
+Unfoldr function has signature b -> Maybe (a, b)
+In case Just (a, b)
+
+So we wonder what does the first signature item do?  a is 'prepended to the
+list'.
+
+So a actually yields the item that goes to the list, while b is the transform
+step.
+
+## Exercises
+
+1.  Write myIterate using direct recursion
+
+Quite simple.  Apply the value and then keep applying it recursively.  There's
+no stopping condition.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 2019-12-19
 
 Unfold is an 'anamorphism'.
 

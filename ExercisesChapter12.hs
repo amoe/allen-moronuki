@@ -273,3 +273,46 @@ either' fl fr (Right x) = fr x
 eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
 eitherMaybe'' f x = either' (const Nothing) (Just . f) x
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Unfolds / anamorphisms
+
+-- Note that there's no stopping condition, so the list is always going to be
+-- infinite.
+myIterate :: (a -> a) -> a -> [a]
+myIterate f z = x : myIterate f x
+  where x = f z

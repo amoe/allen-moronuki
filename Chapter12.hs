@@ -1,6 +1,6 @@
 module Chapter12 where
 
-import Data.List (foldl')
+import Data.List (foldl', unfoldr)
 
 ch12 = "foo"
 
@@ -119,7 +119,7 @@ limitedSeries = take 10 $ iterate (+1) 0
 unfoldFunction :: Integer -> Maybe (Integer, Integer)
 unfoldFunction x = Just (x, x + 1)
 
--- Equivalent to the above.
+-- Equivalent to the above but with a stop condition.
 unfoldFunction' :: Integer -> Maybe (Integer, Integer)
 unfoldFunction' x 
   | x > 10 = Nothing
@@ -135,7 +135,7 @@ mehSum xs = go 0 xs
         go n (x:xs) = (go (n + x) xs)
 
 -- But, using foldl we can do it more easily.  Look how simple this is and
--- it's still tail-recursive.
+-- it's still tail-recursive (well, it would be if we use foldl').
 niceSum :: Num a => [a] -> a
 niceSum xs = foldl (+) 0 xs
 
@@ -148,3 +148,22 @@ mehProduct xs = go 1 xs
 
 niceProduct :: Num a => [a] -> a
 niceProduct xs = foldl (*) 1 xs
+
+
+-- A tail recursive concat pattern.
+mehConcat :: [[a]] -> [a]
+mehConcat xs = go [] xs
+  where go :: [a] -> [[a]] -> [a]
+        go acc [] = acc
+        go acc (x:xs) = go (acc ++ x) xs
+
+-- It's clear that this is much easier to write, once you've identified
+-- the operator and the z-value.
+niceConcat :: [[a]] -> [a]
+niceConcat xs = foldl (++) [] xs
+
+
+
+
+
+
