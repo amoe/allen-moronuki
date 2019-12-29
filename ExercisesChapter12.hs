@@ -274,42 +274,7 @@ eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
 eitherMaybe'' f x = either' (const Nothing) (Just . f) x
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- Unfolds / anamorphisms
+-- UNFOLDS / ANAMORPHISMS
 
 unfoldFunction' :: Integer -> Maybe (Integer, Integer)
 unfoldFunction' x 

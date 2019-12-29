@@ -109,9 +109,7 @@ data Foo a = Foo a
 myFunction :: a -> f a
 myFunction = undefined
 
-
 -- UNFOLDS
-
 
 limitedSeries = take 10 $ iterate (+1) 0
 

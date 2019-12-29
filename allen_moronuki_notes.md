@@ -26,28 +26,12 @@ values.
 It's easy, replace the function with another function tha applies the inner
 function and returns its value in both cases, and never returns nothing.
 
+4.  Write unfold for tree.  This is actually a pretty straightforward
+translation of the list unfold code, which is neat.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Why put the unfolds here (in chapter 12)?  It's because unfold by definition
+uses Maybe, so it doesn't make sense to explain unfold before explaining Maybe
+and also before explaining higher-kinded types.
 
 # 2019-12-19
 
