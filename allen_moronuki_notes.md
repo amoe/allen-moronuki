@@ -1,3 +1,22 @@
+# 2020-01-06
+
+Chapter 13: Building projects.
+
+We will build a hangman game.
+We will use "Cabal" and "Stack", ecosystem tools.
+We will just copy out some code that uses monads and IO.
+Cabal = Common Architecture for Building Applications and Libraries
+Stack is built on top of Cabal but it's not that clear what stack actually does.
+Stack does have LTS snapshots which sounds good.  So maybe we do want Stack.
+
+haskellstack.org for Stack.  Is it in debian?  There is one package,
+`haskell-stack`.  1.7.1.
+Cabal version seems to be 2.2.0.
+The interface for Stack is just 'stack build'.
+
+Cabal has a metadata file that seems to be in a custom format.
+
+
 # 2019-12-29
 
 Unfoldr function has signature b -> Maybe (a, b)
