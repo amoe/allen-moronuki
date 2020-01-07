@@ -4,7 +4,6 @@ synopsis:            Simple project template from stack
 description:         Please see README.md
 homepage:            https://github.com/bitemyapp/hello#readme
 license:             BSD3
-license-file:        LICENSE
 author:              Your Name Here
 maintainer:          example@email.com
 copyright:           2016, Your Name Here

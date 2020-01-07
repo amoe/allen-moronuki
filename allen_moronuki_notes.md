@@ -15,7 +15,22 @@ Cabal version seems to be 2.2.0.
 The interface for Stack is just 'stack build'.
 
 Cabal has a metadata file that seems to be in a custom format.
+Stack writes its local state into ~/.stack.
+It always downloads a ghc version.  There is a stack.yaml file to configure it.
+stack.yaml specifies a 'resolver' key of `lts-14.16`.
+I'm using 8.4.4 ghc so I'm not really sure what the LTS is.  Maybe it's like a
+compiler+libs bundle?  But we probably want to stick to an 8.4.4 version unless
+anything bad happens.
 
+The project clearly needs to have its src/Main.hs file in order to be built.
+
+It didn't work with the more recent diff in stack.yaml.  I had to do this:
+
+-resolver: lts-14.16
++resolver: lts-12.26
+
+12.26 worked OK.  Not sure why.  Stack is going to store a cool 3.2GB of
+downloaded content locally.
 
 # 2019-12-29
 
