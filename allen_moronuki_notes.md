@@ -1,3 +1,17 @@
+# 2020-01-07
+
+It didn't work with the more recent diff in stack.yaml.  I had to do this:
+
+-resolver: lts-14.16
++resolver: lts-12.26
+
+12.26 worked OK.  Not sure why.  Stack is going to store a cool 3.2GB of
+downloaded content locally.
+
+You use ghci using `stack ghci`.  You can do `:load Main` in ghci to live-reload
+your code.  Pretty neato.  Stack exec can exec any 'executable' stanza defined
+in the cabal file for the project.
+
 # 2020-01-06
 
 Chapter 13: Building projects.
@@ -24,13 +38,6 @@ anything bad happens.
 
 The project clearly needs to have its src/Main.hs file in order to be built.
 
-It didn't work with the more recent diff in stack.yaml.  I had to do this:
-
--resolver: lts-14.16
-+resolver: lts-12.26
-
-12.26 worked OK.  Not sure why.  Stack is going to store a cool 3.2GB of
-downloaded content locally.
 
 # 2019-12-29
 
