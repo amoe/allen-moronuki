@@ -4,6 +4,16 @@
 If we move the source, stack will issue the error -- can't find source for Main
 in src.
 You should build depend on your own library.
+stack exec will not auto-rebuild.
+If you specify an empty export list then any export won't be in scope.  So the
+export syntax looks like:
+
+    module Hello 
+      (sayHello)
+      where
+
+Each cabal only needs one library stanza.  However a library can expose multiple
+modules.
 
 
 # 2020-01-07
