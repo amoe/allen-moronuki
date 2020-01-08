@@ -1,3 +1,11 @@
+# 2020-01-08
+
+
+If we move the source, stack will issue the error -- can't find source for Main
+in src.
+You should build depend on your own library.
+
+
 # 2020-01-07
 
 It didn't work with the more recent diff in stack.yaml.  I had to do this:
