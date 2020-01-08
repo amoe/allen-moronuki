@@ -15,6 +15,38 @@ export syntax looks like:
 Each cabal only needs one library stanza.  However a library can expose multiple
 modules.
 
+NoImplicitPrelude language extension disables the entire prelude, leaving you
+with a totally clean environment.
+
+Qualified imports are used in places.  In this case, you write `import qualified
+MODULE as ALIAS`.  Or just `import qualified` which gives a more python-ish
+default.
+
+## Intermission: Check your understanding
+
+1.  What functions are being imported from Control.Monad?
+
+`forever`, `when`
+
+2.  What imports are both unqualified and imported in their entirety?
+
+`Data.Bits`
+`Database.Blacktip.Types`
+
+3.  From the name, what do you suppose importing Blacktip's `Types` module
+    brings in?
+
+Types.
+
+4.  Regarding the blacktip code:
+
+a) The aliased imports are: `MV` = `Control.Concurrent.MVar`
+`FPC` = `Filesystem.Path.CurrentOS`
+`CC` = `Control.Concurrent`
+
+b) `FS.writeFile` refers to the `Filesystem` module.
+
+c) The import `forever` came from `Control.Monad`.
 
 # 2020-01-07
 
