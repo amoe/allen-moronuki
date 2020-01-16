@@ -1,5 +1,90 @@
-# 2020-01-08
+# 2020-01-16
 
+using two libraries.  random and split.   Stack will attempt to download them.
+This means that it doesn't download the entire platform at once.  We need
+internets to get the libraries.
+
+# 2020-01-14
+
+do suggests that it only works with the IO monad.  But some other things work
+with other monads.
+
+It is considered bad style to use do in single line expressions.  The monadic
+syntax is >>=.  I presume that this is bind.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 2020-01-13
+
+"Do syntax" is syntactic sugar.
+Where does getLine come from?  Prelude, I think.  System.IO
+IO String.  IO must be a unary type.
+
+This:
+
+    name <- getLine
+
+The arrow is called 'bind'.
+Binding over the IO string has the effect of converting from the IO String to
+String.  If you just write `sayHello (getLine)` you will get `Couldn't match
+type IO String with [Char]`.  So the bind is required.  Thus reading this as
+simple imperative syntax is wrong, the `<-` is doing more than just defining
+a referentially-transparent name, it's converting a type as well.
+
+Now we add a prompt.  We use `hSetBuffering` from System.IO.  Why the `h`
+prefix?  Not very clear.
+
+do blocks allow the sequencing of **monadic actions**.  `Monad` is a concrete
+type class.  IO is a unary type that has an instance of Monad.
+
+A&M give an example:
+
+    concatUserInput = do
+      x1 <- getLine
+      x2 <- getLine
+      return (x1 ++ x2)
+
+
+Here, we do refer to `x1` as a 'variable'.  'getLine' is an IO action.  'return'
+is something special.  Note that the type of this function is inferred as `IO
+[Char]`.  This indicates that the use of return does not strip the IO type from
+its result.
+
+> While '<-' is used to bind a variable, it is different from other methods
+> we've seen in earlier chapters for naming and binding variables.
+
+It "specifically binds the name to the 'a' of an 'm a' value"., where m is some
+monadic structure.  <- allows us to extract the 'a' and use it WITHIN THE SCOPE
+OF THE DO BLOCK.  Each assignment creates a new variable.
+
+What does `return` do?  For one thing, it's a function.  We can see its type 
+signature: `Monad m => a -> m a`.  It puts the monad wrapper back on.
+When we have some value IO x, we say that x is "in IO".   As the required type
+of main is `IO ()`, there's no use to wrapping the result, as we can't return
+the result in any way.  For instance, if you just need to terminate the do
+block, you can do `return ()`.  AFAIK, the result type of `main` still has to
+match, so you can't put some arbitrary expression like 1 + 2 + 3 as the last
+line of a `do` block if it is to implement a `main` function.
+
+You can write functions that do IO.  They just have to return results inside the
+IO monad, using the return function to wrap their results.
+
+
+# 2020-01-08
 
 If we move the source, stack will issue the error -- can't find source for Main
 in src.
