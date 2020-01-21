@@ -51,3 +51,8 @@
 * const
 * iterate
 * foldl' (Data.List)
+* forever (Control.Monad)
+* isJust (Data.Maybe)
+* exitSuccess (System.Exit)
+* randomRIO (System.Random)
+* all

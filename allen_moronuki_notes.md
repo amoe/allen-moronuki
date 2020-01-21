@@ -1,3 +1,50 @@
+# 2020-01-21
+
+configured haskell-interactive-mode although it still has  afew eerors.
+isJust :: Maybe a -> Bool
+
+You can guess what this function does.
+
+`forever` does an infinite loop, although not sure how to use it.
+
+randomRIO takes a 2-tuple and returns a single item a (with an instance of
+Random) wrapped in the IO monad.
+
+stdout is provided by System.IO.  It's an IO handle.  We've used hSetBuffering
+before.
+
+A&M provide a note regarding the `Foldable` type class.  As we've noted before
+this is a sort of generalization of some list operations like folding.  A&M
+claim
+
+> it’s a set of operations for types that can be
+> folded in a manner conceptually similar to the list type but
+> which don’t necessarily contain more than one value (or any
+> values at all) the way a list or similar datatype does.
+
+It's apparently possible to 'assert a new type signature' on an existing
+function in ghci by providing a type signature to :t.  Not sure if this is
+documented behaviour.
+
+Actually, this is just a regular feature of evaluation.  By hinting the existing
+definition, ghci will try to type check the definition against the new
+signature.  Then, if it doesn't cause an error, :t just prints out the same
+signature -- because the evaluated expression by definition has the hinted type
+if it did not error.
+
+It doesn't 'modify' the existing hint in any way, though.  It only does it for
+the duration of that expression.  However if you bind a new name to the hinted
+version then the tighter signature will stay.
+
+Any "container type" can be folded in the sense.  But it's not really all that
+clear how folding is useful on something like a Maybe?
+
+When using all with Either, the all applies only to the Right case i.e. the
+non-error case.  Note that Either seems to be traditionally denoted as `Either a
+b`.  If the second-arg doesn't have an instance of Foldable, then it won't work,
+as it wouldn't be narrowing the type.
+
+
 # 2020-01-16
 
 using two libraries.  random and split.   Stack will attempt to download them.

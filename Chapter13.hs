@@ -26,5 +26,14 @@ twoo' = do
   then putStrLn "True"
   else return ()
 
+-- We can re-bind the type signature for the `all` function to anything with
+-- a Foldable instance.
 
+myAll :: (a -> Bool) -> [a] -> Bool
+myAll = all
 
+myAll' :: (a -> Bool) -> Maybe a -> Bool
+myAll' = all
+
+myAll'' :: (a -> Bool) -> Either b a -> Bool
+myAll'' = all
