@@ -1,3 +1,15 @@
+# 2020-01-27
+
+Intersperse works with lists as well as with strings.
+exitSuccess has signature IO a.
+What does that mean?  That it has zero arguments.
+It yields an IO action.  This gets converted to an exception when running
+under the REPL.
+
+they talk about randomRIO.  You can use randomRIO on the command line.  As
+Integer has an instance for type class Random, it can be used as a bounds
+specifier.  Not sure how this works with Num.
+
 # 2020-01-21
 
 configured haskell-interactive-mode although it still has  afew eerors.
