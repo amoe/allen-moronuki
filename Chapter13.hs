@@ -3,6 +3,7 @@ module Chapter13 where
 import qualified Data.Bool
 import qualified Data.Bool as B
 import Data.List (intersperse)
+import System.Random (randomRIO)
 
 ch13 = 42
 
@@ -38,3 +39,4 @@ myAll' = all
 
 myAll'' :: (a -> Bool) -> Either b a -> Bool
 myAll'' = all
+

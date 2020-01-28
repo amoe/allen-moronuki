@@ -1,3 +1,26 @@
+# 2020-01-28
+
+Have a weird situation where `randomRIO (0, 5)` works at the ghci prompt but
+does not work in a compiled module.  I am guessing that this is due to the
+monomorphism restriction.  I don't really understand it though?
+
+In a module, the bare statement
+
+    range = (1, 5)
+
+Gets inferred as (Integer, Integer), when examined with :t, which looks correct.
+
+But this causes the error:
+
+    Ambiguous type variable ‘a0’ arising from a use of ‘randomRIO’ prevents
+    the constraint ‘(Random a0)’ from being solved.
+
+Which is resolvable by adding a typeannotation to `range`:
+
+    range :: (Integer, Integer)
+
+Which then compiles, but why, when it was inferred as the same type?
+
 # 2020-01-27
 
 Intersperse works with lists as well as with strings.
@@ -9,6 +32,10 @@ under the REPL.
 they talk about randomRIO.  You can use randomRIO on the command line.  As
 Integer has an instance for type class Random, it can be used as a bounds
 specifier.  Not sure how this works with Num.
+
+a type alias FilePath = String exists.
+
+<- is sugar to remove the IO.  return wraps it back inside the monad.
 
 # 2020-01-21
 
