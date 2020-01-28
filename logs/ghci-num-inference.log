@@ -1,0 +1,30 @@
+10:40         amoe > When I write `x = (0, 5)` in a module, load it into ghci, and check its type with :t, it says that it was inferred as (Integer, Integer).  However when I try to use this as an argument to 
+                     `randomRIO` I get the error: "Ambiguous type variable ‘a0’ arising from a use of ‘randomRIO’ prevents the constraint ‘(Random a0)’ from being solved."
+10:40         amoe > If I add a type annotation `x :: (Integer, Integer)` then the error disappears.
+10:41         amoe > But why should one be needed, because it seems that it was inferred as (Integer, Integer) anyway?
+10:43     Solonarv > I am not sure what exactly is going wrong, but the basic problem is as follows:
+10:44     Solonarv > the inferred type of (0, 5) is *not* (Integer, Integer) - instead it is more general: Num a => (a, a)
+10:45     Solonarv > there are some ad-hoc rules that make this default to 'a = Integer', and this happens more aggressively in ghci
+10:49         amoe > Solonarv: Thanks, that's interesting, so to paraphrase, the 'ghci context' causes :t to return (Integer, Integer), but the 'module compilation context' causes it to be Num a => (a, a) 
+                     instead, and because the randomRIO call is inside the module it gets the other type.
+10:50     Solonarv > just to be sure, what did you type into ghci? :t (0,5) or :t x ?
+10:50         amoe > :t x
+10:50    lambdabot > Expr
+10:51     Solonarv > hm, interesting - I did not expect that to be defaulted as well
+10:52     boxscape > I would have actually expected (0, 5) to be defaulted in general in that context thanks to MonomorphismRestriction
+10:52     boxscape > but I'm probably missing something
+10:57     boxscape > amoe Solonarv I believe :t +v x should not be defaulted
+11:00         amoe > boxscape: that still shows (Integer, Integer) for me
+11:00     boxscape > ah
+11:00     boxscape > amoe did you use randomRIO in the module or in ghci?
+11:00         amoe > If I add NoMonomorphismRestriction to the module, it shows (Num a, Num b) => (a, b)
+11:00         amoe > boxscape, in the module
+11:01         amoe > I should have specified that...
+11:01     boxscape > okay, so from https://stackoverflow.com/questions/32496864/what-is-the-monomorphism-restriction it looks like the MonomorphismRestriction only kicks in *after* all the types for a module 
+                     have been inferred. So it tries to use x in polymorphic form as an argument for randomRIO, which is ambiguous, but when you load x in ghci it's already kicked in
+11:01     boxscape > and so is monomorphic
+11:02     boxscape > if you used randomRIO in ghci I imagine it would work
+11:02         amoe > yes, it does
+11:02     boxscape > okay
+11:02         amoe > Think I understand now :)
+11:02     boxscape > good :)

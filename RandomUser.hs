@@ -2,11 +2,10 @@ module RandomUser where
 
 import System.Random
 
-range :: (Integer, Integer)
-range = (1, 5)
+x = (1, 5)
 
-main :: IO ()
-main = do
-  x <- randomRIO range
-  putStrLn $ show x
-  putStrLn "Hello, world!"
+-- main :: IO ()
+-- main = do
+--   y <- randomRIO x
+--   putStrLn $ show y
+--   putStrLn "Hello, world!"

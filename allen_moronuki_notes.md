@@ -12,14 +12,15 @@ Gets inferred as (Integer, Integer), when examined with :t, which looks correct.
 
 But this causes the error:
 
-    Ambiguous type variable ‘a0’ arising from a use of ‘randomRIO’ prevents
-    the constraint ‘(Random a0)’ from being solved.
+    Ambiguous type variable ‘a0’ arising from a use of ‘randomRIO’ prevents the constraint ‘(Random a0)’ from being solved.
 
 Which is resolvable by adding a typeannotation to `range`:
 
     range :: (Integer, Integer)
 
 Which then compiles, but why, when it was inferred as the same type?
+
+This behaviour is called 'type defaulting' and is restricted to ghci.
 
 # 2020-01-27
 
