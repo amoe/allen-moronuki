@@ -59,6 +59,9 @@ freshPuzzle :: String -> Puzzle
 freshPuzzle x = Puzzle x blanks []
   where blanks = map (const Nothing) x
 
+isGuessCorrect :: Char -> Puzzle -> Bool
+isGuessCorrect x (Puzzle x' _ _) = elem x x'
+
 main :: IO ()
 main = do
   putStrLn "Hello, world!"
