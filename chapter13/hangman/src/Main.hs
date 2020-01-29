@@ -57,7 +57,7 @@ renderPuzzleChar (Just x) = x
 
 freshPuzzle :: String -> Puzzle
 freshPuzzle x = Puzzle x blanks []
-  where blanks = take (length x) $ repeat Nothing
+  where blanks = map (const Nothing) x
 
 main :: IO ()
 main = do
