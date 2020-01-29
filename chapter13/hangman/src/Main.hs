@@ -65,6 +65,17 @@ charInWord x (Puzzle x' _ _) = elem x x'
 alreadyGuessed :: Char -> Puzzle -> Bool
 alreadyGuessed x (Puzzle _ _ x') = elem x x'
 
+-- Insert a correctly guessed character into the string.
+-- l designates the correctly guessed letter.
+-- Replace the Nothing in the appropriate slot with its appropriate reference
+-- from the correct value.
+-- In this case probably the best option is to zip the correct val with the
+-- current guess val.  Then just check the correct val against the l that's
+-- in scope, flip it if not.  Then we don't return a tuple, instead we just
+-- return a Maybe Char.
+fillInCharacter :: Puzzle -> Char -> Puzzle
+fillInCharacter = undefined
+
 main :: IO ()
 main = do
   putStrLn "Hello, world!"

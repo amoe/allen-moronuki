@@ -1,5 +1,15 @@
 # 2020-01-29
 
+fillInCharacter -- what will this do?  It will affect the second argument.
+It needs to find the index of the correct character.
+Then replace the Nothing value at that index with a certain Just value.
+
+But also there could be multiple occurrences of that character.
+So perhaps just iterate over the list and return a new list, with map?
+Nope, because we should actually be parallel iterating over the two lists...
+
+
+
 
 # 2020-01-28
 
