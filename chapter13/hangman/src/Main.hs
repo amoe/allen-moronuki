@@ -52,8 +52,12 @@ instance Show Puzzle where
 
 -- Could probably also be done as one of the folds.
 renderPuzzleChar :: Maybe Char -> Char
-renderPuzzleChar Nothing = '*'
+renderPuzzleChar Nothing = '_'
 renderPuzzleChar (Just x) = x
+
+freshPuzzle :: String -> Puzzle
+freshPuzzle x = Puzzle x blanks []
+  where blanks = take (length x) $ repeat Nothing
 
 main :: IO ()
 main = do
