@@ -59,8 +59,8 @@ freshPuzzle :: String -> Puzzle
 freshPuzzle x = Puzzle x blanks []
   where blanks = map (const Nothing) x
 
-isGuessCorrect :: Char -> Puzzle -> Bool
-isGuessCorrect x (Puzzle x' _ _) = elem x x'
+charInWord :: Char -> Puzzle -> Bool
+charInWord x (Puzzle x' _ _) = elem x x'
 
 main :: IO ()
 main = do
