@@ -37,11 +37,26 @@ randomWord wl = do
 randomWord' :: IO String
 randomWord' = gameWords >>= randomWord
 
+-- Second member is the list of characters that we have correctly guessed.
+
+-- Third member is an ordered list of characters that we already submitted as
+-- guesses, that may or may not be correct.
+
+data Puzzle = Puzzle String [Maybe Char] [Char]
+
+-- is fmap necessary here? 
+instance Show Puzzle where
+  show (Puzzle _ discovered guessed) = 
+    discoveredString ++ " Guessed so far: " ++ guessed
+    where discoveredString = intersperse ' ' $ fmap renderPuzzleChar discovered
+
+-- Could probably also be done as one of the folds.
+renderPuzzleChar :: Maybe Char -> Char
+renderPuzzleChar Nothing = '*'
+renderPuzzleChar (Just x) = x
 
 main :: IO ()
 main = do
   putStrLn "Hello, world!"
   return ()
 
-main' :: Integer
-main' = "foo"

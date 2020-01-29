@@ -1,3 +1,6 @@
+# 2020-01-29
+
+
 # 2020-01-28
 
 Have a weird situation where `randomRIO (0, 5)` works at the ghci prompt but
