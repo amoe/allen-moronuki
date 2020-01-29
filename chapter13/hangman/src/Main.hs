@@ -62,6 +62,9 @@ freshPuzzle x = Puzzle x blanks []
 charInWord :: Char -> Puzzle -> Bool
 charInWord x (Puzzle x' _ _) = elem x x'
 
+alreadyGuessed :: Char -> Puzzle -> Bool
+alreadyGuessed x (Puzzle _ _ x') = elem x x'
+
 main :: IO ()
 main = do
   putStrLn "Hello, world!"
