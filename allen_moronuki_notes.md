@@ -44,6 +44,11 @@ It seems like 'let' within a do-block has a special syntax, does it not?
 Yes, because you normally have to write: `let BINDING in EXPR`.  Whereas
 there seems to be no `in` keyword here.
 
+Note that you can destructure within the left-hand-side of a <- expression.
+
+Using the newtype you get a nice wrapper type that allows you to distinguish
+from the raw type and gain some type safety.
+
 
 # 2020-01-29
 

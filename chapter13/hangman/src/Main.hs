@@ -8,7 +8,10 @@ import System.Exit (exitSuccess)
 import System.IO (BufferMode(NoBuffering), hSetBuffering, stdout)
 import System.Random (randomRIO)
 
-type WordList = [String]
+--type WordList = [String]
+
+newtype WordList = WordList [String] deriving (Eq, Show)
+
 
 minWordLength = 5
 maxWordLength = 9
@@ -20,15 +23,15 @@ validWord s = c > minWordLength && c < maxWordLength
 allWords :: IO WordList
 allWords = do
   dict <- readFile "data/dict.txt"
-  return $ lines dict
+  return $ WordList (lines dict)
 
 gameWords :: IO WordList
 gameWords = do
-  aw <- allWords
-  return $ filter validWord aw
+  (WordList aw) <- allWords
+  return $ WordList $ filter validWord aw
 
 randomWord :: WordList -> IO String
-randomWord wl = do
+randomWord (WordList wl) = do
   randomIndex <- randomRIO (0, (length wl) - 1)
   return $ wl !! randomIndex
 
