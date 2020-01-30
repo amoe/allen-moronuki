@@ -26,6 +26,24 @@ the conditions for Applicative also.
 Note the list destructuring in the case condition.  It allows pattern matching
 on a list that contains a single value.
 
+The magic happens here:
+
+    handleGuess puzzle c >>= runGame
+
+This implements the monadic loop.
+handleGuess itself returns an IO Puzzle.
+The monadic bind strips off the IO layer and feeds the plain `Puzzle` back
+into `runGame`.
+In a way, this is a way of 'removing' the IO qualifier.
+
+Note that when you win the game, it can't immediately bail you out.  The
+puzzle is therefore bound to give you an extra guess after the win condition is
+fulfilled, is it not? -- Wrong, I missed out the exitSuccess call.
+
+It seems like 'let' within a do-block has a special syntax, does it not?
+Yes, because you normally have to write: `let BINDING in EXPR`.  Whereas
+there seems to be no `in` keyword here.
+
 
 # 2020-01-29
 

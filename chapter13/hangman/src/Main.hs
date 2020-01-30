@@ -107,6 +107,7 @@ gameOver (Puzzle wordToGuess _ guessed) =
   then do
     putStrLn "YOU LOSE!"
     putStrLn ("The word was: " ++ wordToGuess)
+    exitSuccess
   else
     return ()
 
@@ -117,29 +118,33 @@ winCondition (Puzzle wordToGuess discovered guessed) = all isJust discovered
 gameWin :: Puzzle -> IO ()
 gameWin puzzle = do
   if (winCondition puzzle)
-    then putStrLn "YOU WIN!"
+    then do
+    putStrLn "YOU WIN!"
+    exitSuccess
     else  return ()
 
 runGame :: Puzzle -> IO ()
 runGame puzzle = forever $ do
-  -- gameOver puzzle
-  -- gameWin puzzle
+  gameOver puzzle
+  gameWin puzzle
   putStrLn $ "Current puzzle is: " ++ show puzzle
   putStr "Guess a letter: "
 
   guess <- getLine
   
   case guess of
-    [c] -> return ()
+    [c] -> handleGuess puzzle c >>= runGame
     _ -> putStrLn "Only single-character guesses are allowed."
 
 
 testPuzzle = freshPuzzle "turbulent"
 
-
-
 main :: IO ()
 main = do
-  putStrLn "Hello, world!"
-  return ()
+  hSetBuffering stdout NoBuffering
+  word <- randomWord'
+  putStrLn word
+
+  let puzzle = freshPuzzle (map toLower word)
+  runGame puzzle
 
