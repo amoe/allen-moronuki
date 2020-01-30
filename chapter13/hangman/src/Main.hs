@@ -59,6 +59,7 @@ freshPuzzle :: String -> Puzzle
 freshPuzzle x = Puzzle x blanks []
   where blanks = map (const Nothing) x
 
+-- Returns true if the guess is correct.
 charInWord :: Char -> Puzzle -> Bool
 charInWord x (Puzzle x' _ _) = elem x x'
 
@@ -77,7 +78,64 @@ flipIfCorrect guessed (real, currentStatus) = if guessed == real
                                               then (Just real)
                                               else currentStatus
 
+handleGuess :: Puzzle -> Char -> IO Puzzle
+handleGuess puzzle guess = do 
+  putStrLn $ "Your guess was: " ++ [guess]
+
+  -- Interesting control structure here
+  -- WTF is happening here?  What are these returns doing
+  -- Presumably they are not exiting the entire outer 'do' block?
+  -- WTF, they actually do?  How is that defined?
+  -- Actually no, they just exit the local do block.  And because the result
+  -- is an `IO Puzzle` already, it satisfies the type signature.
+  case (charInWord guess puzzle, alreadyGuessed guess puzzle) of
+    (_, True) -> do
+      putStrLn "Duplicate guess, bozo."
+      return puzzle
+    (True, _) -> do
+      putStrLn "You Guessed Correctly."
+      return (fillInCharacter puzzle guess)
+    (False, _) -> do
+      putStrLn "The guess was wrong."
+      return (fillInCharacter puzzle guess)
+    
+
+-- Print a rude message if they failed, otherwise do absolutely nothing.
+gameOver :: Puzzle -> IO ()
+gameOver (Puzzle wordToGuess _ guessed) = 
+  if (length guessed) > 7
+  then do
+    putStrLn "YOU LOSE!"
+    putStrLn ("The word was: " ++ wordToGuess)
+  else
+    return ()
+
+
+winCondition :: Puzzle -> Bool
+winCondition (Puzzle wordToGuess discovered guessed) = all isJust discovered
+
+gameWin :: Puzzle -> IO ()
+gameWin puzzle = do
+  if (winCondition puzzle)
+    then putStrLn "YOU WIN!"
+    else  return ()
+
+runGame :: Puzzle -> IO ()
+runGame puzzle = forever $ do
+  -- gameOver puzzle
+  -- gameWin puzzle
+  putStrLn $ "Current puzzle is: " ++ show puzzle
+  putStr "Guess a letter: "
+
+  guess <- getLine
+  
+  case guess of
+    [c] -> return ()
+    _ -> putStrLn "Only single-character guesses are allowed."
+
+
 testPuzzle = freshPuzzle "turbulent"
+
 
 
 main :: IO ()

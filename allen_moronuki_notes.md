@@ -11,6 +11,20 @@ current guess val.  Then just check the correct val against the l that's
 in scope, flip it if not.  Then we don't return a tuple, instead we just
 return a Maybe Char.
 
+A&M do a weird thing in 'handleGuess' which looks like an early return on the
+surface but actually is not.  Nested returns just return from the local do
+block.
+
+Not quite sure what the signature on 'forever' implies.
+How is gameOver going to work?  Can't this have a bug whereby it can't exit
+before the win condition is checked?
+
+Whatever the result of a `do` block is, it fulfils the conditions of
+Applicative.  By looking at the :info output for `IO` we can see that it fulfils
+the conditions for Applicative also.
+
+Note the list destructuring in the case condition.  It allows pattern matching
+on a list that contains a single value.
 
 
 # 2020-01-29
