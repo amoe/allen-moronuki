@@ -146,7 +146,6 @@ main :: IO ()
 main = do
   hSetBuffering stdout NoBuffering
   word <- randomWord'
-  putStrLn word
 
   let puzzle = freshPuzzle (map toLower word)
   runGame puzzle
