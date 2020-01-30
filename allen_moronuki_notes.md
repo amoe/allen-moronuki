@@ -1,3 +1,18 @@
+# 2020-01-30
+
+Items in the guessed string in the hangman game are consed onto the list, so
+they appear in reverse order.  Isn't that weird?  Probably not really for
+our purposes.
+
+Replace the Nothing in the appropriate slot with its appropriate reference
+from the correct value.
+In this case probably the best option is to zip the correct val with the
+current guess val.  Then just check the correct val against the l that's
+in scope, flip it if not.  Then we don't return a tuple, instead we just
+return a Maybe Char.
+
+
+
 # 2020-01-29
 
 fillInCharacter -- what will this do?  It will affect the second argument.
