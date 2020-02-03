@@ -15,6 +15,7 @@ newtype WordList = WordList [String] deriving (Eq, Show)
 
 minWordLength = 5
 maxWordLength = 9
+guessLimit = 9
 
 validWord :: String -> Bool
 validWord s = c > minWordLength && c < maxWordLength
@@ -106,7 +107,7 @@ handleGuess puzzle guess = do
 -- Print a rude message if they failed, otherwise do absolutely nothing.
 gameOver :: Puzzle -> IO ()
 gameOver (Puzzle wordToGuess _ guessed) = 
-  if (length guessed) > 7
+  if (length guessed) > guessLimit
   then do
     putStrLn "YOU LOSE!"
     putStrLn ("The word was: " ++ wordToGuess)

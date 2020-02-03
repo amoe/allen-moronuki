@@ -1,3 +1,9 @@
+# 2020-02-03
+
+1.  Modify the code so that you get 9 guesses. -- Done, this was just a simple
+constant change.
+
+
 # 2020-01-30
 
 Items in the guessed string in the hangman game are consed onto the list, so
