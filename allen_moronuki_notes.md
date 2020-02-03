@@ -16,6 +16,14 @@ this behaviour once it's changed to not count incorrect guesses.
 4.  Change the program so that it only uses shorter words.  That's just
 adjusting one constant.
 
+### Modifying code
+
+1.
+a) Modify the Caesar cipher so that it works with user input.
+
+Thesea re from chapter 9.
+
+p524
 
 # 2020-01-30
 
