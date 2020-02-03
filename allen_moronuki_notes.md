@@ -1,7 +1,20 @@
 # 2020-02-03
 
+## Chapter exercises
+
+### Hangman game logic
+
 1.  Modify the code so that you get 9 guesses. -- Done, this was just a simple
 constant change.
+
+2.  Change to discriminate only against incorrect guesses.  -- Done.  Needs
+as-patterns.
+
+3.  Change it so that the last guess may still be correct.  Couldn't reproduce
+this behaviour once it's changed to not count incorrect guesses.
+
+4.  Change the program so that it only uses shorter words.  That's just
+adjusting one constant.
 
 
 # 2020-01-30

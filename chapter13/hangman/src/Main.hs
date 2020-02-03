@@ -14,8 +14,8 @@ newtype WordList = WordList [String] deriving (Eq, Show)
 
 
 minWordLength = 5
-maxWordLength = 9
-guessLimit = 9
+maxWordLength = 8
+incorrectGuessLimit = 1
 
 validWord :: String -> Bool
 validWord s = c > minWordLength && c < maxWordLength
@@ -106,8 +106,8 @@ handleGuess puzzle guess = do
 
 -- Print a rude message if they failed, otherwise do absolutely nothing.
 gameOver :: Puzzle -> IO ()
-gameOver (Puzzle wordToGuess _ guessed) = 
-  if (length guessed) > guessLimit
+gameOver p@(Puzzle wordToGuess _ guessed) = 
+  if (incorrectGuesses p) > incorrectGuessLimit
   then do
     putStrLn "YOU LOSE!"
     putStrLn ("The word was: " ++ wordToGuess)
@@ -142,6 +142,13 @@ runGame puzzle = forever $ do
 
 
 testPuzzle = freshPuzzle "turbulent"
+
+correctGuesses :: Puzzle -> Integer
+correctGuesses (Puzzle wordToGuess discovered guessed) = toInteger $ length correct
+  where correct = filter isJust discovered
+
+incorrectGuesses :: Puzzle -> Integer
+incorrectGuesses p@(Puzzle _ _ guessed) = (toInteger $ length guessed) - (correctGuesses p)
 
 main :: IO ()
 main = do
