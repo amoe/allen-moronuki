@@ -117,7 +117,8 @@ palindrome = forever $ do
       putStrLn "Bad luck; it was not a palindrome."
       exitSuccess
 
-
+-- This version uses the more forgiving way to determine if a string is
+-- a palindrome.
 palindrome' :: IO ()
 palindrome' = forever $ do
   line1 <- getLine
@@ -126,3 +127,40 @@ palindrome' = forever $ do
     False -> do
       putStrLn "Bad luck; it was not a palindrome."
       exitSuccess
+
+-- "Modifying code", Ex. 4
+
+type Name = String
+type Age = Integer
+data Person = Person Name Age deriving Show
+
+
+data PersonInvalid = NameEmpty | AgeTooLow | PersonInvalidUnknown String
+  deriving (Eq, Show)
+
+mkPerson :: Name -> Age -> Either PersonInvalid Person
+mkPerson name age
+  | name /= "" && age > 0 = Right $ Person name age
+  | name == "" = Left NameEmpty
+  | not (age > 0) = Left AgeTooLow
+  | otherwise = 
+    Left $ PersonInvalidUnknown $
+    "Name was: " ++ show name ++ "; Age was: " ++ show age
+
+gimmePerson :: IO ()
+gimmePerson = do
+  putStrLn "Please enter a name."
+  personName <- getLine
+  putStrLn "Please enter an age."
+  personAgeString <- getLine
+  let personAge = read personAgeString :: Integer
+
+  case mkPerson personName personAge of
+    (Left x) -> do
+      putStrLn "An error occurred."
+      putStrLn $ "The error was: " ++ show x
+    (Right x) -> do
+      putStrLn "It worked!"
+      putStrLn $ "The Person is: " ++ show x
+
+  return ()

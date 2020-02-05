@@ -25,10 +25,8 @@ You can either use the exitSuccess function from System.Exit, or you can use
     lowercase the string.  Then compare the reversed ones.  Basically just 
 create a whitelist
 
-useful functions
-
-p525
-
+4.  Seems to work ok with just case-ing on the Either value and setting the
+either value with let.
 
 
 
