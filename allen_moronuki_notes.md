@@ -1,3 +1,14 @@
+# 2020-02-05
+
+## More exercises
+
+ref: p524
+
+How to use read?
+
+It is quite weird because its signature is bound by the type at the result site.
+It's insane that you can be polymorphic in the return value in this way.
+
 # 2020-02-03
 
 ## Chapter exercises
@@ -21,7 +32,7 @@ adjusting one constant.
 1.
 a) Modify the Caesar cipher so that it works with user input.
 
-Thesea re from chapter 9.
+Thesea re from chapter 9.  -- What about using Read to do the conversion?
 
 p524
 

@@ -37,3 +37,11 @@ interactiveCaesar = do
   putStr "The encrypted text is: "
   putStrLn $ modularCaesar defaultShift theInput
   return ()
+
+interactiveNumber :: IO ()
+interactiveNumber = do
+  putStrLn "Enter a number."
+  theInput <- getLine
+  let inputNumber = (read theInput :: Integer)
+  putStrLn ("Input was " ++ (show (inputNumber * 2)))
+  return ()
