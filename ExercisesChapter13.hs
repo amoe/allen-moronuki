@@ -1,6 +1,6 @@
 module ExercisesChapter13 where
 
-import Data.Char (isUpper, toUpper, ord, chr)
+import Data.Char (isUpper, toUpper, ord, chr, toLower)
 import System.IO (BufferMode(NoBuffering), hSetBuffering, stdout)
 import System.Exit (exitSuccess)
 import Control.Monad
@@ -93,11 +93,35 @@ interactiveVigenere = do
 
   putStrLn ("The cipher-text is: " ++ cipherText)
 
+palindromeWhitelist = ['a'..'z']
+
+validPalindromeChar :: Char -> Bool
+validPalindromeChar c = elem c palindromeWhitelist
+
+stripInvalid :: String -> String
+stripInvalid s = filter validPalindromeChar s
+
+massageString :: String -> String
+massageString s = stripInvalid $ map toLower s
+
+isPalindrome :: String -> Bool
+isPalindrome s = s' == reverse s'
+  where s' = massageString s
 
 palindrome :: IO ()
 palindrome = forever $ do
   line1 <- getLine
   case line1 == reverse line1 of
+    True -> putStrLn "It is a palindrome."
+    False -> do
+      putStrLn "Bad luck; it was not a palindrome."
+      exitSuccess
+
+
+palindrome' :: IO ()
+palindrome' = forever $ do
+  line1 <- getLine
+  case isPalindrome line1 of
     True -> putStrLn "It is a palindrome."
     False -> do
       putStrLn "Bad luck; it was not a palindrome."

@@ -21,6 +21,16 @@ interactiveVigenere seems to work successfully.
 You can either use the exitSuccess function from System.Exit, or you can use
 `error` from prelude which will also terminate the 'forever'.
 
+3.  Strategy must be to strip all non-alpha characters from the string.  Then
+    lowercase the string.  Then compare the reversed ones.  Basically just 
+create a whitelist
+
+useful functions
+
+p525
+
+
+
 
 # 2020-02-03
 

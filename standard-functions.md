@@ -44,6 +44,7 @@
 * scanr
 * nub (Data.List)
 * toUpper (Data.Char)
+* isUpper (Data.Char)
 * isSpace (Data.Char)
 * maximumBy (Data.List)
 * bool
@@ -56,3 +57,5 @@
 * exitSuccess (System.Exit)
 * randomRIO (System.Random)
 * all
+* isUpper 
+* toLower
