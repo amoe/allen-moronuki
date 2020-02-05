@@ -4,6 +4,7 @@ import Data.Char (isUpper, toUpper, ord, chr)
 import System.IO (BufferMode(NoBuffering), hSetBuffering, stdout)
 
 -- Copies of the code from the exercises from chapter 9.
+-- Caesar cipher
 
 shiftUpModular :: Int -> Char -> Char
 shiftUpModular n x = chr $ base + (mod newPosition 26)
@@ -45,3 +46,47 @@ interactiveNumber = do
   let inputNumber = (read theInput :: Integer)
   putStrLn ("Input was " ++ (show (inputNumber * 2)))
   return ()
+
+-- The vigenere cipher only works with uppercase, for whatever reason.
+
+keyword = ['A', 'L', 'L', 'Y']
+message = ['M', 'E', 'E', 'T', 'A', 'T', 'D', 'A', 'W', 'N']
+
+shiftUpModular' :: Int -> Char -> Char
+shiftUpModular' n x = chr $ base + (mod newPosition 26)
+  where base = ord 'A'
+        relativePosition = (ord x) - base
+        newPosition = relativePosition + n
+
+shiftDownModular' :: Int -> Char -> Char
+shiftDownModular' n x = chr $ base + (mod newPosition 26)
+  where base = ord 'A'
+        relativePosition = (ord x) - base
+        newPosition = relativePosition - n
+
+determineShift k = (ord k) - alphabetBase
+  where alphabetBase = ord 'A'
+
+encodeTuple (k, p)  = shiftUpModular' shift p
+   where shift = determineShift k
+encodeText keyword message = map encodeTuple $ generatePairs keyword message
+
+decodeTuple (k, p)  = shiftDownModular' shift p
+   where shift = determineShift k
+decodeText keyword message = map decodeTuple $ generatePairs keyword message
+
+
+generatePairs :: [a] -> [b] -> [(a, b)]
+generatePairs keyword message = zip loopedKey message
+  where loopedKey = keyword ++ loopedKey
+
+interactiveVigenere :: IO ()
+interactiveVigenere = do
+  putStrLn "Enter a keyword (any values are fine)."
+  keyword <- getLine
+  putStrLn "Enter a message (it must be in all upper case)."
+  message <- getLine
+
+  let cipherText = encodeText keyword message
+
+  putStrLn ("The cipher-text is: " ++ cipherText)

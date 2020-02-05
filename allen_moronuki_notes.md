@@ -9,6 +9,15 @@ How to use read?
 It is quite weird because its signature is bound by the type at the result site.
 It's insane that you can be polymorphic in the return value in this way.
 
+interactiveVigenere seems to work successfully.
+
+    Enter a keyword (any values are fine).
+    ALLY
+    Enter a message (it must be in all upper case).
+    MEETATDAWN
+    The cipher-text is: MPPRAEOYWY
+
+
 # 2020-02-03
 
 ## Chapter exercises
