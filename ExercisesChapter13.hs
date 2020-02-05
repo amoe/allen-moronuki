@@ -2,6 +2,8 @@ module ExercisesChapter13 where
 
 import Data.Char (isUpper, toUpper, ord, chr)
 import System.IO (BufferMode(NoBuffering), hSetBuffering, stdout)
+import System.Exit (exitSuccess)
+import Control.Monad
 
 -- Copies of the code from the exercises from chapter 9.
 -- Caesar cipher
@@ -90,3 +92,13 @@ interactiveVigenere = do
   let cipherText = encodeText keyword message
 
   putStrLn ("The cipher-text is: " ++ cipherText)
+
+
+palindrome :: IO ()
+palindrome = forever $ do
+  line1 <- getLine
+  case line1 == reverse line1 of
+    True -> putStrLn "It is a palindrome."
+    False -> do
+      putStrLn "Bad luck; it was not a palindrome."
+      exitSuccess

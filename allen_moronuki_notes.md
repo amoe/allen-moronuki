@@ -17,6 +17,10 @@ interactiveVigenere seems to work successfully.
     MEETATDAWN
     The cipher-text is: MPPRAEOYWY
 
+2 -- Exit from the palindrome program.  There are several ways you can do this
+You can either use the exitSuccess function from System.Exit, or you can use
+`error` from prelude which will also terminate the 'forever'.
+
 
 # 2020-02-03
 
