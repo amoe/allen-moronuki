@@ -26,6 +26,9 @@ Monad, Applicative, etc.
 So we need to create a new Cabal project for 'addition'.  We need to start this
 project and download the appropriate dependencies when we have some connection.
 
+All the framework has been added.  Now would be the right time to install hspec
+by adding it to the list etc.
+
 # 2020-02-05
 
 ## More exercises

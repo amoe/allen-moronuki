@@ -1,3 +1,6 @@
 module Addition where
 
-ch14 = 42
+sayHello :: IO ()
+sayHello = do
+  putStrLn "Hello, world!"  
+
