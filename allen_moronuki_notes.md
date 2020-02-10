@@ -1,3 +1,30 @@
+# 2020-02-10
+
+## Ch14 -- Testing
+
+A&M describe two types of testing -- unit testing and property testing.  "Spec
+testing" is contrasted to unit testing -- this is referring to the expect/when
+style used by Jest etc.  Apparently `HUnit` implements assert-style testing
+while `hspec` does the spec-style tests.
+
+Property testing is the style where the system generates random inputs to the
+function.  This is quite cool sounding, but how would it work for large types
+like String?  This is where the legendary QuickCheck comes in.
+
+It's called property testing because it always checks a specific property and
+if all tests pass, you know that said program 'has that property'.  What's
+an example of such a property?  Quickcheck also tests the edge cases, eg like
+in the Rainsberger talk: zero, one, some, lots, error.  It can determine thes
+by applying functions like `minBound` from the Bounded type class to the type
+in question.
+
+They are going to do the show-first-then-explain style again with respect to
+Monad, Applicative, etc.
+
+> Generally, we want to make a Cabal package, even for small experiments.
+
+So we need to create a new Cabal project for 'addition'.
+
 # 2020-02-05
 
 ## More exercises
