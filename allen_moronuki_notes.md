@@ -23,7 +23,8 @@ Monad, Applicative, etc.
 
 > Generally, we want to make a Cabal package, even for small experiments.
 
-So we need to create a new Cabal project for 'addition'.
+So we need to create a new Cabal project for 'addition'.  We need to start this
+project and download the appropriate dependencies when we have some connection.
 
 # 2020-02-05
 
