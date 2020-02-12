@@ -9,6 +9,11 @@ dividedBy num denom = go num denom 0
           | otherwise = go (n - d) d (count + 1)
 
 
+multipliedBy :: (Eq a, Num a) => a -> a -> a
+multipliedBy x y = go x y 0
+  where go x y count
+          | count == (y - 1) = x
+          | otherwise = go (x + y) y (count + 1)
 
 main :: IO ()
 main = hspec $ do
@@ -25,6 +30,11 @@ main = hspec $ do
   describe "Trivial rules" $ do
     it "is sane" $ do
       True `shouldBe` True
+  describe "Multiplication" $ do
+    it "3 by 3 is 9" $ do
+      (multipliedBy 3 3) `shouldBe` 9    
+    it "3 by 1 is 3" $ do
+      (multipliedBy 3 1) `shouldBe` 3
 
 
 
