@@ -1,3 +1,55 @@
+# 2020-02-12
+
+All imports need to live before all code, no out of order imports within the
+scope of a file a la Python.
+
+Debian does package hspec, eg.  libghc-hspec-dev
+
+hspec is of type Spec -> IO () meaning it generates an IO action at the
+topn level.
+
+describe is function from description, it takes two do blocks.  eg
+
+    main :: IO ()
+    main = hspec $ do
+      describe "Addition" $ do
+        it "2 + 2 is equal to 4" $ do
+          (2 + 2) == 4 `shouldBe` True
+
+Here, describe is using a kind of curried syntax to avoid excessive
+parenthesization of the SpecWith blocks.
+It's really unclear how the `it` block is working.  `do` "allow us to sequence
+monadic actions" 
+
+> The type of the do blocks passed to hspec, describe, and it aren't IO () but
+> something more specific to hspec.  [However]... they result in IO () in the 
+> end.
+
+      (2 + 2) == 4 `shouldBe` True
+
+We can reword this as 
+
+    shouldBe (2 + 2 == 4) True
+
+The type of `shouldBe` is revealed by ghci as:
+
+    shouldBe :: (Show a, Eq a) => a -> a -> Expectation
+
+So this is simply an equality test that returns an Expectation.  The requirement
+for `Show` is simply so that the test can show the result of the value.
+Expectation itself is just  type with a blank instance for Show.
+
+The test output looks as follows.
+
+    Addition
+      2 + 2 is equal to 4
+
+    Finished in 0.0009 seconds
+    1 example, 0 failures
+
+
+
+
 # 2020-02-10
 
 ## Ch14 -- Testing
