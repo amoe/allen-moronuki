@@ -2,8 +2,11 @@ module Addition where
 
 import Test.Hspec
 
-dividedBy :: a -> a -> (a, a)
-dividedBy x y = (x,y)
+dividedBy :: (Ord a, Num a) => a -> a -> (a, a)
+dividedBy num denom = go num denom 0
+  where go n d count
+          | n < d = (count, n)
+          | otherwise = go (n - d) d (count + 1)
 
 main :: IO ()
 main = hspec $ do
