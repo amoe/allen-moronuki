@@ -59,8 +59,6 @@ create a whitelist
 4.  Seems to work ok with just case-ing on the Either value and setting the
 either value with let.
 
-
-
 # 2020-02-03
 
 ## Chapter exercises
