@@ -48,7 +48,16 @@ The test output looks as follows.
     1 example, 0 failures
 
 
+`describe` can accept a whole bunch of tests, somehow.  No idea how that works.
+I am guessing that becuse the `it` function yields an action, the do block
+sequences them all into one action, thus satisfying the single SpecWith argument
+in the type signature.
 
+   describe "foo" $ do
+      it "test1" $ do
+        -- something that yields an Expectation
+      it "test2" $ do
+        -- something that yields an Expectation
 
 # 2020-02-10
 
