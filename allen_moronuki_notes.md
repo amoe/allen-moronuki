@@ -74,6 +74,9 @@ It also works to chain multple suites in the hspec do block.  Eg.
           (dividedBy 22 5) `shouldBe` (4,2)
 
 
+This is the end of the hspec coverage, the next thing is quickcheck.
+Seems that it (that is QuickCheck) won't import
+
 # 2020-02-10
 
 ## Ch14 -- Testing

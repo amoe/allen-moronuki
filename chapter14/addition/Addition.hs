@@ -1,6 +1,7 @@
 module Addition where
 
 import Test.Hspec
+import Test.QuickCheck
 
 dividedBy :: (Ord a, Num a) => a -> a -> (a, a)
 dividedBy num denom = go num denom 0
@@ -35,7 +36,3 @@ main = hspec $ do
       (multipliedBy 3 3) `shouldBe` 9    
     it "3 by 1 is 3" $ do
       (multipliedBy 3 1) `shouldBe` 3
-
-
-
-
