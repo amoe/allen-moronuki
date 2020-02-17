@@ -16,6 +16,9 @@ multipliedBy x y = go x y 0
           | count == (y - 1) = x
           | otherwise = go (x + y) y (count + 1)
 
+f :: Int -> Bool
+f x = (x + 1) > x
+
 main :: IO ()
 main = hspec $ do
   describe "Addition" $ do
@@ -36,3 +39,7 @@ main = hspec $ do
       (multipliedBy 3 3) `shouldBe` 9    
     it "3 by 1 is 3" $ do
       (multipliedBy 3 1) `shouldBe` 3
+  describe "QuickCheck usage" $ do
+    it "x + 1 is always greater than x" $ do
+--      property $ \x -> (x + 1) > (x :: Int)
+      property $ f
