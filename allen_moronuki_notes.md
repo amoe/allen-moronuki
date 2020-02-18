@@ -1,3 +1,45 @@
+# 2020-02-18
+
+quickcheck.
+There is both a VALUE called `arbitrary`, which is a value of type Gen.
+Gen is a unary type.  Its wrapped type has an instance of the type class named
+`Arbitrary`.
+
+There are some functions called sample and sample'.
+
+I don't really understand this sentence:
+
+> This is a way to set a default generator for a type. When you use
+> the arbitrary value, you have to specify the type to dispatch the right
+> type class instance, as types and type class instances form unique
+> pairings.
+
+sample will take a single argument which is a value of `Gen` and will print
+its values.  If I run `sample arbitrary`, this will type check.
+
+sample' returns a list of `Gen a` wrapped in the IO monad.
+
+Arbitrary is an 'unprincipled' type class that 'has no laws'.
+
+The arbitrary value is some sort of magic that will just construct a generator
+for some type.  eg
+
+    sample (arbitrary :: Gen Int)
+
+This is clearly doing some sort of defaulting for the range.
+
+trivialInt just uses return.  `Gen` is a monad, so we can use `return` to wrap
+the Int value into that monad.  It can be used to put a value inside the IO
+monad.  But it can also be used to put a value into the Gen monad.
+
+So basically arbitrary is like a magic generator that has canned implementations
+for a few types.
+
+Quickcheck provides a function `elements` that will wrap up a list of
+elements as the ones to select from.  You can also use `choose` which I'm not
+really sure how this works.  What is the difference between genBool and genBool'
+if any?
+
 # 2020-02-12
 
 All imports need to live before all code, no out of order imports within the

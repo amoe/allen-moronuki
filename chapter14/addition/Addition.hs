@@ -43,3 +43,32 @@ main = hspec $ do
     it "x + 1 is always greater than x" $ do
 --      property $ \x -> (x + 1) > (x :: Int)
       property $ f
+
+-- This will not work because arbitrary has an ambiguous type in this context.
+--ch14 = sample arbitrary
+
+-- Now, trivialInt is going to always return 1.
+trivialInt :: Gen Int
+trivialInt = return 1
+
+oneThroughThree :: Gen Int
+oneThroughThree = elements [1,2,3]
+
+-- Now, the value one has a higher probability of showing up in our selected
+-- set.
+oneThroughThreeNonUniform :: Gen Int
+oneThroughThreeNonUniform = elements [1,2,3,1]
+
+-- These two Bool ones look identical.
+genBool :: Gen Bool
+genBool = choose (False, True)
+
+genBool' :: Gen Bool
+genBool' = elements [False, True]
+
+genOrdering :: Gen Ordering
+genOrdering = elements [LT, EQ, GT]
+
+genChar :: Gen Char
+genChar = elements ['a' .. 'z']
+
