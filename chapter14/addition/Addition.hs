@@ -72,3 +72,13 @@ genOrdering = elements [LT, EQ, GT]
 genChar :: Gen Char
 genChar = elements ['a' .. 'z']
 
+-- If we write:
+-- sample (genTuple :: Gen (Int, Float))
+-- Then ghc will force the a and b of the type signature to Int and Float.
+-- This will then lead to (arbitrary :: Int, arbitrary :: Float)
+
+genTuple :: (Arbitrary a, Arbitrary b) => Gen (a, b)
+genTuple = do
+  x <- arbitrary
+  y <- arbitrary
+  return (x, y)

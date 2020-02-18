@@ -40,6 +40,16 @@ elements as the ones to select from.  You can also use `choose` which I'm not
 really sure how this works.  What is the difference between genBool and genBool'
 if any?
 
+If you try to do something like this:
+
+    sample (arbitrary :: Gen [()])
+you are asking for an arbitrary sized list of empty tuples.
+
+    sample (arbitrary :: Gen Char)
+
+Is going to choose all one-character things.  This includes things like '\SYN'
+which are rendered as multiple characters but denote a single character.
+
 # 2020-02-12
 
 All imports need to live before all code, no out of order imports within the
