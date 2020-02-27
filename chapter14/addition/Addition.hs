@@ -137,3 +137,16 @@ genEither = do
   a <- arbitrary
   b <- arbitrary
   elements [Left a, Right b]
+
+
+prop_additionGreater :: Int -> Bool
+prop_additionGreater x = (x + 1) > x
+
+prop_additionGreater' :: Int -> Bool
+prop_additionGreater' x = (x + 0) > x
+
+runQc :: IO ()
+runQc = quickCheck prop_additionGreater
+
+runQcFails :: IO ()
+runQcFails = quickCheck prop_additionGreater'

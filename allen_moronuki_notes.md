@@ -28,6 +28,10 @@ genMaybe' = do
   elements [Nothing, Just a]
 ```
 
+Quickcheck will report that the law was falsifiable if a single test fails.
+Quickcheck has a default of 0 when generating Arbitrary values for an Int.
+So therefore, the 0 input will always be tested first, because of this built in
+prioritizing.
 
 # 2020-02-18
 
