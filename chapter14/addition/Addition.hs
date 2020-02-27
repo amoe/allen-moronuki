@@ -82,3 +82,17 @@ genTuple = do
   x <- arbitrary
   y <- arbitrary
   return (x, y)
+
+genThreeple :: (Arbitrary a, Arbitrary b, Arbitrary c) => Gen (a, b, c)
+genThreeple = do
+  x <- arbitrary
+  y <- arbitrary
+  z <- arbitrary
+  return (x, y, z)
+
+type G = Gen (Int, Float)
+
+-- If you hint genTuple to be of type G', you'll get a tuple where the first
+-- element of the tuple is a list of (), of arbitrary length.  In my run, the
+-- first one's length maxed out at 18.
+type G' = Gen ([()], Char)

@@ -1,3 +1,21 @@
+# 2020-02-27
+
+sample (genTuple :: G)
+
+What on earth does this do?  It binds genTuple to a specific type.
+Note that a, b, and c must have an instance of Arbitrary,
+
+    genTuple :: (Arbitrary a, Arbitrary b) => Gen (a, b)
+
+because a and b are enforced to have such by the type signature.
+If you examine `:info Int` while QuickCheck is loaded, you will see:
+
+    instance Arbitrary Int -- Defined in ‘Test.QuickCheck.Arbitrary’
+
+Quickcheck module introduces the Arbitrary typeclass.
+
+
+
 # 2020-02-18
 
 quickcheck.
