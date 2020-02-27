@@ -14,6 +14,19 @@ If you examine `:info Int` while QuickCheck is loaded, you will see:
 
 Quickcheck module introduces the Arbitrary typeclass.
 
+Question: is there any difference between these two?
+
+```
+genMaybe :: Arbitrary a => Gen (Maybe a)
+genMaybe = do
+  x <- arbitrary
+  return x
+
+genMaybe' :: Arbitrary a => Gen (Maybe a)
+genMaybe' = do
+  a <- arbitrary
+  elements [Nothing, Just a]
+```
 
 
 # 2020-02-18

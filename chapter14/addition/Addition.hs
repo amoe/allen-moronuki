@@ -96,3 +96,44 @@ type G = Gen (Int, Float)
 -- element of the tuple is a list of (), of arbitrary length.  In my run, the
 -- first one's length maxed out at 18.
 type G' = Gen ([()], Char)
+
+type G'' = Gen String
+
+genString :: Gen String
+genString = do
+  x <- arbitrary
+  return x
+
+-- Once you define this, you can also write:
+--    sample (genMaybe :: (Gen (Maybe Bool)))
+
+genMaybe :: Arbitrary a => Gen (Maybe a)
+genMaybe = do
+  x <- arbitrary
+  return x
+
+-- This also works
+genMaybe' :: Arbitrary a => Gen (Maybe a)
+genMaybe' = do
+  a <- arbitrary
+  elements [Nothing, Just a]
+
+-- A weighted versin of the maybe generator.
+-- frequency itself takes a Gen a.  Hence why `return Nothing` satisfies the
+-- type signature.  Inside the monad Gen, 'return' will wrap the simple-value
+-- Nothing inside a Gen.
+
+genMaybe'' :: Arbitrary a => Gen (Maybe a)
+genMaybe'' = do
+  a <- arbitrary
+  frequency [(1, return Nothing),
+             (3, return (Just a))]
+
+-- Be more specific about the types with this.
+--sample (genEither :: (Gen (Either Int Bool)))
+
+genEither :: (Arbitrary a, Arbitrary b) => Gen (Either a b)
+genEither = do
+  a <- arbitrary
+  b <- arbitrary
+  elements [Left a, Right b]
