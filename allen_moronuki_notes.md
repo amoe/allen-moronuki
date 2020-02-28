@@ -1,3 +1,9 @@
+# 2020-02-28
+
+Just realized that the extraneous warnings that I was seeing are probably
+coming from the `ghc-options` defined in cabal file, so I didn't really need
+the ghci command tweaks.
+
 # 2020-02-27
 
 sample (genTuple :: G)
