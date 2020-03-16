@@ -1,3 +1,11 @@
+# 2020-03-16
+
+fixing the output cabal file from stack new command.
+decided to call the tests file Spec.hs.  removed 
+hence tests live under the `test/Spec.hs` path.
+
+package.yaml is something that can be used to generify things?
+
 # 2020-02-28
 
 Just realized that the extraneous warnings that I was seeing are probably
