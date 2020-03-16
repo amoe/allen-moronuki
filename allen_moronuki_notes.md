@@ -11,6 +11,9 @@ orderable (otherwise it can't be inserted into the tree).
 This is somewhat interesting that it doensn't need to have a hash function.
 550.  They don't specify what balanced means, which is a problem in my view.
 
+We will start filling out the functions, but in the meantime we stub all of
+the functions to undefined in order to be able to test the compilation process.
+
 # 2020-02-28
 
 Just realized that the extraneous warnings that I was seeing are probably
