@@ -15,7 +15,7 @@ library
   exposed-modules:
       Morse
   ghc-options:
-      -Wall -fwarn-tabs
+      -Wall -Wno-missing-signatures -fwarn-tabs 
   hs-source-dirs:
       src
   build-depends:

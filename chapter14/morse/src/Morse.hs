@@ -1,3 +1,19 @@
-module Morse where
+module Morse (
+  Morse,
+  charToMorse,
+  morseToChar,
+  stringToMorse,
+  letterToMorse,
+  morseToLetter
+) where
 
-ch14 = 42
+import qualified Data.Map as M
+
+type Morse = String
+
+charToMorse = undefined
+morseToChar = undefined
+stringToMorse = undefined
+letterToMorse = undefined
+morseToLetter = undefined
+

@@ -6,6 +6,11 @@ hence tests live under the `test/Spec.hs` path.
 
 package.yaml is something that can be used to generify things?
 
+Map from Data.Map is introduced.  It's a key-value pairing.  The key must be
+orderable (otherwise it can't be inserted into the tree).
+This is somewhat interesting that it doensn't need to have a hash function.
+550.  They don't specify what balanced means, which is a problem in my view.
+
 # 2020-02-28
 
 Just realized that the extraneous warnings that I was seeing are probably
