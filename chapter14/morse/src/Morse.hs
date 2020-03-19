@@ -61,5 +61,9 @@ charToMorse :: Char -> Maybe Morse
 charToMorse x = M.lookup x letterToMorse
 
 
-morseToChar = undefined
+-- Not very clear how to implement this...
+stringToMorse :: String -> Maybe [Morse]
 stringToMorse = undefined
+
+
+morseToChar = undefined
