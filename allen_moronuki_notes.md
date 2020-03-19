@@ -1,5 +1,18 @@
 # 2020-03-19
 
+letterToMorse is a map from Char to Morse, morse is itself a string.
+So Map is a product type.
+When you declare a list over multiple lines, the closing square bracket has to
+line up with the first character of the last element eg
+
+    letterToMorse = M.fromList [
+      ('a', ".-")
+      ]
+
+Note the way that the square bracket is two-column-indented.
+
+The map lookup function is called lookup.
+
 # 2020-03-16
 
 fixing the output cabal file from stack new command.
