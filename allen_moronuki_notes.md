@@ -13,6 +13,25 @@ Note the way that the square bracket is two-column-indented.
 
 The map lookup function is called lookup.
 
+M.empty is a thing, what is its type.
+
+M.empty is a totally empty map.  I struggle to understand what it properly is.
+
+foldrWithKey is a fold function
+M.insert is a function to insert keys to a map.
+
+An invocation like this,
+
+    M.foldrWithKey M.insert M.empty letterToMorse
+
+will copy a map.
+
+M.insert :: Ord k => k -> a -> M.Map k a -> M.Map k a
+
+insert takes three arguments.  key, value, existing map.
+
+eg M.insert 2 4 M.empty 
+
 # 2020-03-16
 
 fixing the output cabal file from stack new command.

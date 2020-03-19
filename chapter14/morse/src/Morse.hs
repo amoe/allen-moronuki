@@ -52,8 +52,9 @@ letterToMorse = M.fromList [
   ]
 
 
+-- Invert a map.  But note that this will just silently discard multis.
 morseToLetter :: M.Map Morse Char
-morseToLetter = undefined
+morseToLetter = M.foldrWithKey (flip M.insert) M.empty letterToMorse
 
 
 charToMorse :: Char -> Maybe Morse
