@@ -11,7 +11,7 @@ import qualified Data.Map as M
 
 type Morse = String
 
-letterToMorse :: (M.Map Char Morse)
+letterToMorse :: M.Map Char Morse
 letterToMorse = M.fromList [
   ('a', ".-"),
   ('b', "-..."),
@@ -52,10 +52,13 @@ letterToMorse = M.fromList [
   ]
 
 
+morseToLetter :: M.Map Morse Char
+morseToLetter = undefined
+
+
 charToMorse :: Char -> Maybe Morse
 charToMorse x = M.lookup x letterToMorse
 
 
 morseToChar = undefined
 stringToMorse = undefined
-morseToLetter = undefined
