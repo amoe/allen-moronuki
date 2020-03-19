@@ -11,9 +11,12 @@ import qualified Data.Map as M
 
 type Morse = String
 
+
+letterToMorse = undefined
+
+
 charToMorse = undefined
 morseToChar = undefined
 stringToMorse = undefined
-letterToMorse = undefined
 morseToLetter = undefined
 
