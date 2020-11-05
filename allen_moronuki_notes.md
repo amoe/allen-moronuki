@@ -1,3 +1,14 @@
+# 2020-11-05
+
+`sequence` goes from a group of Just values in a monad and puts their contents
+into one list.  Or so it seems.
+
+    λ> fmap charToMorse "foo"
+    [Just "..-.",Just "---",Just "---"]
+    λ> sequence $ fmap charToMorse "foo"
+    Just ["..-.","---","---"]
+
+
 # 2020-03-19
 
 letterToMorse is a map from Char to Morse, morse is itself a string.

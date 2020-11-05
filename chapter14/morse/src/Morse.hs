@@ -56,14 +56,12 @@ letterToMorse = M.fromList [
 morseToLetter :: M.Map Morse Char
 morseToLetter = M.foldrWithKey (flip M.insert) M.empty letterToMorse
 
-
 charToMorse :: Char -> Maybe Morse
 charToMorse x = M.lookup x letterToMorse
 
-
 -- Not very clear how to implement this...
 stringToMorse :: String -> Maybe [Morse]
-stringToMorse = undefined
+stringToMorse s = sequence $ fmap charToMorse s
 
-
-morseToChar = undefined
+morseToChar :: Morse -> Maybe Char
+morseToChar x = M.lookup x morseToLetter

@@ -59,3 +59,5 @@
 * all
 * isUpper 
 * toLower
+* maybe
+* sequence

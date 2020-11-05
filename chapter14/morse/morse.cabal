@@ -18,6 +18,7 @@ library
       -Wall
       -Wno-missing-signatures
       -Wno-unused-imports
+      -Wno-type-defaults
       -fwarn-tabs 
   hs-source-dirs:
       src
@@ -35,6 +36,7 @@ executable morse
       -Wall
       -Wno-missing-signatures
       -Wno-unused-imports
+      -Wno-type-defaults
       -fwarn-tabs 
   build-depends:
       base >=4.7 && <5,
