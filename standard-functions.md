@@ -62,3 +62,5 @@
 * maybe
 * sequence
 * when (Control.Monad)
+* traverse
+* intercalate (Data.List)
