@@ -37,6 +37,7 @@ executable morse
       -Wno-missing-signatures
       -Wno-unused-imports
       -Wno-type-defaults
+      -Wno-unused-matches
       -fwarn-tabs 
   build-depends:
       base >=4.7 && <5,

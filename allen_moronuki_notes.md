@@ -1,3 +1,11 @@
+# 2020-11-07
+
+"The Main event"
+
+
+
+
+
 # 2020-11-05
 
 `sequence` goes from a group of Just values in a monad and puts their contents

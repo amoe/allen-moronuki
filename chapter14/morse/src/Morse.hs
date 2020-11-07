@@ -59,7 +59,8 @@ morseToLetter = M.foldrWithKey (flip M.insert) M.empty letterToMorse
 charToMorse :: Char -> Maybe Morse
 charToMorse x = M.lookup x letterToMorse
 
--- Not very clear how to implement this...
+-- Note that this returns a list of strings but in a single Maybe container.  It
+-- doesn't stuff the strings together.  It just stuffs the Just values together.
 stringToMorse :: String -> Maybe [Morse]
 stringToMorse s = sequence $ fmap charToMorse s
 
