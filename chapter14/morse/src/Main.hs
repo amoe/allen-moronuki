@@ -4,6 +4,7 @@ import Control.Monad (forever, when)
 import System.Exit (exitFailure, exitSuccess)
 import Data.Traversable (traverse)
 import Data.List (intercalate)
+import System.Environment (getArgs)
 import System.IO (hGetLine, hIsEOF, BufferMode(NoBuffering), hSetBuffering, stdout, stdin)
 import Morse (stringToMorse, morseToChar, charToMorse)
 
@@ -41,10 +42,15 @@ convertFromMorse = forever $ do
   
 main :: IO ()
 main = do
-  hSetBuffering stdout NoBuffering
-  putStr "Please type some input: "
-  input <- getLine
-  putStrLn "Hello, world!"
-  putStrLn $ case (stringToMorse input) of
-    (Just x) -> concat x
-    Nothing -> "INVALID"
+  mode <- getArgs
+  case mode of
+    [arg] -> case arg of
+               "from" -> convertFromMorse
+               "to" -> convertToMorse
+               _ -> argError
+    _ -> argError
+    where argError = do
+            putStrLn "BAD ARGUMENTS, FOOL."
+            exitFailure
+
+

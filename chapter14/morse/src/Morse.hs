@@ -61,6 +61,8 @@ charToMorse x = M.lookup x letterToMorse
 
 -- Note that this returns a list of strings but in a single Maybe container.  It
 -- doesn't stuff the strings together.  It just stuffs the Just values together.
+-- Also this doesn't support spaces in strings.  A space will just cause the
+-- lookup to fail.
 stringToMorse :: String -> Maybe [Morse]
 stringToMorse s = sequence $ fmap charToMorse s
 
