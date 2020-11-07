@@ -2,7 +2,7 @@
 
 "The Main event"
 
-
+why hGetLine rather than getLine?
 
 
 

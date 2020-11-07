@@ -61,3 +61,4 @@
 * toLower
 * maybe
 * sequence
+* when (Control.Monad)
