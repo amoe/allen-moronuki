@@ -27,7 +27,6 @@
 * unzip
 * zipWith
 * minimum
-* toUpper
 * head
 * succ
 * chr
@@ -64,3 +63,4 @@
 * when (Control.Monad)
 * traverse
 * intercalate (Data.List)
+* keys (Data.Map)
