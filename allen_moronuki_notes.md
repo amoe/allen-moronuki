@@ -1,3 +1,9 @@
+# 2020-11-10
+
+Arbitrary instances
+
+
+
 # 2020-11-08
 
 Your cabal file has a stanza like this:

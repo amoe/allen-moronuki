@@ -29,7 +29,7 @@ h :: Char -> Maybe Char
 h x = (charToMorse x) >>= morseToChar
 
 g :: String -> Maybe Char
-g x = Just '!'
+g _ = Just '!'
 
   
 prop_thereAndBackAgain :: Property
