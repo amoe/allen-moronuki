@@ -1,7 +1,17 @@
-# 2020-11-10
+# 2020-11-13
 
-Arbitrary instances
+`oneof` has type:
 
+    oneof :: [Gen a] -> Gen a
+
+So 'from a list of Gen', pick an arbitrary Gen.
+
+`frequency` has type:
+
+    frequency :: [(Int, Gen a)] -> Gen a
+
+So take a list of frequency, gen tuples and combine them to a single gen that
+produces values with that probability.
 
 
 # 2020-11-08
