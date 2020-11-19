@@ -1,3 +1,13 @@
+# 2020-11-19
+
+What does this mean?
+
+    shouldBe :: (HasCallStack, Show a, Eq a) => a -> a -> Expectation
+
+What does `HasCallStack` apply to here, it can't be the type variable `a`
+because otherwise the user wouldn't have needed to write `a` twice later in the
+signature.
+
 # 2020-11-13
 
 current page = 564
