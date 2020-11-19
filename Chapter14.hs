@@ -2,6 +2,7 @@ module Chapter14 where
 
 import Test.QuickCheck
 import Test.QuickCheck.Gen (oneof)
+import Test.Hspec
 
 data Trivial = Trivial deriving (Eq, Show)
 
@@ -71,3 +72,4 @@ sumGenFirstPls = do
 
 sumGenCharIntFirst :: Gen (Sum Char Int)
 sumGenCharIntFirst = sumGenFirstPls
+
