@@ -13,6 +13,10 @@ working.
 
 still not finished -- quirky
 
+seems that hspec defines stuff like `anyException` types to allow:
+
+    foo `shouldThrow` anyException
+
 # 2020-11-13
 
 current page = 564
