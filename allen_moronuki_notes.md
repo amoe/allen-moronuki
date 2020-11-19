@@ -11,6 +11,8 @@ signature.
 I want to be able to use shouldThrow from hspec, but it doesn't seem to be
 working.
 
+still not finished -- quirky
+
 # 2020-11-13
 
 current page = 564

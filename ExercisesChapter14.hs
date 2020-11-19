@@ -2,6 +2,7 @@ module ExercisesChapter14 where
 
 import Test.Hspec
 import WordNumber (digitToWord, getIndividualDigits, wordNumber)
+import Test.QuickCheck  
 
 hspecMain :: IO ()
 hspecMain = hspec $ do
@@ -23,3 +24,28 @@ hspecMain = hspec $ do
     it "nine-zero-zero-one for 9001" $ do
       wordNumber 9001 `shouldBe` "nine-zero-zero-one"
   
+
+--   describe "QuickCheck usage" $ do
+--     it "x + 1 is always greater than x" $ do
+-- --      property $ \x -> (x + 1) > (x :: Int)
+--       property $ f
+
+
+-- half x = x / 2
+-- halfIdentity = (*2) . half
+-- prop_halfIdentity x = x == halfIdentity x
+  
+-- quickcheckMain :: IO ()
+-- quickcheckMain = quickCheck prop_halfIdentity
+
+
+
+-- defined in point free style and needs to have explicit type signature
+halfIdentity :: Double -> Double
+halfIdentity = (*2) . half
+  
+prop_halfIdentity :: Double -> Bool
+prop_halfIdentity x = x == x
+
+quickcheckMain :: IO ()
+quickcheckMain = quickCheck prop_halfIdentity
