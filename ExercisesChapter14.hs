@@ -3,8 +3,8 @@ module ExercisesChapter14 where
 import Test.Hspec
 import WordNumber (digitToWord, getIndividualDigits, wordNumber)
 
-main :: IO ()
-main = hspec $ do
+hspecMain :: IO ()
+hspecMain = hspec $ do
   describe "digitToWord" $ do
     it "return zero for 0" $ do
       digitToWord 0 `shouldBe` "zero"
@@ -23,4 +23,3 @@ main = hspec $ do
     it "nine-zero-zero-one for 9001" $ do
       wordNumber 9001 `shouldBe` "nine-zero-zero-one"
   
-ch14 = "foo"

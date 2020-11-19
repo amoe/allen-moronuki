@@ -8,6 +8,9 @@ What does `HasCallStack` apply to here, it can't be the type variable `a`
 because otherwise the user wouldn't have needed to write `a` twice later in the
 signature.
 
+I want to be able to use shouldThrow from hspec, but it doesn't seem to be
+working.
+
 # 2020-11-13
 
 current page = 564
