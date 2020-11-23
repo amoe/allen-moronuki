@@ -48,6 +48,47 @@ halfIdentity = (*2) . half
 prop_halfIdentity :: Double -> Bool
 prop_halfIdentity x = halfIdentity x == x
 
-quickcheckMain :: IO ()
-quickcheckMain = quickCheck prop_halfIdentity
 
+-- How does this work?  It's a right-fold which keeps some status in a tuple
+-- over xs.  The tuple is (LAST-CHAR, CURRENT-STATUS).
+-- The input value 'comes in' from the first argument.
+listOrdered :: (Ord a) => [a] -> Bool
+listOrdered xs = snd $ foldr go (Nothing, True) xs
+  where go _ status@(_, False) = status    -- If we ever saw False, it means one pairing was wrongturn false forever.
+        go y (Nothing, t) = (Just y, t)    -- If the first turn through the loop, store our last-seen-value and stay True.  [_] -> True.
+        go y (Just x, t) = (Just y, x >= y) -- Compare to last-seen-value and turn False if wrongly ordered.
+
+
+prop_listOrdered :: [Integer] -> Bool
+prop_listOrdered xs = listOrdered $ sort xs
+
+-- If we just type hint this properly, it automatically becomes a property.
+prop_plusAssociative :: Integer -> Integer -> Integer  -> Bool
+prop_plusAssociative x y z = x + (y + z) == (x + y) + z
+
+prop_plusCommutative :: Integer -> Integer -> Bool
+prop_plusCommutative x y = x + y == y + x
+
+prop_multiplyAssociative :: Integer -> Integer -> Integer  -> Bool
+prop_multiplyAssociative x y z = x * (y * z) == (x * y) * z
+
+prop_multiplyCommutative :: Integer -> Integer  -> Bool
+prop_multiplyCommutative x y = x * y == y * x
+
+-- Testing this property will fail!  Because subtraction is not associative.
+prop_subtractAssociative :: Integer -> Integer -> Integer  -> Bool
+prop_subtractAssociative x y z = x - (y - z) == (x - y) - z
+
+prop_subtractCommutative :: Integer -> Integer -> Bool
+prop_subtractCommutative x y = x + y == y + x
+
+  
+quickcheckMain :: IO ()
+quickcheckMain = do
+  quickCheck prop_halfIdentity
+  quickCheck prop_listOrdered
+  quickCheck prop_plusAssociative
+  quickCheck prop_plusCommutative
+  quickCheck prop_multiplyAssociative
+--  quickCheck prop_subtractAssociative
+  quickCheck prop_subtractCommutative

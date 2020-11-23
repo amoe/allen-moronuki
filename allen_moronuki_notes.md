@@ -1,3 +1,14 @@
+# 2020-11-23
+
+There is a quite clever function to check if a list was ordered given.  This is
+a very nice pattern for using foldr to express some difficult iterations.
+
+Think about using property testing for some algorithms like the RISC-V assembly
+algorithms from C&CA week 8 -- this would eliminate the problem of having to
+think of values that prove certain algorithms aren't simply appearing to work.
+
+
+
 # 2020-11-19
 
 What does this mean?
