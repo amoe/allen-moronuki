@@ -38,7 +38,7 @@ hspecMain = hspec $ do
 -- quickcheckMain :: IO ()
 -- quickcheckMain = quickCheck prop_halfIdentity
 
-
+half x = x / 2
 
 -- defined in point free style and needs to have explicit type signature
 halfIdentity :: Double -> Double
