@@ -2,7 +2,8 @@ module ExercisesChapter14 where
 
 import Test.Hspec
 import WordNumber (digitToWord, getIndividualDigits, wordNumber)
-import Test.QuickCheck  
+import Test.QuickCheck
+import Data.List (sort)
 
 hspecMain :: IO ()
 hspecMain = hspec $ do
@@ -45,7 +46,8 @@ halfIdentity :: Double -> Double
 halfIdentity = (*2) . half
   
 prop_halfIdentity :: Double -> Bool
-prop_halfIdentity x = x == x
+prop_halfIdentity x = halfIdentity x == x
 
 quickcheckMain :: IO ()
 quickcheckMain = quickCheck prop_halfIdentity
+
