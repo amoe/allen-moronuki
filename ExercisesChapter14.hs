@@ -82,6 +82,32 @@ prop_subtractAssociative x y z = x - (y - z) == (x - y) - z
 prop_subtractCommutative :: Integer -> Integer -> Bool
 prop_subtractCommutative x y = x + y == y + x
 
+
+-- p566 -- interestingly this causes a divide by zero.
+quotLaw :: Integer -> Integer -> Bool
+quotLaw x y = (quot x y) * y + (rem x y) == x
+
+
+trivialInteger :: Gen Integer
+trivialInteger = return 1
+
+-- Generate from nonzero integers
+genNonzero :: Gen Integer
+genNonzero = elements nonzeroIntegers
+  where nonzeroIntegers = [1..100] ++ [(-100)..(-1)]
+
+-- Using the new Gen that we just defined in place of the standard 'arbitrary'.
+genNonzeroTuple :: Gen (Integer, Integer)
+genNonzeroTuple = do
+  a <- genNonzero
+  b <- genNonzero
+  return (a, b)
+
+-- Since we've only been shown how to get single values from generators, but we
+-- need two values for one application of this function, we uncurry the quotLaw
+-- so that it accepts a single 2-tuple of the form that our Gen produces.
+prop_quotLaw :: Property
+prop_quotLaw = forAll genNonzeroTuple $ uncurry quotLaw
   
 quickcheckMain :: IO ()
 quickcheckMain = do
@@ -92,3 +118,5 @@ quickcheckMain = do
   quickCheck prop_multiplyAssociative
 --  quickCheck prop_subtractAssociative
   quickCheck prop_subtractCommutative
+--  quickCheck prop_quotLaw
+  quickCheck prop_quotLaw

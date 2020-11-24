@@ -1,3 +1,17 @@
+# 2020-11-24
+
+div/mod and quot/rem differ in rounding direction.
+div "rounds down" -- that means it rounds to the number lower in all cases.  if
+it's a negative number it will round from -3.3 to -4 for instance, where quot
+would round to -3 (towards zero).
+
+#haskell-beginn> HPFFP ch14, I'm asked to write quickcheck properties for the quot/rem law, "(quot x y) * y + (rem x y) == x".  IIUC, this law applies for all Integer x, and all Integer y where y != 0.  However  I don't think that there's sufficient info in the book so far to let me write a Gen instance for nonzero integers.
+
+However this might be possible using `elements` and infinite integer lists?
+
+Remeember that Integer is unbounded, so how are we going to pick an Integer?
+This actually poses some problems for Gen Integer.
+
 # 2020-11-23
 
 There is a quite clever function to check if a list was ordered given.  This is
@@ -6,8 +20,6 @@ a very nice pattern for using foldr to express some difficult iterations.
 Think about using property testing for some algorithms like the RISC-V assembly
 algorithms from C&CA week 8 -- this would eliminate the problem of having to
 think of values that prove certain algorithms aren't simply appearing to work.
-
-
 
 # 2020-11-19
 
