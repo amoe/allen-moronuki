@@ -82,16 +82,13 @@ prop_subtractAssociative x y z = x - (y - z) == (x - y) - z
 prop_subtractCommutative :: Integer -> Integer -> Bool
 prop_subtractCommutative x y = x + y == y + x
 
-
--- p566 -- interestingly this causes a divide by zero.
+-- This will cause a divide by zero if attempted to be tested using simply the
+-- regular generator for Integers.  
 quotLaw :: Integer -> Integer -> Bool
 quotLaw x y = (quot x y) * y + (rem x y) == x
 
-
-trivialInteger :: Gen Integer
-trivialInteger = return 1
-
--- Generate from nonzero integers
+-- Kind of nasty, but we don't know any other syntax to produce nonzero
+-- integers.
 genNonzero :: Gen Integer
 genNonzero = elements nonzeroIntegers
   where nonzeroIntegers = [1..100] ++ [(-100)..(-1)]

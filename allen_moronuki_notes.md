@@ -12,6 +12,8 @@ However this might be possible using `elements` and infinite integer lists?
 Remeember that Integer is unbounded, so how are we going to pick an Integer?
 This actually poses some problems for Gen Integer.
 
+The solution for quotLaw is not the best as it doesn't work very semantically
+
 # 2020-11-23
 
 There is a quite clever function to check if a list was ordered given.  This is
