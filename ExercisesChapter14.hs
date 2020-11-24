@@ -87,6 +87,10 @@ prop_subtractCommutative x y = x + y == y + x
 quotLaw :: Integer -> Integer -> Bool
 quotLaw x y = (quot x y) * y + (rem x y) == x
 
+divLaw :: Integer -> Integer -> Bool
+divLaw x y = (div x y) * y + (mod x y) == x
+
+  
 -- Kind of nasty, but we don't know any other syntax to produce nonzero
 -- integers.
 genNonzero :: Gen Integer
@@ -105,6 +109,12 @@ genNonzeroTuple = do
 -- so that it accepts a single 2-tuple of the form that our Gen produces.
 prop_quotLaw :: Property
 prop_quotLaw = forAll genNonzeroTuple $ uncurry quotLaw
+
+
+prop_divLaw :: Property
+prop_divLaw = forAll genNonzeroTuple $ uncurry divLaw
+
+
   
 quickcheckMain :: IO ()
 quickcheckMain = do
@@ -117,3 +127,4 @@ quickcheckMain = do
   quickCheck prop_subtractCommutative
 --  quickCheck prop_quotLaw
   quickCheck prop_quotLaw
+  quickCheck prop_divLaw
