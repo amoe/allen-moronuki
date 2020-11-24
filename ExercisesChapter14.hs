@@ -114,7 +114,15 @@ prop_quotLaw = forAll genNonzeroTuple $ uncurry quotLaw
 prop_divLaw :: Property
 prop_divLaw = forAll genNonzeroTuple $ uncurry divLaw
 
+-- Falsifiable for 1^0 != 0^1
+prop_exponentiationCommutative :: Integer -> Integer -> Bool
+prop_exponentiationCommutative x y = x ^ y == y ^ x
 
+-- Falsifiable:
+-- 0 ^ (0 ^ 0) == 0  because 0 x 1 = 0
+-- (0 ^ 0) ^ 0 == 1  because 1^0 = 1
+prop_exponentiationAssociative :: Integer -> Integer -> Integer -> Bool
+prop_exponentiationAssociative x y z = x ^ (y ^ z) == (x ^ y) ^ z
   
 quickcheckMain :: IO ()
 quickcheckMain = do
@@ -125,6 +133,7 @@ quickcheckMain = do
   quickCheck prop_multiplyAssociative
 --  quickCheck prop_subtractAssociative
   quickCheck prop_subtractCommutative
---  quickCheck prop_quotLaw
   quickCheck prop_quotLaw
   quickCheck prop_divLaw
+--  quickCheck prop_exponentiationCommutative
+--  quickCheck prop_exponentiationAssociative
