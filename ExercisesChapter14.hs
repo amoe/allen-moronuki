@@ -32,22 +32,11 @@ hspecMain = hspec $ do
 --       property $ f
 
 
--- half x = x / 2
--- halfIdentity = (*2) . half
--- prop_halfIdentity x = x == halfIdentity x
-  
--- quickcheckMain :: IO ()
--- quickcheckMain = quickCheck prop_halfIdentity
-
+half :: Fractional a => a -> a
 half x = x / 2
 
--- defined in point free style and needs to have explicit type signature
-halfIdentity :: Double -> Double
-halfIdentity = (*2) . half
-  
-prop_halfIdentity :: Double -> Bool
-prop_halfIdentity x = halfIdentity x == x
-
+prop_halfIdentity :: (Eq a, Fractional a) => a -> Bool
+prop_halfIdentity x = (half x) * 2 == x
 
 -- How does this work?  It's a right-fold which keeps some status in a tuple
 -- over xs.  The tuple is (LAST-CHAR, CURRENT-STATUS).
@@ -128,11 +117,10 @@ prop_exponentiationAssociative x y z = x ^ (y ^ z) == (x ^ y) ^ z
 -- Fun fact -- this is called an 'involution' mathematically.
 prop_twiceReverseIdentity :: [Integer] -> Bool
 prop_twiceReverseIdentity xs = (reverse . reverse) xs == xs
-
   
 quickcheckMain :: IO ()
 quickcheckMain = do
-  quickCheck prop_halfIdentity
+  quickCheck (prop_halfIdentity :: Double -> Bool)
   quickCheck prop_listOrdered
   quickCheck prop_plusAssociative
   quickCheck prop_plusCommutative

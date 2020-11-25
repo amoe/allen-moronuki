@@ -2,20 +2,16 @@
 
 From stackoverflow:
 
-> You don't do this. You write the property once for the class:
-> 
-> class Gen a where
->     next :: a -> a
->     prev :: a -> a
-> 
-> np_prop :: (Eq a, Gen a) => a -> Bool
-> np_prop a = prev (next a) == a
-> 
+> (... writes np_prop using type classes rather than concrete types...)
 > Then to test it, you cast to a particular type:
 > 
 > quickCheck (np_prop :: Int -> Bool)
 > quickCheck (np_prop :: String -> Bool)
 
+This is a cool approach, to define the property using the maximally general type
+class and then, at 'test time' (i.e. within the do-block that executes the
+`quickCheck` action) we 'downcast' the property itself to the specific concrete
+type that we want to check.
 
 # 2020-11-24
 
