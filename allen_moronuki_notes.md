@@ -1,3 +1,22 @@
+# 2020-11-25
+
+From stackoverflow:
+
+> You don't do this. You write the property once for the class:
+> 
+> class Gen a where
+>     next :: a -> a
+>     prev :: a -> a
+> 
+> np_prop :: (Eq a, Gen a) => a -> Bool
+> np_prop a = prev (next a) == a
+> 
+> Then to test it, you cast to a particular type:
+> 
+> quickCheck (np_prop :: Int -> Bool)
+> quickCheck (np_prop :: String -> Bool)
+
+
 # 2020-11-24
 
 div/mod and quot/rem differ in rounding direction.

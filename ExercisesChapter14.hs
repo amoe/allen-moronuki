@@ -123,6 +123,12 @@ prop_exponentiationCommutative x y = x ^ y == y ^ x
 -- (0 ^ 0) ^ 0 == 1  because 1^0 = 1
 prop_exponentiationAssociative :: Integer -> Integer -> Integer -> Bool
 prop_exponentiationAssociative x y z = x ^ (y ^ z) == (x ^ y) ^ z
+
+  
+-- Fun fact -- this is called an 'involution' mathematically.
+prop_twiceReverseIdentity :: [Integer] -> Bool
+prop_twiceReverseIdentity xs = (reverse . reverse) xs == xs
+
   
 quickcheckMain :: IO ()
 quickcheckMain = do
@@ -135,5 +141,6 @@ quickcheckMain = do
   quickCheck prop_subtractCommutative
   quickCheck prop_quotLaw
   quickCheck prop_divLaw
+  quickCheck prop_twiceReverseIdentity
 --  quickCheck prop_exponentiationCommutative
 --  quickCheck prop_exponentiationAssociative
