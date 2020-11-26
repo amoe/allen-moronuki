@@ -1,3 +1,9 @@
+# 2020-11-26
+
+it seems that quickcheck can't get instances for functions
+perhaps it can but if we create a gen using select or something similar?
+But it still wants to Show the things
+
 # 2020-11-25
 
 From stackoverflow:
@@ -12,6 +18,11 @@ This is a cool approach, to define the property using the maximally general type
 class and then, at 'test time' (i.e. within the do-block that executes the
 `quickCheck` action) we 'downcast' the property itself to the specific concrete
 type that we want to check.
+
+HPFFP p567: "Write a property for the definition of $: `f $ a  = f a`.  `f . g =
+\x -> f (g x)`"  I don't understand this question.  Is this actually asking to
+write properties for BOTH the dollar-sign and the compose operator?  Pretty sure
+that it is, actually.
 
 # 2020-11-24
 

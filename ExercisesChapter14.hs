@@ -117,7 +117,22 @@ prop_exponentiationAssociative x y z = x ^ (y ^ z) == (x ^ y) ^ z
 -- Fun fact -- this is called an 'involution' mathematically.
 prop_twiceReverseIdentity :: [Integer] -> Bool
 prop_twiceReverseIdentity xs = (reverse . reverse) xs == xs
-  
+
+-- The dollar sign
+prop_infixApplication :: (Eq b) => (a -> b) -> a -> Bool
+prop_infixApplication f x = (f $ x) == (f x)
+
+-- Quickcheck can't infer the first argument, so we need to specialize the
+-- property, which still remains a property after partial application.
+prop_infixApplyAddOne :: Int -> Bool
+prop_infixApplyAddOne = prop_infixApplication (+1)
+
+prop_composeRelation :: (Eq c) => (b -> c) -> (a -> b) -> a -> Bool
+prop_composeRelation f1 f2 x = ((f1 . f2) x) == (f1 (f2 x))
+
+prop_composeRelationAddOne :: Integer -> Bool
+prop_composeRelationAddOne = prop_composeRelation (+1) (+1)  
+
 quickcheckMain :: IO ()
 quickcheckMain = do
   quickCheck (prop_halfIdentity :: Double -> Bool)
@@ -130,5 +145,7 @@ quickcheckMain = do
   quickCheck prop_quotLaw
   quickCheck prop_divLaw
   quickCheck prop_twiceReverseIdentity
+  quickCheck prop_infixApplyAddOne
+  quickCheck prop_composeRelationAddOne
 --  quickCheck prop_exponentiationCommutative
 --  quickCheck prop_exponentiationAssociative
