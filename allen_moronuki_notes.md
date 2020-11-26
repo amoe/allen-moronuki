@@ -23,6 +23,8 @@ stop value z which is [1,2,3].j
 So, we can prove that `f` is identical to `++` when one of its arguments is the
 empty list.
 
+One interesting thing is that 
+
 
 # 2020-11-25
 

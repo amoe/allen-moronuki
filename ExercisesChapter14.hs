@@ -137,6 +137,18 @@ prop_composeRelationAddOne = prop_composeRelation (+1) (+1)
 prop_consFoldEqualsConcatenationOperator :: (Eq a) => [a] -> [a] -> Bool
 prop_consFoldEqualsConcatenationOperator xs ys = (f xs ys) == ((++) xs ys)
   where f = foldr (:)
+
+
+-- I believe that these should be equal.
+
+-- g needs to have its type fixed thus, or it won't compile; yet it does
+-- compile OK at the ghci repl for some reason.
+prop_foldConcatOperatorEqualsConcat :: (Eq a) => [[a]] -> Bool
+prop_foldConcatOperatorEqualsConcat xs = (f xs) == (concat xs)
+  where
+    f :: [[a]] -> [a]
+    f = foldr (++) []
+  
   
 quickcheckMain :: IO ()
 quickcheckMain = do
@@ -155,3 +167,4 @@ quickcheckMain = do
   quickCheck prop_infixApplyAddOne
   quickCheck prop_composeRelationAddOne
 --  quickCheck (prop_consFoldEqualsConcatenationOperator :: [Integer] -> [Integer] -> Bool)
+  quickCheck (prop_foldConcatOperatorEqualsConcat :: [[Integer]] -> Bool)
