@@ -4,6 +4,26 @@ it seems that quickcheck can't get instances for functions
 perhaps it can but if we create a gen using select or something similar?
 But it still wants to Show the things
 
+Recall that this is a list copy.
+
+    foldr (:) [] [1..10]
+
+Therefore `foldr (:)` is a 2-argument function.
+Well, so is `++`, right?
+
+(++) takes two lists of equivalent types and produces a single list.
+
+What's actually happening in this example?
+
+foldr (:) [1,2,3] [4,5,6] => [4,5,6,1,2,3]
+
+Cons operator is being folded through all the xs, then finally consed onto the
+stop value z which is [1,2,3].j
+
+So, we can prove that `f` is identical to `++` when one of its arguments is the
+empty list.
+
+
 # 2020-11-25
 
 From stackoverflow:

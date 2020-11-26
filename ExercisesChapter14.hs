@@ -124,7 +124,7 @@ prop_infixApplication f x = (f $ x) == (f x)
 
 -- Quickcheck can't infer the first argument, so we need to specialize the
 -- property, which still remains a property after partial application.
-prop_infixApplyAddOne :: Int -> Bool
+prop_infixApplyAddOne :: Integer -> Bool
 prop_infixApplyAddOne = prop_infixApplication (+1)
 
 prop_composeRelation :: (Eq c) => (b -> c) -> (a -> b) -> a -> Bool
@@ -133,6 +133,11 @@ prop_composeRelation f1 f2 x = ((f1 . f2) x) == (f1 (f2 x))
 prop_composeRelationAddOne :: Integer -> Bool
 prop_composeRelationAddOne = prop_composeRelation (+1) (+1)  
 
+-- Falsifiable with [0] and [1]; f = [1,0], (++) = [0,1]
+prop_consFoldEqualsConcatenationOperator :: (Eq a) => [a] -> [a] -> Bool
+prop_consFoldEqualsConcatenationOperator xs ys = (f xs ys) == ((++) xs ys)
+  where f = foldr (:)
+  
 quickcheckMain :: IO ()
 quickcheckMain = do
   quickCheck (prop_halfIdentity :: Double -> Bool)
@@ -144,8 +149,9 @@ quickcheckMain = do
   quickCheck prop_subtractCommutative
   quickCheck prop_quotLaw
   quickCheck prop_divLaw
+--  quickCheck prop_exponentiationCommutative
+--  quickCheck prop_exponentiationAssociative
   quickCheck prop_twiceReverseIdentity
   quickCheck prop_infixApplyAddOne
   quickCheck prop_composeRelationAddOne
---  quickCheck prop_exponentiationCommutative
---  quickCheck prop_exponentiationAssociative
+--  quickCheck (prop_consFoldEqualsConcatenationOperator :: [Integer] -> [Integer] -> Bool)
