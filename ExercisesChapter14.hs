@@ -154,6 +154,11 @@ prop_foldConcatOperatorEqualsConcat xs = (f xs) == (concat xs)
 prop_takeYieldsRequestedNumber :: Int -> [a] -> Bool
 prop_takeYieldsRequestedNumber n xs = (f n xs) == n
   where f n xs = length (take n xs)
+
+
+prop_readShowRoundTrip :: (Show a, Read a, Eq a) => a -> Bool
+prop_readShowRoundTrip x = (f x) == x
+  where f x = read $ show x
   
   
 quickcheckMain :: IO ()
@@ -175,3 +180,6 @@ quickcheckMain = do
 --  quickCheck (prop_consFoldEqualsConcatenationOperator :: [Integer] -> [Integer] -> Bool)
   quickCheck (prop_foldConcatOperatorEqualsConcat :: [[Integer]] -> Bool)
   -- quickCheck (prop_takeYieldsRequestedNumber :: Int -> [Integer] -> Bool)
+  quickCheck (prop_readShowRoundTrip :: Integer -> Bool)
+  quickCheck (prop_readShowRoundTrip :: String -> Bool)
+  quickCheck (prop_readShowRoundTrip :: Float -> Bool)
