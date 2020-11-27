@@ -148,6 +148,12 @@ prop_foldConcatOperatorEqualsConcat xs = (f xs) == (concat xs)
   where
     f :: [[a]] -> [a]
     f = foldr (++) []
+
+-- Clearly does not hold because the number of the list may be shorter than the
+-- number requested.  Falsifiable for 1  and [].
+prop_takeYieldsRequestedNumber :: Int -> [a] -> Bool
+prop_takeYieldsRequestedNumber n xs = (f n xs) == n
+  where f n xs = length (take n xs)
   
   
 quickcheckMain :: IO ()
@@ -168,3 +174,4 @@ quickcheckMain = do
   quickCheck prop_composeRelationAddOne
 --  quickCheck (prop_consFoldEqualsConcatenationOperator :: [Integer] -> [Integer] -> Bool)
   quickCheck (prop_foldConcatOperatorEqualsConcat :: [[Integer]] -> Bool)
+  -- quickCheck (prop_takeYieldsRequestedNumber :: Int -> [Integer] -> Bool)

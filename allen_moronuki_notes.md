@@ -1,3 +1,8 @@
+# 2020-11-27
+
+f n xs = length (take n xs) == xs
+
+
 # 2020-11-26
 
 it seems that quickcheck can't get instances for functions
