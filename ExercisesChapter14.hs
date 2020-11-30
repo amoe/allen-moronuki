@@ -262,11 +262,31 @@ fillInCharacter (Puzzle x y z) l = Puzzle x y' z'
   where y' = map (flipIfCorrect l) $ zip x y
         z' = (l : z)
 
-      -- fillInCharacter x y `shouldBe` expected
-      --   where x = Puzzle "foo" [Nothing, Nothing, Nothing] []
-      --         y = 'f'
-      --         expected = Puzzle "foo" [Just 'f', Nothing, Nothing] ['f']
 
+charInWord :: Char -> Puzzle -> Bool
+charInWord x (Puzzle x' _ _) = elem x x'
+
+alreadyGuessed :: Char -> Puzzle -> Bool
+alreadyGuessed x (Puzzle _ _ x') = elem x x'
+
+-- What does this function do?
+-- It takes a guess and a puzzle, does some IO, and yields a Puzzle inside the
+-- IO monad.    The test will be the same, except with one more case.  Will it be
+-- complicated by the fact that the result is an IO Puzzle?
+handleGuess :: Puzzle -> Char -> IO Puzzle
+handleGuess puzzle guess = do 
+  putStrLn $ "Your guess was: " ++ [guess]
+  case (charInWord guess puzzle, alreadyGuessed guess puzzle) of
+    (_, True) -> do
+      putStrLn "Duplicate guess, bozo."
+      return puzzle
+    (True, _) -> do
+      putStrLn "You Guessed Correctly."
+      return (fillInCharacter puzzle guess)
+    (False, _) -> do
+      putStrLn "The guess was wrong."
+      return (fillInCharacter puzzle guess)
+  
   
 hangmanSpecMain :: IO ()
 hangmanSpecMain = hspec $ do
@@ -277,4 +297,16 @@ hangmanSpecMain = hspec $ do
           expected = Puzzle "foo" [Just 'f', Nothing, Nothing] ['f'] in
         fillInCharacter x y `shouldBe` expected
     it "does not flip the value for an incorrect guess" $ do
-      2 `shouldBe` 2
+      let x = Puzzle "foo" [Nothing, Nothing, Nothing] []
+          y = 'z'
+          expected = Puzzle "foo" [Nothing, Nothing, Nothing] ['z'] in
+        fillInCharacter x y `shouldBe` expected
+  describe "handleGuess" $ do
+    it "fills in the value for a correct guess" $ do
+      let x = Puzzle "foo" [Nothing, Nothing, Nothing] []
+          y = 'f'
+          expected = Puzzle "foo" [Just 'f', Nothing, Nothing] ['f'] in
+        do
+          -- Bind the IO value so that we can compare it to our non-IO Puzzle.
+          actual <- handleGuess x y
+          actual `shouldBe` expected
