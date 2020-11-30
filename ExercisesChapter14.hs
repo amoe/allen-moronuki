@@ -187,7 +187,11 @@ prop_capitalizeWordIdempotent :: String -> Bool
 prop_capitalizeWordIdempotent x =
   (capitalizeWord x == twice capitalizeWord x)
   && (capitalizeWord x == fourTimes capitalizeWord x)
-  
+
+
+prop_sortIdempotent :: Ord a => [a] -> Bool  
+prop_sortIdempotent xs =
+  (sort xs == twice sort xs) && (sort xs == fourTimes sort xs)
   
 -- f x = (capitalize-dwim
   
@@ -215,4 +219,4 @@ quickcheckMain = do
   quickCheck (prop_readShowRoundTrip :: Float -> Bool)
 --  quickCheck (prop_squareIdentity :: Double -> Bool)
   quickCheck prop_capitalizeWordIdempotent
-  
+  quickCheck (prop_sortIdempotent :: [Integer] -> Bool)
