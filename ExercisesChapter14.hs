@@ -220,3 +220,24 @@ quickcheckMain = do
 --  quickCheck (prop_squareIdentity :: Double -> Bool)
   quickCheck prop_capitalizeWordIdempotent
   quickCheck (prop_sortIdempotent :: [Integer] -> Bool)
+
+-- "Make a Gen random generator for the datatype".
+
+-- Equal probabilities for each.  
+data Fool = Fulse | Frue deriving (Eq, Show)
+
+-- Use oneof to create generators for sum types.
+genFoolEqual :: Gen Fool
+genFoolEqual = do
+  oneof [return $ Fulse, return $ Frue]
+
+
+-- We want: 2/3 Fulse, 1/3 Frue.
+-- 1 and 1 will give both equal weight.  Chance is 1/2.
+-- 2 and 1 therefore gives Frue 1/3 and Fulse 2/3.
+-- But does it make sense to say that a 2/3 chance is "twice as likely" as a 1/3
+-- chance?  Yes; you multiply the numerators.
+genFoolWeighted :: Gen Fool
+genFoolWeighted = do
+  frequency [(2, return $ Fulse), (1, return $ Frue)]
+  
