@@ -241,3 +241,40 @@ genFoolWeighted :: Gen Fool
 genFoolWeighted = do
   frequency [(2, return $ Fulse), (1, return $ Frue)]
   
+-- Testing Hangman functions.  Using my implementations rather than A&M's
+-- implementations.
+
+data Puzzle = Puzzle String [Maybe Char] [Char] deriving (Show, Eq)
+
+flipIfCorrect :: Char -> (Char, Maybe Char) -> Maybe Char
+flipIfCorrect guessed (real, currentStatus) = if guessed == real
+                                              then (Just real)
+                                              else currentStatus
+
+-- What is this function supposed to do?
+-- It takes a Puzzle, and a candidate Char.
+-- The Puzzle holds a [Maybe Char] representing the stuff that has been guessed.
+-- It also holds the actual answer to the puzzle as its first data member.
+-- It also holds a list of stuff-already-guessed, which we need to make sure gets
+-- our guess appended to.  
+fillInCharacter :: Puzzle -> Char -> Puzzle
+fillInCharacter (Puzzle x y z) l = Puzzle x y' z'
+  where y' = map (flipIfCorrect l) $ zip x y
+        z' = (l : z)
+
+      -- fillInCharacter x y `shouldBe` expected
+      --   where x = Puzzle "foo" [Nothing, Nothing, Nothing] []
+      --         y = 'f'
+      --         expected = Puzzle "foo" [Just 'f', Nothing, Nothing] ['f']
+
+  
+hangmanSpecMain :: IO ()
+hangmanSpecMain = hspec $ do
+  describe "fillInCharacter" $ do
+    it "flips the value for a correct guess" $ do
+      let x = Puzzle "foo" [Nothing, Nothing, Nothing] []
+          y = 'f'
+          expected = Puzzle "foo" [Just 'f', Nothing, Nothing] ['f'] in
+        fillInCharacter x y `shouldBe` expected
+    it "does not flip the value for an incorrect guess" $ do
+      2 `shouldBe` 2

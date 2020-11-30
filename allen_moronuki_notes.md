@@ -6,8 +6,8 @@ Getting this to type check was a bit tricky, had to manually type hint
 squareIdentity.
 Why does it fail?  Because of FPA; example, 1/10 can't be represented precisely
 in binary.
-This 
 
+For some reason 'let' works better in these describe expressions.  Not sure why.
 
 # 2020-11-27
 
