@@ -309,3 +309,8 @@ hangmanSpecMain = hspec $ do
         -- Fancy bind, no do-notation needed here!  Luckily, 'shouldBe' is
         -- commutative.
         handleGuess x y >>= shouldBe expected
+    it "avoids duplication in the guess record" $ do
+      let x = Puzzle "foo" [Nothing, Nothing, Nothing] ['z']
+          y = 'z'
+          expected = Puzzle "foo" [Nothing, Nothing, Nothing] ['z'] in
+        handleGuess x y >>= shouldBe expected
