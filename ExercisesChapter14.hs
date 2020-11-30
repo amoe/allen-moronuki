@@ -306,7 +306,6 @@ hangmanSpecMain = hspec $ do
       let x = Puzzle "foo" [Nothing, Nothing, Nothing] []
           y = 'f'
           expected = Puzzle "foo" [Just 'f', Nothing, Nothing] ['f'] in
-        do
-          -- Bind the IO value so that we can compare it to our non-IO Puzzle.
-          actual <- handleGuess x y
-          actual `shouldBe` expected
+        -- Fancy bind, no do-notation needed here!  Luckily, 'shouldBe' is
+        -- commutative.
+        handleGuess x y >>= shouldBe expected
