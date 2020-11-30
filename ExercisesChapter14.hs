@@ -4,7 +4,8 @@ import Test.Hspec
 import WordNumber (digitToWord, getIndividualDigits, wordNumber)
 import Test.QuickCheck
 import Data.List (sort)
-
+import Data.Char (toUpper)
+  
 hspecMain :: IO ()
 hspecMain = hspec $ do
   describe "digitToWord" $ do
@@ -160,6 +161,35 @@ prop_readShowRoundTrip :: (Show a, Read a, Eq a) => a -> Bool
 prop_readShowRoundTrip x = (f x) == x
   where f x = read $ show x
   
+
+square x = x * x
+  
+squareIdentity :: Floating a => a -> a
+squareIdentity = square . sqrt
+
+-- Falsifiable, due to inaccuracy of floating point arithmetic.
+prop_squareIdentity :: (Eq a, Floating a) => a -> Bool
+prop_squareIdentity x = (squareIdentity x) == x
+
+
+-- Idempotence
+
+twice f = f . f
+fourTimes = twice . twice
+
+-- This test actually exposed a bug in this function, which didn't originally
+-- support the empty string.
+capitalizeWord :: String -> String
+capitalizeWord [] = ""  
+capitalizeWord (x:xs) = (toUpper x) : xs
+
+prop_capitalizeWordIdempotent :: String -> Bool  
+prop_capitalizeWordIdempotent x =
+  (capitalizeWord x == twice capitalizeWord x)
+  && (capitalizeWord x == fourTimes capitalizeWord x)
+  
+  
+-- f x = (capitalize-dwim
   
 quickcheckMain :: IO ()
 quickcheckMain = do
@@ -183,3 +213,6 @@ quickcheckMain = do
   quickCheck (prop_readShowRoundTrip :: Integer -> Bool)
   quickCheck (prop_readShowRoundTrip :: String -> Bool)
   quickCheck (prop_readShowRoundTrip :: Float -> Bool)
+--  quickCheck (prop_squareIdentity :: Double -> Bool)
+  quickCheck prop_capitalizeWordIdempotent
+  

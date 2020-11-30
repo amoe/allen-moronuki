@@ -1,3 +1,14 @@
+# 2020-11-30
+
+The type of sqrt is something called Floating.
+Only Float and Double have instances of 'Floating'.
+Getting this to type check was a bit tricky, had to manually type hint
+squareIdentity.
+Why does it fail?  Because of FPA; example, 1/10 can't be represented precisely
+in binary.
+This 
+
+
 # 2020-11-27
 
 f n xs = length (take n xs) == xs
