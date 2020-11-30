@@ -5,6 +5,7 @@ import WordNumber (digitToWord, getIndividualDigits, wordNumber)
 import Test.QuickCheck
 import Data.List (sort)
 import Data.Char (toUpper)
+import CaesarCipher (modularCaesar, modularUncaesar)
   
 hspecMain :: IO ()
 hspecMain = hspec $ do
@@ -314,3 +315,12 @@ hangmanSpecMain = hspec $ do
           y = 'z'
           expected = Puzzle "foo" [Nothing, Nothing, Nothing] ['z'] in
         handleGuess x y >>= shouldBe expected
+
+
+
+prop_caesarIdentity :: String -> Bool  
+prop_caesarIdentity x = x == (modularUncaesar 1 $ modularCaesar 1 x)
+
+
+qcCiphersMain = do
+  quickCheck prop_caesarIdentity
