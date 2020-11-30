@@ -14,6 +14,7 @@ executed in-real-life.  It would be kind of cool to just 'simulate' them in some
 sense.
 
 Caesar is broken!  lol
+What should the result be for "A"?  It should probably be 'B', not 'v'
 
 # 2020-11-27
 
