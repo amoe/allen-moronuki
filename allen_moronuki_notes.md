@@ -15,6 +15,11 @@ sense.
 
 Caesar is broken!  lol
 What should the result be for "A"?  It should probably be 'B', not 'v'
+The decimal value of A is 65.
+Therefore 65 should become 66, 'B'.
+'Z' is 90 and should become 65, 'A'.
+non-alphabetic chars should just be left alone.
+
 
 # 2020-11-27
 
