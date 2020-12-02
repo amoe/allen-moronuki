@@ -29,9 +29,18 @@ shiftByRange :: Int -> Char -> CharacterRange -> Char
 shiftByRange n x (CharacterRange base size) = chr $ base + (mod newPosition size)
   where relativePosition = (ord x) - base
         newPosition = relativePosition + n
-  
+
+inRange :: Char -> CharacterRange -> Bool
+inRange c (CharacterRange a n) = val >= a && val < a + n
+  where val = ord c
+
+-- We do need to care about the partial function case.  Write this as a
+-- recursion then see if we can translate it into a fold
+findRange :: [CharacterRange] -> Char -> CharacterRange
+findRange xs c = head $ filter (inRange c) xs
+
 -- maybeShiftUpModular :: Int -> Char -> Char
--- maybeShiftUpModular n x
+-- maybeShiftUpModular n x =
 --   | isInLowercaseRange x = shiftByRange
 --   ẅhere y = ord 'x'
 
