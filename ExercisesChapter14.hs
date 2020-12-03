@@ -332,6 +332,5 @@ nonEmptyString = listOf1 arbitrary
 prop_vigenereIdentity :: String -> String -> Bool
 prop_vigenereIdentity k msg = msg == (decodeText k $ encodeText k msg)
   
-  
 qcCiphersMain = do
   quickCheck prop_caesarIdentity
