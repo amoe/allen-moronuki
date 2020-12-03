@@ -1,3 +1,8 @@
+# 2020-12-03
+
+quickcheck found a bug attempting encryption with an empty key.
+What should happen in this case?
+
 # 2020-11-30
 
 The type of sqrt is something called Floating.

@@ -6,6 +6,7 @@ import Test.QuickCheck
 import Data.List (sort)
 import Data.Char (toUpper)
 import CaesarCipher (modularCaesar, modularUncaesar)
+import VigenereCipher (encodeText, decodeText)
   
 hspecMain :: IO ()
 hspecMain = hspec $ do
@@ -318,9 +319,19 @@ hangmanSpecMain = hspec $ do
 
 
 
-prop_caesarIdentity :: String -> Bool  
-prop_caesarIdentity x = x == (modularUncaesar 1 $ modularCaesar 1 x)
+prop_caesarIdentity :: Int -> String -> Bool  
+prop_caesarIdentity n msg = msg == (modularUncaesar n  $ modularCaesar n msg)
 
 
+nonEmptyString :: Gen String
+nonEmptyString = listOf1 arbitrary
+
+
+-- The problem here, how can we say that arg1 is nonempty string, while arg2 can
+-- be empty?
+prop_vigenereIdentity :: String -> String -> Bool
+prop_vigenereIdentity k msg = msg == (decodeText k $ encodeText k msg)
+  
+  
 qcCiphersMain = do
   quickCheck prop_caesarIdentity
