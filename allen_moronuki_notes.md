@@ -1,3 +1,8 @@
+# 2020-12-04
+
+Learned:
+You can nest forAll to get multiple Arbitrary instances.
+
 # 2020-12-03
 
 quickcheck found a bug attempting encryption with an empty key.

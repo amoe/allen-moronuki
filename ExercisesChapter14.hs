@@ -334,3 +334,13 @@ prop_vigenereIdentity k msg = msg == (decodeText k $ encodeText k msg)
   
 qcCiphersMain = do
   quickCheck prop_caesarIdentity
+
+  -- This is really tricky syntactically and used SO question #45519955 But
+  -- fundamentally we are just using two generators and specifying that the
+  -- first one be nonempty.  As `forAll` returns a Property, the properties
+  -- become composable.  However note that 100 tests still get run as a result
+  -- of this -- not 1000 -- indicating that the `forAll` is strictly
+  -- non-imperative; the QC runtime somehow folds all of the various `Gen`
+  -- requests into tuples.  We could use this to refactor `quotLaw` earlier.
+  quickCheck . verbose $ forAll nonEmptyString $ \k ->
+    forAll (arbitrary :: Gen String) $ \msg -> prop_vigenereIdentity k msg
