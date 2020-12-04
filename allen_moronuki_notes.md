@@ -1,7 +1,76 @@
 # 2020-12-04
 
+Ch15, Monoid & Semigroup.  Now we get to the scarily named stuff!
+
+Algebra in general is the study of mathematical symbols and the rules governing
+their manipulation.
+
+An algebra refers to some operations and the set they operate over.  We don't
+care about the particular values: we care about the rules of their use.
+
+Type classes implement algebras.  A type class is the definition of a set of
+operations for a given type; the type itself is the set of values.  One algebra
+is called "monoid".
+
+A monoid is a binary associative operator with an identity.  Associative means
+that you can switch around the parens.
+
+Identity is the value that bottoms out the computation, eg 0 is the identity
+value for addition, where 1 is the identity value for multiplication, and [] is
+the identity value for lists.
+
+Check this out:
+
+    λ> mappend [1,2,3] mempty
+    [1,2,3]
+
+Bonkers, somehow the `mempty` value was inferred to be the specific value for the
+empty list.  Is this defined anywhere?  Possibly in the type class.
+
+A monoid is basically about joining things together.  It also has `mconcat`
+which basically folds the monoidal-append operation between a big list.  Eg I
+predict that `mconcat [Integer]` is a summation function.  But this does not
+work.  Neither does `mappend 1 4` actually add the numbers (how would we know it
+needed to add numbers anyway?  It could multiply them).
+
+And indeed mconcat is defined as `foldr mappend mempty`.
+
+They define the monoidal combination operation using (<>) on the semigroup.
+That is yet to come I suppose.  `mempty` is defined on the Monoid and is just
+set to [] in the case of lists.  Monoid defaults to defining `mappend` to `<>`
+from the `Semigroup` instance.
+
+Why doesn't Integer have a Monoid?
+> Each type should only have one unique instance for a given type class, not two
+> (one instance for a sum, one for a product).
+
+I mean this was pretty obvious, as it's far from clear what `mconcat [1,2,3]`
+should do.
+
+If I run
+
+> mappend (1 :: Integer) (2 :: Integer)
+
+I get a more informative error:
+
+    • No instance for (Monoid Integer) arising from a use of ‘mappend’
+    • In the expression: mappend (1 :: Integer) (2 :: Integer)
+      In an equation for ‘it’: it = mappend (1 :: Integer) (2 :: Integer)
+
+Which makes way more sense than the shit that I get when the integers are not
+properly type-hinted.
+
+# 2020-12-04
+
 Learned:
 You can nest forAll to get multiple Arbitrary instances.
+
+> Common properties that are checked using property testing are things like
+> identity, associativity, isomorphism, and idempotence.
+
+Idempotence means it only does its job once.  Eg `(*1)` is idempotent.
+
+    2*1 = 2, 2*1*1 = 2, etc.
 
 # 2020-12-03
 

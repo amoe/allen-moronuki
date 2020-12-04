@@ -64,3 +64,4 @@
 * traverse
 * intercalate (Data.List)
 * keys (Data.Map)
+* mappend
