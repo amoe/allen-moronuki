@@ -1,3 +1,47 @@
+# 2020-12-07
+
+There is a 'Sum' newtype from `Data.Monoid` which does monoidal sum for
+integers.  For some reason, importing `(Sum)` imports the type constructor but
+not the data constructor.
+
+We say,
+> Integers form a monoid under summation and multiplication.
+
+Lists also have more than one possible monoid (!)  I wonder what the other one
+is?  When you have different monoidal behaviours it's normal to create newtypes
+to separate out every behaviour.
+
+Let's briefly go over newtypes again. (p579 bookmark.)  newtypes can have type
+class instances, unlike type aliases.  They are like half way between a real
+data type and a type alias.
+
+mappend has an infix operator (<>).  That's what's defined by the semigroup type
+class.
+
+So something like:
+
+    [1,2,3] <> [4,5,6]
+
+This will do a monoidal combination of these lists, i.e. it will concatenate
+them with `(++)`.
+
+Something like
+
+    Sum 1 <> Sum 2
+
+Should give (Sum 3)?  And it does.
+
+Weirdly it's possible to create a `Sum "Frank"`.  That's because `Sum` doesn't
+restrict its argument to be of any specific type class.  That seems weird.
+
+The "Abelian" or commutative monoid also guarantees that it doesn't matter what
+order operations are done in.  That is a different monoid or a subset of
+monoids.
+
+A&M point out that monoids are strongly associated with folds -- well, that was
+slightly obvious, given that mconcat is equivalent to folding mappend.  It's
+clear that, more generally, monoids would be useful in generic folds anyway.
+
 # 2020-12-04
 
 Ch15, Monoid & Semigroup.  Now we get to the scarily named stuff!
