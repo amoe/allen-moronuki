@@ -1,3 +1,66 @@
+# 2020-12-08
+
+Why care about mathematical laws?
+
+Algebras are defined by their laws and are used principally for their laws.
+Laws make up what algebras are.
+
+Laws give us predictable composition of programs.  They make it easier to reason
+when combining code.
+
+Monoid instances must abide by the following laws:
+
+    mappend mempty x == x
+
+A monoidal combination with the identity element must return its argument
+unchanged, hence ["foo"] ++ [] == ["foo"].
+
+Regardless of which order mempty is passed in (i.e., cons does not obey this
+law).
+
+    mappend x (mappend y z) = mappend (mappend x y) z
+
+Associativity.
+
+    mconcat = foldr mappend mempty
+
+We have all these guarantees *even when we don't know which monoid we are
+working with*, eg, when our function is defined to take an argument `Monoid a =>
+a`, and we have no more information about it.
+
+It is correct to refer to the monoidal-combination operation as append.  Even
+though thinking of an addition as an 'append' seems wooly in the extreme.
+However, monoidal-combination may be better thought of as a condensing of a set
+of values to a summary value, much as 'reduce' traditionally does.
+
+`Bool` has some Monoid instances.  `True <> True` gives `No instance for
+(Semigroup Bool)` which makes sense.  We probably need to differentiate them via
+some newtype.  It has conjunction and disjunction.
+
+You distinguish these via newtypes `All` and `Any`, which is pretty nice.  This
+is going to allow us to do some cool things.  All can only be a bool, it has
+kind `*`, however it seems you can't just hint it to be a bool, you need to map
+it explicitly?  using the data constructor `All`.
+
+Maybe has two monoids.  One chooses the leftmost Just value, one the rightmost.
+Note that this has to happen on a binary-operator, pairwise level.
+Concatenating two First values which both hold Nothing will give Nothing, of
+course.
+
+You can also write another Monoid instance that will allow combining all values.
+
+
+    instance Monoid (Booly a) where
+      mempty = True'
+
+If we had written:
+
+    instance (Monoid a) => Monoid (Booly a) where
+      ...
+
+We would have applied a type class constraint, but we don't need to because we
+can't monoidally-combine values of type `a` within the terms of this instance.
+
 # 2020-12-07
 
 There is a 'Sum' newtype from `Data.Monoid` which does monoidal sum for

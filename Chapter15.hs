@@ -20,3 +20,34 @@ theIntegers = [3, 5, 7]
 theSum = getSum $ mconcat $ map Sum theIntegers
 
 xs = [2, 4, 6] :: [Product Int]
+
+-- These values are identical for any arguments, demonstrating the associativity
+-- law of monoids.  
+rightAssociativeSum = (<>) (Sum 1) ((<>) (Sum 2) (Sum 3))
+leftAssociativeSum = (<>) ((<>) (Sum 1) (Sum 2)) (Sum 3)
+
+
+rightAssociativeSum' = Sum 1 <> (Sum 2 <> Sum 3)
+leftAssociativeSum' = (Sum 1 <> Sum 2) <> Sum 3
+
+
+-- This works to test if all values are true
+boolValues = map All [True, False, True]
+allWereTrue = mconcat boolValues
+
+
+firstMaybe = mconcat $ map First $ [Nothing, Just 42, Nothing, Just 43, Nothing]
+lastMaybe = mconcat $ map Last $ [Nothing, Just 42, Nothing, Just 43, Nothing]
+  
+
+-- This is called a phantom type; the type argument does not appear anywhere
+-- in the data constructors.  
+data Booly a = False' | True' deriving (Eq, Show)
+
+instance Semigroup (Booly a) where
+  (<>) False' _ = False'
+  (<>) _ False' = False'
+  (<>) True' True' = True'
+
+instance Monoid (Booly a) where
+  mempty = True'
