@@ -61,6 +61,27 @@ If we had written:
 We would have applied a type class constraint, but we don't need to because we
 can't monoidally-combine values of type `a` within the terms of this instance.
 
+Associativity is a less-strong property than commutativity.  Addition and
+multiplication are commutative but ++ on the list type is not commutative (for
+obvious reasons -- [1,2] ++ [3,4] != [3,4] ++ [1,2]).  That's the intuition
+we're getting at when we say that + on strings is wrong, because string-append
+is commutative, where + implies a commutative operation.
+
+The face that we can prove in one case that (++) for lists does not commute
+constitutes a proof by counterexample.  This could be the absolute only pair of
+inputs where this works and it still would prove that (++) is non-commutative.
+
+The commutativity property can be useful in some cases in distributed systems,
+eg you could farm out (2 + 3) to some machine and (4 + 6) to another machine
+where you know that adding (4 + 6) is more intense operation, then you know that
+you can combine the results in any order.
+
+> An identity is a value with a special relationship to an operation: it turns
+> the operation into the identity function.
+
+The binary operation must be associative, and it must have a sensible identity
+value.
+
 # 2020-12-07
 
 There is a 'Sum' newtype from `Data.Monoid` which does monoidal sum for

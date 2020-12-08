@@ -51,3 +51,8 @@ instance Semigroup (Booly a) where
 
 instance Monoid (Booly a) where
   mempty = True'
+
+  
+evilPlus = flip (+)
+
+evilPlusPlus = flip (++)
