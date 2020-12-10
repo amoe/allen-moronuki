@@ -56,3 +56,24 @@ instance Monoid (Booly a) where
 evilPlus = flip (+)
 
 evilPlusPlus = flip (++)
+
+
+type Exclamation = String
+type Adverb = String
+type Noun = String  
+type Adjective = String
+  
+
+madlibbin :: Exclamation -> Adverb -> Noun -> Adjective -> String
+madlibbin excl adv noun adj = excl <> "! he said " <> adv
+                               <> " as he jumped into his car " <> noun
+                               <> " and drove off with his " <> adj <> " wife"
+
+  
+-- madlibbinBetter "hey ho" "loudly" "door" "fat"
+madlibbinBetter :: Exclamation -> Adverb -> Noun -> Adjective -> String
+madlibbinBetter excl adv noun adj = mconcat
+                                    [excl, "! he said ", adv,
+                                     " as he jumped into his car ", noun,
+                                     " and drove off with his ", adj, " wife"]
+  
