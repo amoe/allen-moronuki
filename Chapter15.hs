@@ -1,6 +1,7 @@
 module Chapter15 where
 
 import Data.Monoid
+import Test.QuickCheck
 
 ch15 = "foo"
 
@@ -77,3 +78,30 @@ madlibbinBetter excl adv noun adj = mconcat
                                      " as he jumped into his car ", noun,
                                      " and drove off with his ", adj, " wife"]
   
+
+
+-- Check associativity of simple arithmetic expresssions  
+isAddAssociative a b c = a + (b + c) == (a + b) + c
+isMulAssociative a b c = a * (b * c) == (a * b) * c
+
+
+isOperationAssociative f x y z = result1 == result2
+  where result1 = f x (f y z)
+        result2 = f (f x y) z
+  
+
+
+-- Binds infix <> *inside the definition* to whatever was passed in, shadowing
+-- the definition from Semigroup.  Impressive but confusing.
+isOperationAssociative' :: (Eq a) => (a -> a -> a) -> a -> a -> a -> Bool
+isOperationAssociative' (<>) a b c = a <> (b <> c) == (a <> b) <> c
+
+
+-- Encapsulate the monoid associativity law.  
+isMonoidAssociative :: (Eq m, Monoid m) => m -> m -> m -> Bool
+isMonoidAssociative a b c = a <> (b <> c) == (a <> b) <> c
+
+quickcheckMain :: IO ()
+quickcheckMain = do
+  -- Test that the law holds for integers
+  quickCheck (isMonoidAssociative :: Sum Integer -> Sum Integer -> Sum Integer -> Bool)

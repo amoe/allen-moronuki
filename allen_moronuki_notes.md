@@ -1,3 +1,20 @@
+# 2020-12-14
+
+See this (p598):
+
+    isOperationAssociative' :: (Eq a) => (a -> a -> a) -> a -> a -> a -> Bool
+    isOperationAssociative' (<>) a b c = a <> (b <> c) == (a <> b) <> c
+
+What's actually happening here?  It's a bit perverse.  The name (<>) is being
+bound in the pattern as the first parameter of the function.  This is totally
+unrelated to the (<>) defined in the Semigroup type class.  It's exactly
+equivalent to defining any other string as an infix operator, eg I could also
+have written this:
+
+    isOperationAssociative' :: (Eq a) => (a -> a -> a) -> a -> a -> a -> Bool
+    isOperationAssociative' (**) a b c = a ** (b ** c) == (a ** b) ** c
+
+
 # 2020-12-08
 
 Why care about mathematical laws?
