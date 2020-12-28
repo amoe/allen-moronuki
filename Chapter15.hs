@@ -101,7 +101,43 @@ isOperationAssociative' (<>) a b c = a <> (b <> c) == (a <> b) <> c
 isMonoidAssociative :: (Eq m, Monoid m) => m -> m -> m -> Bool
 isMonoidAssociative a b c = a <> (b <> c) == (a <> b) <> c
 
+
+monoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidRightIdentity x = (x <> mempty) == x
+
+monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidLeftIdentity x = (mempty <> x) == x
+
 quickcheckMain :: IO ()
 quickcheckMain = do
   -- Test that the law holds for integers
-  quickCheck (isMonoidAssociative :: Sum Integer -> Sum Integer -> Sum Integer -> Bool)
+  verboseCheck (isMonoidAssociative :: Sum Integer -> Sum Integer -> Sum Integer -> Bool)
+  verboseCheck (monoidRightIdentity :: Sum Integer -> Bool)
+  verboseCheck (monoidLeftIdentity :: Sum Integer -> Bool)
+--  verboseCheck isMonoidAssociative
+
+  
+
+data Bull = Fools | Twoo  deriving (Eq, Show)
+
+instance Arbitrary Bull where
+  arbitrary = frequency [(1, return Fools), (2, return Twoo)]
+
+-- Under our fictional invalid monoid, we always return Fools in any monoidal
+-- combination.  This wouldn't be correct because in that case the identity
+-- property would be violated.  We do this to show that QuickCheck can enforce
+-- properties that the type system itself cannot.
+instance Semigroup Bull where
+  (<>) _ _ = Fools
+
+instance Monoid Bull where
+  mempty = Fools
+
+type BullMappend = Bull -> Bull -> Bull -> Bool
+
+qcBull = do
+  -- It's associative, because it will always return `Fools` so the ordering
+  -- does not matter.
+  quickCheck (isMonoidAssociative :: Bull -> Bull -> Bull -> Bool)
+  quickCheck (monoidRightIdentity :: Bull -> Bool)
+  

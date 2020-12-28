@@ -16,6 +16,5 @@ import Listy
 instance Semigroup (Listy a) where
   (<>) (Listy l) (Listy r) = Listy $ mappend l r
 
-
 instance Monoid (Listy a) where
   mempty = Listy []

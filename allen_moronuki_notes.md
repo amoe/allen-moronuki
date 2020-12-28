@@ -1,3 +1,11 @@
+# 2020-12-28
+
+You can use `verboseCheck` instead of `quickCheck` to see which values are being
+tested.
+
+Somehow, `verboseCheck isMonoidAssociative` runs when it's used within ghci.
+Why?  It just tests the unit type ().  This is ghci's type defaulting at work.
+
 # 2020-12-14
 
 See this (p598):
