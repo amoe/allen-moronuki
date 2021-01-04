@@ -1,6 +1,7 @@
 module ExercisesChapter15 where
 
 import Data.Monoid
+import Test.QuickCheck
 
 -- This optional monoidally combines its contained values in the case where both
 -- are present, rather than just preferring a certain side, as `First` and `Last`
@@ -31,3 +32,36 @@ val3 = Only (Sum 1) `mappend` Nada
 val4 = Only [1] `mappend` Nada
 
 val5 = Nada `mappend` Only (Sum 1)  
+
+
+newtype First' a = First' { getFirst' :: Optional a } deriving (Eq, Show)
+
+instance Semigroup (First' a) where
+  (<>) (First' (Only x)) _ = First' (Only x)
+  (<>) _ (First' (Only x)) = First' (Only x)
+  (<>) _ _ = First' Nada
+
+instance Monoid (First' a) where
+  mempty = First' Nada
+
+
+isMonoidAssociative :: (Eq m, Monoid m) => m -> m -> m -> Bool
+isMonoidAssociative a b c = a <> (b <> c) == (a <> b) <> c
+
+monoidRightIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidRightIdentity x = (x <> mempty) == x
+
+monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
+monoidLeftIdentity x = (mempty <> x) == x
+
+type FirstMappend = First' String -> First' String -> First' String -> Bool  
+
+instance Arbitrary (First' String) where
+  arbitrary = do
+    x <- arbitrary
+    frequency [(1, return (First' (Only x))), (2, return (First' Nada))]
+
+
+-- qcOptional :: IO ()
+-- qcOptional = do
+--   quickCheck (isMonoidAssociative :: FirstMappend)

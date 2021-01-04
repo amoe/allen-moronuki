@@ -141,3 +141,4 @@ qcBull = do
   quickCheck (isMonoidAssociative :: Bull -> Bull -> Bull -> Bool)
   quickCheck (monoidRightIdentity :: Bull -> Bool)
   
+
