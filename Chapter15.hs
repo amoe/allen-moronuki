@@ -142,3 +142,5 @@ qcBull = do
   quickCheck (monoidRightIdentity :: Bull -> Bool)
   
 
+newtype First' a = First' { getFirst' :: Optional a } deriving (Eq, Show)
+
