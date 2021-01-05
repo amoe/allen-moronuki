@@ -1,4 +1,4 @@
-module MaybeAMonoid where
+module MaybeAnotherMonoid where
 
 -- Solution to ch15 this is a bit complicated.
 
@@ -40,3 +40,5 @@ instance Monoid (First' a) where
 
 main = do
   quickCheck (isMonoidAssociative :: First' String -> First' String -> First' String -> Bool)
+  quickCheck (monoidLeftIdentity :: First' String -> Bool)
+  quickCheck (monoidRightIdentity :: First' String -> Bool)
