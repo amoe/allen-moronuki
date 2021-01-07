@@ -2,6 +2,7 @@ module Chapter15 where
 
 import Data.Monoid
 import Test.QuickCheck
+import qualified Data.List.NonEmpty as N
 
 ch15 = "foo"
 
@@ -143,5 +144,25 @@ qcBull = do
 
 
 -- For exercise "Maybe another Monoid", see MaybeAnotherMonoid.hs.
+
+data P = Prefix Int String
+
+-- "Data constructors with only non-alphanumeric symbols and that begin with a
+-- colon are infix by default"
+
+data Q = Int :!!: String deriving (Show)
+
+-- This type could substitute for the builtin NonEmpty type:
+newtype NonEmpty' a = NonEmpty' (a, [a]) deriving (Eq, Ord, Show)
+
+nonEmptyXs = 1 N.:| [2, 3]
+nonEmptyYs = 4 N.:| [5, 6]
+
+-- => 1 :| [2,3,4,5,6]  
+combined = nonEmptyXs <> nonEmptyYs  
+
+-- N.head returns the head of the list (and is a total function for the NonEmpty
+-- list).
+-- N.length counts the list.  
 
   

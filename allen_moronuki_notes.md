@@ -1,3 +1,14 @@
+# 2021-01-07
+
+When you import a module as qualified, you also prefix all infix operators.
+That can lead to weird code like the following:
+
+    import qualified Data.List.NonEmpty as N
+    42 N.:| [43]
+
+This is invoking the infix operator called `:|` that exists in
+`Data.List.NonEmpty`.
+
 # 2020-12-28
 
 You can use `verboseCheck` instead of `quickCheck` to see which values are being
