@@ -140,7 +140,8 @@ qcBull = do
   -- does not matter.
   quickCheck (isMonoidAssociative :: Bull -> Bull -> Bull -> Bool)
   quickCheck (monoidRightIdentity :: Bull -> Bool)
+
+
+-- For exercise "Maybe another Monoid", see MaybeAnotherMonoid.hs.
+
   
-
-newtype First' a = First' { getFirst' :: Optional a } deriving (Eq, Show)
-
