@@ -69,7 +69,18 @@ instance Arbitrary Trivial where
 isSemigroupAssociative :: (Eq m, Semigroup m) => m -> m -> m -> Bool
 isSemigroupAssociative a b c = a <> (b <> c) == (a <> b) <> c
 
-  
+newtype Identity a = Identity a deriving (Show, Eq)
+
+-- The semigroup instance for this one essentially works like 'First'.
+instance Semigroup (Identity a) where
+  (<>) x _ = x
+
+instance Arbitrary a => Arbitrary (Identity a) where
+  arbitrary = do
+    x <- arbitrary
+    return (Identity x)
+
 qcMain :: IO ()
 qcMain = do
   quickCheck (isSemigroupAssociative :: Trivial -> Trivial -> Trivial -> Bool)
+  quickCheck (isSemigroupAssociative :: Identity Integer -> Identity Integer -> Identity Integer -> Bool)
