@@ -55,4 +55,21 @@ monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidLeftIdentity x = (mempty <> x) == x
 
 -- See MaybeAnotherMonoid.hs for the implementation of that exercise.
+
+-- Semigroup exercises.
+
+data Trivial = Trivial deriving (Eq, Show)
+
+instance Semigroup Trivial where
+  _ <> _ = Trivial
+
+instance Arbitrary Trivial where
+  arbitrary = return Trivial
+
+isSemigroupAssociative :: (Eq m, Semigroup m) => m -> m -> m -> Bool
+isSemigroupAssociative a b c = a <> (b <> c) == (a <> b) <> c
+
   
+qcMain :: IO ()
+qcMain = do
+  quickCheck (isSemigroupAssociative :: Trivial -> Trivial -> Trivial -> Bool)
