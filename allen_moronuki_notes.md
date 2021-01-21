@@ -1,3 +1,21 @@
+# 2021-01-21
+
+"Strength can be weakness": the **strength** of an algebra (technical term).
+This is informally the number of operations it defines.  In a sense, its
+complexity or size (in an informal sense).
+
+It's not always good to have huge algebras, because this reduces the number of
+datatypes that could satisfy everything in them.  It's more useful to have
+lots of smaller algebras, with larger amounts of data types that satisfy each
+one.
+
+e.g.
+A monoid is a stronger algebra than a semigroup.
+
+What's weaker than a semigroup?  A `magma`, which removes the associativity
+property and just has a binary operation.
+
+
 # 2021-01-07
 
 When you import a module as qualified, you also prefix all infix operators.

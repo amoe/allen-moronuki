@@ -54,14 +54,5 @@ monoidRightIdentity x = (x <> mempty) == x
 monoidLeftIdentity :: (Eq m, Monoid m) => m -> Bool
 monoidLeftIdentity x = (mempty <> x) == x
 
-type FirstMappend = First' String -> First' String -> First' String -> Bool  
-
-instance Arbitrary (First' String) where
-  arbitrary = do
-    x <- arbitrary
-    frequency [(1, return (First' (Only x))), (2, return (First' Nada))]
-
-
--- qcOptional :: IO ()
--- qcOptional = do
---   quickCheck (isMonoidAssociative :: FirstMappend)
+-- See MaybeAnotherMonoid.hs for the implementation of that exercise.
+  

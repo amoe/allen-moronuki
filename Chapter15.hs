@@ -163,6 +163,4 @@ combined = nonEmptyXs <> nonEmptyYs
 
 -- N.head returns the head of the list (and is a total function for the NonEmpty
 -- list).
--- N.length counts the list.  
-
-  
+-- N.length counts the list.
